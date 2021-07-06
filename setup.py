@@ -13,7 +13,7 @@ setup(
         version='0.0.1', 
         long_description=readme(),
         long_description_content_type='text/markdown',
-        url='https://gitlab.dlr.de/trak-mud/urbanspatial/-/tree/open_accessibility_calculation_tool',
+        url='https://gitlab.dlr.de/trak-mud/ptac',
         classifiers=[
             'Development Status :: 5 - Production/Stable', 
             'Programming Language :: Python :: 3', 
