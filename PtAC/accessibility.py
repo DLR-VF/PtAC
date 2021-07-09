@@ -11,7 +11,6 @@ import osmnx as ox
 
 def prepare_origins_and_destinations(dest_gdf, od="origin"):
 
-
     dest_gdf["x"] = dest_gdf.geometry.centroid.x
     dest_gdf["y"] = dest_gdf.geometry.centroid.y
     dest_gdf = dest_gdf[["x", "y"]]
@@ -42,7 +41,8 @@ def prepare_network(boundary, crs, verbose=0):
 
     network_gdf["street_type"] = 'highway_' + network_gdf["street_type"].astype(str)
     network_gdf = network_gdf.merge(network_characteristics, on="street_type", how="left")
-    network_gdf = network_gdf[["osmid",
+    network_gdf = network_gdf.reset_index()
+    network_gdf = network_gdf[["index",
                                "fromnode",
                                "tonode",
                                "mode_walk",
@@ -51,16 +51,15 @@ def prepare_network(boundary, crs, verbose=0):
                                "vmax",
                                "length",
                                "geometry"]]
-    bounds = network_gdf.geometry.bounds
     network_gdf = pd.concat([network_gdf, network_gdf.geometry.bounds], axis=1)
-    #del network_gdf["geometry"]
+    del network_gdf["geometry"]
     network_gdf.to_csv("tmp/network.csv", sep=";", header=False, index=False)
     return network_gdf
 
 def build_request(epsg, mode, number_of_threads,
                   date, start_time):
     urmo_ac_request = 'java -jar -Xmx12g UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
-                      '--from file;"tmp/origins.csv" ' \
+                      '--from file;"tmp/origins.csv" '\
                       '--shortest '\
                       '--to file;"tmp/destinations.csv" ' \
                       '--mode {mode} ' \
@@ -124,35 +123,35 @@ def distance_to_closest(start_geometries,
     boundary = boundary_geometries.unary_union.convex_hull
 
     if network_exists is False:
-        network_gdf = prepare_network(boundary, start_geometries.crs, verbose)
-    network_gdf.to_file("tmp/network.shp")
-    from matplotlib import pyplot as plt
-    ax = start_geometries.plot()
-    destination_geometries.plot(ax=ax, color="orange")
-    plt.show()
-    destination_geometries = destination_geometries.to_crs(start_geometries.crs)
+        prepare_network(boundary, epsg, verbose)
 
+    if "index" in start_geometries.columns:
+        del start_geometries["index"]
+    if "index" in destination_geometries.columns:
+        del start_geometries["index"]
+    #generate unique ids for origins and destinations
+    start_geometries.reset_index(inplace=True)
+    destination_geometries.reset_index(inplace=True)
+
+    destination_geometries = destination_geometries.to_crs(epsg)
+    start_geometries = start_geometries.to_crs(epsg)
     prepare_origins_and_destinations(destination_geometries, od="destination")
     prepare_origins_and_destinations(start_geometries, od="origin")
 
-    urmo_ac_request = build_request("4326", mode,
+    urmo_ac_request = build_request(epsg, mode,
                                     number_of_threads, date, start_time)
     print(urmo_ac_request)
 
     os.system(urmo_ac_request)
-    header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_v", "avg_num", "avg_value", "avg_kcal", "avg_price", "avg_co2", "avg_interchanges",
-                    "avg_access", "avg_egress", "avg_waiting_time", "avg_init_waiting_time", "avg_pt_tt", "avg_pt_interchange_time", "modes"]
+    header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_v", "avg_num"]
+
     output = pd.read_csv("tmp/sdg_output.txt", sep=";", header=0, names=header_list)
 
-    # #print("output: ", output.head())
-    # if not facility is None:
-    #     output = output.add_suffix("_{facility}".format(facility=facility))
-    # accessibility_output = start_geometries.merge(output, how="left", left_on="index", right_on="o_id_{facility}".format(facility=facility))#{facility}
-    # accessibility_output = accessibility_output[accessibility_output["o_id_{facility}".format(facility=facility)] != -1]
-    # stop = timeit.default_timer()
-    # #if verbose > 0:
-    #     #print("accessibility calculated in {exec_time} seconds".format(exec_time=round(stop - start)))
-    #
+    accessibility_output = start_geometries.merge(output,
+                                                  how="left",
+                                                  left_on="index",
+                                                  right_on="o_id".format(facility=facility))
+    return accessibility_output
     # accessibility_output['average_distance'] = accessibility_output["avg_distance_destination_geometries"] \
     #                           - accessibility_output["avg_access_destination_geometries"] \
     #                           - accessibility_output["avg_egress_destination_geometries"]
