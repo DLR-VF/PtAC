@@ -3,10 +3,10 @@ import os
 #print(os.path.abspath('..'))
 #sys.path.insert(0, os.path.abspath('..'))
 #print(sys.path)
-import demopkg.osm as osm
-import demopkg.urbanspatialio as io
-import demopkg.util as util
-import demopkg.settings as settings
+import PtAC.osm as osm
+import PtAC.urbanspatialio as io
+import PtAC.util as util
+import PtAC.settings as settings
 
 from sqlalchemy import create_engine
 import timeit

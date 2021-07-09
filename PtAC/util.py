@@ -1,7 +1,7 @@
 #from osmnx
 import geopandas as gpd
 import math
-import demopkg.settings as settings
+import PtAC.settings as settings
 from shapely.geometry import Polygon
 import pandas as pd
 
