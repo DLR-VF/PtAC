@@ -129,24 +129,33 @@ def distance_to_closest(start_geometries,
         del start_geometries["index"]
     if "index" in destination_geometries.columns:
         del start_geometries["index"]
-    #generate unique ids for origins and destinations
+
+    # generate unique ids for origins and destinations
     start_geometries.reset_index(inplace=True)
     destination_geometries.reset_index(inplace=True)
 
+    # transform origins and destinations to utm coordinates
     destination_geometries = destination_geometries.to_crs(epsg)
     start_geometries = start_geometries.to_crs(epsg)
+
+    # write origins and destinations to disk
     prepare_origins_and_destinations(destination_geometries, od="destination")
     prepare_origins_and_destinations(start_geometries, od="origin")
 
+    # build UrMoAC request
     urmo_ac_request = build_request(epsg, mode,
                                     number_of_threads, date, start_time)
-    print(urmo_ac_request)
+    if verbose>0:
+        print(urmo_ac_request)
 
+    # Use UrMoAc to calculate SDG indicator
     os.system(urmo_ac_request)
-    header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_v", "avg_num"]
 
+    # read UrMoAC output
+    header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_v", "avg_num"]
     output = pd.read_csv("tmp/sdg_output.txt", sep=";", header=0, names=header_list)
 
+    # Merge output to startin geometries 
     accessibility_output = start_geometries.merge(output,
                                                   how="left",
                                                   left_on="index",
