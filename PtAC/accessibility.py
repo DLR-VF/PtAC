@@ -58,6 +58,19 @@ def prepare_network(boundary, crs, verbose=0):
 
 def build_request(epsg, number_of_threads,
                   date, start_time):
+    """
+        Builds requests for the UrMoAC
+
+        :param epsg: PSG code of UTM projection for a certain area of interest
+        :type epsg: String
+        :param number_of_threads: PSG code of UTM projection for a certain area of interest
+        :type number_of_threads: String
+        :param date:
+        :type date:
+        :param start_time: time to start the routing (in seconds of the day)
+        :type start_time: Integer
+
+    """
     current_path = os.path.dirname(os.path.abspath(__file__))
     urmo_ac_request = 'java -jar -Xmx12g {current_path}/UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
                       '--from file;"tmp/origins.csv" ' \
