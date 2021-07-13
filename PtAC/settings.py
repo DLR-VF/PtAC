@@ -75,7 +75,7 @@ new_route_types = {
     "ic": 2
 }
 
-# Street types wihtout highway initialization
+# Street types without highway initialization
 #mode, mode_walk, mode_bike, mode_mit, vmax, lanes
 streettypes = pd.DataFrame.from_dict({
     "motorway": [False, False, True,  160, 2],

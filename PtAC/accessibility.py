@@ -10,12 +10,11 @@ import osmnx as ox
 
 
 def prepare_origins_and_destinations(dest_gdf, od="origin"):
-
     dest_gdf["x"] = dest_gdf.geometry.centroid.x
     dest_gdf["y"] = dest_gdf.geometry.centroid.y
     dest_gdf = dest_gdf[["x", "y"]]
     if od == "origin":
-        dest_gdf.dropna(inplace=True)
+        dest_gdf = dest_gdf.dropna()
         dest_gdf.to_csv("tmp/origins.csv", sep=";", header=False)
     if od == "destination":
         dest_gdf.to_csv("tmp/destinations.csv", sep=";", header=False)
@@ -56,62 +55,67 @@ def prepare_network(boundary, crs, verbose=0):
     network_gdf.to_csv("tmp/network.csv", sep=";", header=False, index=False)
     return network_gdf
 
-def build_request(epsg, mode, number_of_threads,
+
+def build_request(epsg, number_of_threads,
                   date, start_time):
-    urmo_ac_request = 'java -jar -Xmx12g UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
-                      '--from file;"tmp/origins.csv" '\
-                      '--shortest '\
+    current_path = os.path.dirname(os.path.abspath(__file__))
+    urmo_ac_request = 'java -jar -Xmx12g {current_path}/UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
+                      '--from file;"tmp/origins.csv" ' \
+                      '--shortest ' \
                       '--to file;"tmp/destinations.csv" ' \
-                      '--mode {mode} ' \
+                      '--mode foot ' \
                       '--time {start_time} ' \
                       '--epsg {epsg} ' \
-                      '--nm-output "file;tmp/sdg_output.txt" ' \
+                      '--ext-nm-output "file;tmp/sdg_output.txt" ' \
                       '--verbose ' \
                       '--threads {number_of_threads} ' \
                       '--dropprevious ' \
                       '--date {date} ' \
                       '--net "file;tmp/network.csv"'.format(
+        current_path=current_path,
         epsg=epsg,
-        mode=mode,
         number_of_threads=number_of_threads,
-        date=date,  # date_obj.date().strftime("%Y%m%d"),
+        date=date,
         start_time=int(start_time),
         null="'NULL'")
     return urmo_ac_request
 
 
-
 def distance_to_closest(start_geometries,
-                        facility=None, 
-                        epsg=None, 
-                        destination_geometries=None, 
+                        destination_geometries=None,
+                        epsg=None,
                         network_exists=False,
-                        boundary_geometries=None, 
-                        city=None, 
-                        start_time=35580, 
-                        maximum_distance=500, 
-                        mode="foot",
-                        number_of_threads=4, 
-                        date=20200915,
+                        boundary_geometries=None,
+                        start_time=35580,
                         transport_system=None,
+                        number_of_threads=4,
+                        date=20200915,
                         verbose=0):
     """
         Python wrapper for UrMoAC Accessibility Calculator
 
-        :param conn: db connection
-        :type conn: sqlalchemy connection
-        :param start_geometries: Starting point for accessibility calculation (can be either point or polygon)
-        :type start_geometries: Geopandas.GeoDataFrame::POLYGON (must be in UTM coordinates)
-        :param destination_geometries: Starting point for accessibility calculation (can be either point or polygon)
-        :type destination_geometries: Geopandas.GeoDataFrame::POLYGON (must be in UTM coordinates)
+        :param start_geometries: Starting points for accessibility calculation
+        :type start_geometries: Geopandas.GeoDataFrame::POLYGON
+        :param destination_geometries: Starting point for accessibility calculation
+        :type destination_geometries: Geopandas.GeoDataFrame::POLYGON
+        :param epsg: EPSG code of UTM projection for a certain area of interest
+        :type epsg: String
+        :param network_exists:
+        :type network_exists: Boolean
+        :param boundary_geometries:
+        :type boundary_geometries: Geopandas.GeoDataFrame::POLYGON
         :param start_time: time to start the routing (in seconds of the day)
         :type start_time: Integer
-        :param: travel_time: maximum travel time (in seconds)
-        :type: travel_time: Integer
-        :return: Aggregation geometries with accessibilities
-        :type Geopandas.GeoDataFrame:POLYGON
-
+        :param transport_system:
+        :type transport_system:
+        :param number_of_threads:
+        :type number_of_threads: Integer
+        :param date:
+        :type date:
+        :param verbose:
+        :type verbose:
         """
+
     start = timeit.default_timer()
 
     if not os.path.exists('tmp'):
@@ -119,7 +123,7 @@ def distance_to_closest(start_geometries,
 
     if not boundary_geometries.crs == "epsg:4326":
         boundary_geometries = boundary_geometries.to_crs(4326)
-         
+
     boundary = boundary_geometries.unary_union.convex_hull
 
     if network_exists is False:
@@ -143,44 +147,57 @@ def distance_to_closest(start_geometries,
     prepare_origins_and_destinations(start_geometries, od="origin")
 
     # build UrMoAC request
-    urmo_ac_request = build_request(epsg, mode,
-                                    number_of_threads, date, start_time)
-    if verbose>0:
-        print(urmo_ac_request)
+    urmo_ac_request = build_request(epsg=epsg, number_of_threads=number_of_threads, date=date, start_time=start_time)
+    if verbose > 0:
+        print("Starting UrMoAC to calculate accessibilities\n")
+        print(f"UrMoAC request: {urmo_ac_request}\n")
 
     # Use UrMoAc to calculate SDG indicator
     os.system(urmo_ac_request)
 
     # read UrMoAC output
-    header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_v", "avg_num"]
+    header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_v", "avg_num", "avg_value", "avg_kcal", "avg_price",
+                   "avg_co2", "avg_interchanges", "avg_access", "avg_egress", "avg_waiting_time",
+                   "avg_init_waiting_time", "avg_pt_tt", "avg_pt_interchange_time", "modes"]
+
     output = pd.read_csv("tmp/sdg_output.txt", sep=";", header=0, names=header_list)
 
-    # Merge output to startin geometries 
+    # Merge output to starting geometries
     accessibility_output = start_geometries.merge(output,
                                                   how="left",
                                                   left_on="index",
-                                                  right_on="o_id".format(facility=facility))
+                                                  right_on="o_id")
+
+    # do not take into account access and egress distances. this might not be necessary any more..
+    # accessibility_output['distance_pt'] = accessibility_output["avg_distance"] \
+    #                                            - accessibility_output["avg_access"] \
+    #                                            - accessibility_output["avg_egress"]
+
+    if transport_system is None:
+        if verbose > 0:
+            stop = timeit.default_timer()
+            print("accessibility to public transport calculated in {exec_time} seconds".format(
+                exec_time=round(stop - start)))
+
+    if transport_system == "low-capacity":
+        if verbose > 0:
+            accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 500)]
+            stop = timeit.default_timer()
+            print("accessibility to {transport_system} public transport within 500 m calculated in {exec_time} seconds".format(
+                    transport_system=transport_system, exec_time=round(stop - start)))
+
+    if transport_system == "high-capacity":
+        if verbose > 0:
+            accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 1000)]
+            stop = timeit.default_timer()
+            print("accessibility to {transport_system} public transport within 1 km calculated in {exec_time} seconds".format(
+                    transport_system=transport_system, exec_time=round(stop - start)))
+
     return accessibility_output
-    # accessibility_output['average_distance'] = accessibility_output["avg_distance_destination_geometries"] \
-    #                           - accessibility_output["avg_access_destination_geometries"] \
-    #                           - accessibility_output["avg_egress_destination_geometries"]
-    # if verbose > 0:
-    #     if transport_system == None:
-    #         accessibility_output = accessibility_output
-    #         print("accessibility to public transport calculated in {exec_time} seconds".format(exec_time=round(stop - start)))
-    #     if transport_system == "low-capacity":
-    #         accessibility_output = accessibility_output[(accessibility_output["average_distance"] <= 500)]
-    #         stop = timeit.default_timer()
-    #         print("accessibility to {transport_system} public transport within 500 m calculated in {exec_time} seconds".format(transport_system=transport_system, exec_time=round(stop - start)))
-    #     if transport_system == "high-capacity":
-    #         accessibility_output = accessibility_output[(accessibility_output["average_distance"] <= 1000)]
-    #         stop = timeit.default_timer()
-    #         print("accessibility to {transport_system} public transport within 1 km calculated in {exec_time} seconds".format(transport_system=transport_system, exec_time=round(stop - start)))
-    # return accessibility_output
+
 
 def calculate_sdg(total_population, accessibility_output_population):
     print("Calulating SDG 11.2. indicator ... ")
-    sdg = accessibility_output_population/ total_population
+    sdg = accessibility_output_population / total_population
     print("SDG 11.2. indicator is calculated ")
     return sdg
-
