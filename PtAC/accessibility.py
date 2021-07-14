@@ -92,27 +92,53 @@ def build_request(epsg, number_of_threads,
 
     """
     current_path = os.path.dirname(os.path.abspath(__file__))
-    urmo_ac_request = 'java -jar -Xmx12g {current_path}/UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
+    urmo_ac_request = f'java -jar -Xmx12g {current_path}/UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
                       '--from file;"tmp/origins.csv" ' \
                       '--shortest ' \
                       '--to file;"tmp/destinations.csv" ' \
                       '--mode foot ' \
-                      '--time {start_time} ' \
-                      '--epsg {epsg} ' \
+                      f'--time {int(start_time)} ' \
+                      f'--epsg {epsg} ' \
                       '--ext-nm-output "file;tmp/sdg_output.txt" ' \
                       '--verbose ' \
-                      '--threads {number_of_threads} ' \
+                      f'--threads {number_of_threads} ' \
                       '--dropprevious ' \
-                      '--date {date} ' \
-                      '--net "file;tmp/network.csv"'.format(
-                                                        current_path=current_path,
-                                                        epsg=epsg,
-                                                        number_of_threads=number_of_threads,
-                                                        date=date,
-                                                        start_time=int(start_time),
-                                                       )
+                      f'--date {date} ' \
+                      '--net "file;tmp/network.csv"'
     return urmo_ac_request
 
+def transport_system_function(accessibility_output, start=None, transport_system=None, maximum_distance=None):
+    if transport_system == None and maximum_distance == None:
+        accessibility_output = accessibility_output["avg_distance"]
+        stop = timeit.default_timer()
+        print(f"accessibility to public transport stops calculated in {round(stop - start)} seconds")
+    if transport_system == None and maximum_distance is not None:
+        accessibility_output = accessibility_output[(accessibility_output["avg_distance"] <= maximum_distance)]
+        stop = timeit.default_timer()
+        print(f"accessibility to public transport stops within {maximum_distance} m calculated in {round(stop - start)} seconds")
+    if transport_system is not None:
+        if transport_system == "low-capacity":
+            accessibility_output = accessibility_output[(accessibility_output["avg_distance"] <= 500)]
+            stop = timeit.default_timer()
+            print(f"accessibility to public transport stops within 500 m calculated in {round(stop - start)} seconds")
+        if transport_system == "high-capacity":
+            accessibility_output = accessibility_output[(accessibility_output["avg_distance"] <= 1000)]
+            stop = timeit.default_timer()
+            print(f"accessibility to public transport stops within 1000 m calculated in {round(stop - start)} seconds")
+        else:
+            print("there is no such transport system")
+    # if transport_system is None:
+    #     stop = timeit.default_timer()
+    #     print(f"accessibility to public transport calculated in {round(stop - start)} seconds")  # {exec_time}
+    # if transport_system == "low-capacity":
+    #     accessibility_output = accessibility_output[(accessibility_output["avg_distance"] <= 500)]
+    #     stop = timeit.default_timer()
+    #     print(f"accessibility to {transport_system} public transport within 500 m calculated in {round(stop - start)} seconds")
+    # if transport_system == "high-capacity":
+    #     accessibility_output = accessibility_output[(accessibility_output["avg_distance"] <= 1000)]
+    #     stop = timeit.default_timer()
+    #     print(f"accessibility to {transport_system} public transport within 1 km calculated in {round(stop - start)} seconds")
+    return accessibility_output
 
 def distance_to_closest(start_geometries,
                         destination_geometries=None,
@@ -121,6 +147,7 @@ def distance_to_closest(start_geometries,
                         boundary_geometries=None,
                         start_time=35580,
                         transport_system=None,
+                        maximum_distance=None,
                         number_of_threads=4,
                         date=20200915,
                         verbose=0):
@@ -165,7 +192,7 @@ def distance_to_closest(start_geometries,
     if "index" in start_geometries.columns:
         del start_geometries["index"]
     if "index" in destination_geometries.columns:
-        del start_geometries["index"]
+        del destination_geometries["index"]
 
     # generate unique ids for origins and destinations
     start_geometries.reset_index(inplace=True)
@@ -183,7 +210,7 @@ def distance_to_closest(start_geometries,
     urmo_ac_request = build_request(epsg=epsg, number_of_threads=number_of_threads, date=date, start_time=start_time)
     if verbose > 0:
         print("Starting UrMoAC to calculate accessibilities\n")
-        print(f"UrMoAC request: {urmo_ac_request}\n")
+        #print(f"UrMoAC request: {urmo_ac_request}\n")
 
     # Use UrMoAc to calculate SDG indicator
     os.system(urmo_ac_request)
@@ -206,33 +233,48 @@ def distance_to_closest(start_geometries,
     #                                            - accessibility_output["avg_access"] \
     #                                            - accessibility_output["avg_egress"]
 
-    if transport_system is None:
-        if verbose > 0:
-            stop = timeit.default_timer()
-            print("accessibility to public transport calculated in {exec_time} seconds".format(
-                exec_time=round(stop - start)))
-
-    if transport_system == "low-capacity":
-        if verbose > 0:
-            accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 500)]
-            stop = timeit.default_timer()
-            print(
-                "accessibility to {transport_system} public transport within 500 m calculated in {exec_time} seconds".format(
-                    transport_system=transport_system, exec_time=round(stop - start)))
-
-    if transport_system == "high-capacity":
-        if verbose > 0:
-            accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 1000)]
-            stop = timeit.default_timer()
-            print(
-                "accessibility to {transport_system} public transport within 1 km calculated in {exec_time} seconds".format(
-                    transport_system=transport_system, exec_time=round(stop - start)))
-
+    # if transport_system is None:
+    #     if verbose > 0:
+    #         stop = timeit.default_timer()
+    #         print("accessibility to public transport calculated in {exec_time} seconds".format(
+    #             exec_time=round(stop - start)))
+    #
+    # if transport_system == "low-capacity":
+    #     if verbose > 0:
+    #         accessibility_output = accessibility_output[(accessibility_output["avg_distance"] <= 500)]
+    #         stop = timeit.default_timer()
+    #         print(
+    #             "accessibility to {transport_system} public transport within 500 m calculated in {exec_time} seconds".format(
+    #                 transport_system=transport_system, exec_time=round(stop - start)))
+    #
+    # if transport_system == "high-capacity":
+    #     if verbose > 0:
+    #         accessibility_output = accessibility_output[(accessibility_output["avg_distance"] <= 1000)]
+    #         stop = timeit.default_timer()
+    #         exec_time = round(stop - start)
+    #         print(f"accessibility to {transport_system} public transport within 1 km calculated in {exec_time} seconds")
+    if verbose > 0:
+        accessibility_output = transport_system_function(accessibility_output,
+                                                         start=start, transport_system=transport_system,
+                                                         maximum_distance=maximum_distance)
     return accessibility_output
 
-
-def calculate_sdg(total_population, accessibility_output_population):
-    print("Calulating SDG 11.2. indicator ... ")
-    sdg = accessibility_output_population / total_population
-    print("SDG 11.2. indicator is calculated ")
+def calculate_sdg(total_population, output=None, output_high_capacity=None, output_low_capacity=None, epsg=None):
+    if "index" in total_population.columns:
+        del total_population["index"]
+    total_population.reset_index(inplace=True)
+    start_geometries = total_population.to_crs(epsg)
+    total_population = start_geometries['pop'].sum()
+    if (output_high_capacity is not None) and (output_low_capacity is not None):
+        df_low_high = pd.concat([output_high_capacity, output_low_capacity])
+        df_low_high = df_low_high.drop_duplicates(subset=['index', 'o_id'])
+        accessibility_output_population = df_low_high['pop'].sum()
+        print("Calculating SDG 11.2. indicator ... ")
+        sdg = accessibility_output_population / total_population
+        print("SDG 11.2.1 indicator is calculated")
+    else:
+        accessibility_output_population = output['pop'].sum()
+        print("Calculating SDG 11.2. indicator ... ")
+        sdg = accessibility_output_population / total_population
+        print("SDG 11.2.1 indicator is calculated")
     return sdg
