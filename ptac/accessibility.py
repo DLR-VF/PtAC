@@ -1,11 +1,9 @@
-import sys
+
 import os
-import PtAC.osm as osm
-import PtAC.util as util
-import PtAC.settings as settings
+import ptac.osm as osm
+import ptac.settings as settings
 import timeit
 import pandas as pd
-import geopandas as gpd
 import osmnx as ox
 
 
