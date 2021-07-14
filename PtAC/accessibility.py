@@ -202,9 +202,9 @@ def distance_to_closest(start_geometries,
                                                   right_on="o_id")
 
     # do not take into account access and egress distances. this might not be necessary any more..
-    # accessibility_output['distance_pt'] = accessibility_output["avg_distance"] \
-    #                                            - accessibility_output["avg_access"] \
-    #                                            - accessibility_output["avg_egress"]
+    accessibility_output['distance_pt'] = accessibility_output["avg_distance"] \
+                                                - accessibility_output["avg_access"] \
+                                                - accessibility_output["avg_egress"]
 
     if transport_system is None:
         if verbose > 0:
