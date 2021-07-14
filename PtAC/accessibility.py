@@ -10,6 +10,15 @@ import osmnx as ox
 
 
 def prepare_origins_and_destinations(dest_gdf, od="origin"):
+    """
+        prepares origin or desination data set for usage in UrMoAC
+
+        :param dest_gdf: origin or destination point data set (must be projected in UTM Projection)
+        :type dest_gdf: Geopandas.GeoDataFrame:POINT
+        :param od: indicate if "origin" or "destination"
+        :type od: String
+    """
+
     dest_gdf["x"] = dest_gdf.geometry.centroid.x
     dest_gdf["y"] = dest_gdf.geometry.centroid.y
     dest_gdf = dest_gdf[["x", "y"]]
@@ -20,12 +29,23 @@ def prepare_origins_and_destinations(dest_gdf, od="origin"):
         dest_gdf.to_csv("tmp/destinations.csv", sep=";", header=False)
 
 
-def prepare_network(boundary, crs, verbose=0):
+def prepare_network(boundary, epsg, verbose=0):
+    """
+        Loads road network from OpenStreetMap and prepares network for usage in UrMoAC
+
+        :param boundary: boundary of area where to download network (must be projected in WGS84)
+        :type boundary: Geopandas.GeoDataFrame:POLYGON
+        :param epsg: EPSG code of UTM projection for the area of interest
+        :type epsg: Integer
+        :param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
+        :type verbose: Integer
+
+    """
     if verbose > 0:
         print("No street network was specified. Loading osm network..\n")
     network = osm.get_network(boundary)
     network_gdf = ox.graph_to_gdfs(network)[1]
-    network_gdf = network_gdf.to_crs(crs)
+    network_gdf = network_gdf.to_crs(epsg)
     network_characteristics = settings.highways
     network_characteristics.reset_index(inplace=True)
     network_characteristics.rename(columns={"index": "street_type"}, inplace=True)
@@ -53,7 +73,7 @@ def prepare_network(boundary, crs, verbose=0):
     network_gdf = pd.concat([network_gdf, network_gdf.geometry.bounds], axis=1)
     del network_gdf["geometry"]
     network_gdf.to_csv("tmp/network.csv", sep=";", header=False, index=False)
-    return network_gdf
+    #return network_gdf
 
 
 def build_request(epsg, number_of_threads,
@@ -65,8 +85,8 @@ def build_request(epsg, number_of_threads,
         :type epsg: String
         :param number_of_threads: PSG code of UTM projection for a certain area of interest
         :type number_of_threads: String
-        :param date:
-        :type date:
+        :param date: date on which the routing starts (e.g. 20200915)
+        :type date: integer
         :param start_time: time to start the routing (in seconds of the day)
         :type start_time: Integer
 
@@ -85,12 +105,12 @@ def build_request(epsg, number_of_threads,
                       '--dropprevious ' \
                       '--date {date} ' \
                       '--net "file;tmp/network.csv"'.format(
-        current_path=current_path,
-        epsg=epsg,
-        number_of_threads=number_of_threads,
-        date=date,
-        start_time=int(start_time),
-        null="'NULL'")
+                                                        current_path=current_path,
+                                                        epsg=epsg,
+                                                        number_of_threads=number_of_threads,
+                                                        date=date,
+                                                        start_time=int(start_time),
+                                                       )
     return urmo_ac_request
 
 
@@ -125,7 +145,7 @@ def distance_to_closest(start_geometries,
         :type number_of_threads: Integer
         :param date:
         :type date:
-        :param verbose:
+        :param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
         :type verbose:
         """
 
@@ -196,14 +216,16 @@ def distance_to_closest(start_geometries,
         if verbose > 0:
             accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 500)]
             stop = timeit.default_timer()
-            print("accessibility to {transport_system} public transport within 500 m calculated in {exec_time} seconds".format(
+            print(
+                "accessibility to {transport_system} public transport within 500 m calculated in {exec_time} seconds".format(
                     transport_system=transport_system, exec_time=round(stop - start)))
 
     if transport_system == "high-capacity":
         if verbose > 0:
             accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 1000)]
             stop = timeit.default_timer()
-            print("accessibility to {transport_system} public transport within 1 km calculated in {exec_time} seconds".format(
+            print(
+                "accessibility to {transport_system} public transport within 1 km calculated in {exec_time} seconds".format(
                     transport_system=transport_system, exec_time=round(stop - start)))
 
     return accessibility_output

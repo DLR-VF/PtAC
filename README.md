@@ -8,10 +8,19 @@ Python library to automatically compute public transport accessbilities for the 
 
 
 # Developer instructions
+
+Clone repository from github:\
+"git clone https://github.com/DLR-VF/PtAC.git"
+
+
+
 ## Sphinx instructions
 
-activate python/conda virtual environment
-be sure to have sphinx installed
-switch to docs folder on the command line
-type: make html
+The following steps are necessary to build the sphinx documentation:
+* be sure to have sphinx installed
+* activate python/conda virtual environment
+* switch to PtAC/docs folder on the command line
+* type: make html
+ 
+=> Documentation will be build in PtAC/build. Main page is index.html
 
