@@ -172,7 +172,6 @@ def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
             # CRS to project
             utm_zone = int(math.floor((avg_longitude + 180) / 6.) + 1)
             utm_crs = f"+proj = utm + datum = WGS84 + ellps = WGS84 + zone = {utm_zone} + units = m + type = crs"
-
             crs = CRS.from_proj4(utm_crs)
             epsg = crs.to_epsg()
             projected_gdf = gdf.to_crs(epsg)

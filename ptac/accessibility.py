@@ -49,7 +49,7 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
         if verbose > 0:
             print("No street network was specified. Loading osm network..\n")
         network_gdf = osm.get_network(boundary)
-        network_gdf = util.project_geometry(network_gdf, to_latlong=True)
+        network_gdf = util.project_gdf(network_gdf, to_latlong=False)
 
     else:
         if verbose > 0:
