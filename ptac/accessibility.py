@@ -1,10 +1,14 @@
-
 import os
 import ptac.osm as osm
 import ptac.settings as settings
+import ptac.util as util
 import timeit
+from pathlib import Path
 import pandas as pd
-import osmnx as ox
+
+
+global home_directory
+home_directory = Path.home()
 
 
 def prepare_origins_and_destinations(dest_gdf, od="origin"):
@@ -22,15 +26,16 @@ def prepare_origins_and_destinations(dest_gdf, od="origin"):
     dest_gdf = dest_gdf[["x", "y"]]
     if od == "origin":
         dest_gdf = dest_gdf.dropna()
-        dest_gdf.to_csv("tmp/origins.csv", sep=";", header=False)
+        dest_gdf.to_csv(f"{home_directory}/.ptac/origins.csv", sep=";", header=False)
     if od == "destination":
-        dest_gdf.to_csv("tmp/destinations.csv", sep=";", header=False)
+        dest_gdf.to_csv(f"{home_directory}/.ptac/destinations.csv", sep=";", header=False)
 
 
-def prepare_network(boundary, epsg, verbose=0):
+def prepare_network(network_gdf=None, boundary=None, verbose=0):
     """
         Loads road network from OpenStreetMap and prepares network for usage in UrMoAC
 
+        :param network_gdf: network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
         :param boundary: boundary of area where to download network (must be projected in WGS84)
         :type boundary: Geopandas.GeoDataFrame:POLYGON
         :param epsg: EPSG code of UTM projection for the area of interest
@@ -39,12 +44,22 @@ def prepare_network(boundary, epsg, verbose=0):
         :type verbose: Integer
 
     """
+
+    if network_gdf is None:
+        if verbose > 0:
+            print("No street network was specified. Loading osm network..\n")
+        network_gdf = osm.get_network(boundary)
+        network_gdf = util.project_geometry(network_gdf, to_latlong=True)
+
+    else:
+        if verbose > 0:
+            print("Street network provided\n")
+        # todo: check if dataset has the right format
+
     if verbose > 0:
-        print("No street network was specified. Loading osm network..\n")
-    network = osm.get_network(boundary)
-    network_gdf = ox.graph_to_gdfs(network)[1]
-    network_gdf = network_gdf.to_crs(epsg)
-    network_characteristics = settings.highways
+        print("Preparing street network for routing.")
+
+    network_characteristics = settings.streettypes
     network_characteristics.reset_index(inplace=True)
     network_characteristics.rename(columns={"index": "street_type"}, inplace=True)
     network_gdf.reset_index(inplace=True)
@@ -56,7 +71,6 @@ def prepare_network(boundary, epsg, verbose=0):
                                               "index": "oid",
                                               })
 
-    network_gdf["street_type"] = 'highway_' + network_gdf["street_type"].astype(str)
     network_gdf = network_gdf.merge(network_characteristics, on="street_type", how="left")
     network_gdf = network_gdf.reset_index()
     network_gdf = network_gdf[["index",
@@ -70,8 +84,8 @@ def prepare_network(boundary, epsg, verbose=0):
                                "geometry"]]
     network_gdf = pd.concat([network_gdf, network_gdf.geometry.bounds], axis=1)
     del network_gdf["geometry"]
-    network_gdf.to_csv("tmp/network.csv", sep=";", header=False, index=False)
-    #return network_gdf
+    network_gdf.to_csv(f"{home_directory}/.ptac/network.csv", sep=";", header=False, index=False)
+    # return network_gdf
 
 
 def build_request(epsg, number_of_threads,
@@ -91,40 +105,41 @@ def build_request(epsg, number_of_threads,
     """
     current_path = os.path.dirname(os.path.abspath(__file__))
     urmo_ac_request = 'java -jar -Xmx12g {current_path}/UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
-                      '--from file;"tmp/origins.csv" ' \
+                      '--from file;"{home_directory}/.ptac/origins.csv" ' \
                       '--shortest ' \
-                      '--to file;"tmp/destinations.csv" ' \
+                      '--to file;"{home_directory}/.ptac/destinations.csv" ' \
                       '--mode foot ' \
                       '--time {start_time} ' \
                       '--epsg {epsg} ' \
-                      '--ext-nm-output "file;tmp/sdg_output.txt" ' \
+                      '--ext-nm-output "file;{home_directory}/.ptac/sdg_output.txt" ' \
                       '--verbose ' \
                       '--threads {number_of_threads} ' \
                       '--dropprevious ' \
                       '--date {date} ' \
                       '--net "file;tmp/network.csv"'.format(
-                                                        current_path=current_path,
-                                                        epsg=epsg,
-                                                        number_of_threads=number_of_threads,
-                                                        date=date,
-                                                        start_time=int(start_time),
-                                                       )
+                                    home_directory=home_directory,
+                                    current_path=current_path,
+                                    epsg=epsg,
+                                    number_of_threads=number_of_threads,
+                                    date=date,
+                                    start_time=int(start_time),
+    )
     return urmo_ac_request
 
 
 def distance_to_closest(start_geometries,
                         destination_geometries=None,
-                        epsg=None,
-                        network_exists=False,
+                        network_gdf=None,
                         boundary_geometries=None,
                         start_time=35580,
-                        transport_system=None,
                         number_of_threads=4,
                         date=20200915,
                         verbose=0):
     """
         Python wrapper for UrMoAC Accessibility Calculator
 
+        :param network_gdf network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
+        :type network_gdf Geopandas.GeoDataFrame::POLYGON
         :param start_geometries: Starting points for accessibility calculation
         :type start_geometries: Geopandas.GeoDataFrame::POLYGON
         :param destination_geometries: Starting point for accessibility calculation
@@ -147,18 +162,29 @@ def distance_to_closest(start_geometries,
         :type verbose:
         """
 
+    # todo: check if dataset is geographic coordinate system, if yes get epsg code of corresponding utm projection
+
     start = timeit.default_timer()
 
-    if not os.path.exists('tmp'):
-        os.makedirs('tmp')
+    start_geometries = util.project_gdf(start_geometries, to_latlong=True)
+    destination_geometries = util.project_gdf(destination_geometries, to_latlong=True)
 
-    if not boundary_geometries.crs == "epsg:4326":
-        boundary_geometries = boundary_geometries.to_crs(4326)
+    start_geometries = util.project_gdf(start_geometries, to_latlong=False)
+    destination_geometries = util.project_gdf(destination_geometries, to_latlong=False)
 
-    boundary = boundary_geometries.unary_union.convex_hull
+    if not os.path.exists(f"{home_directory}/.ptac"):
+        os.makedirs(f"{home_directory}/.ptac")
 
-    if network_exists is False:
-        prepare_network(boundary, epsg, verbose)
+    if not boundary_geometries.crs == settings.default_crs:
+        boundary_geometries = boundary_geometries.to_crs(settings.default_crs)
+
+    if network_gdf is None:
+        prepare_network(network_gdf=None, boundary=boundary_geometries, verbose=verbose)
+
+    else:
+        network_gdf = util.project_gdf(network_gdf, to_latlong=True)
+        network_gdf = util.project_gdf(network_gdf, to_latlong=False)
+        prepare_network(network_gdf=network_gdf, boundary=boundary_geometries, verbose=verbose)
 
     if "index" in start_geometries.columns:
         del start_geometries["index"]
@@ -169,14 +195,11 @@ def distance_to_closest(start_geometries,
     start_geometries.reset_index(inplace=True)
     destination_geometries.reset_index(inplace=True)
 
-    # transform origins and destinations to utm coordinates
-    destination_geometries = destination_geometries.to_crs(epsg)
-    start_geometries = start_geometries.to_crs(epsg)
-
     # write origins and destinations to disk
     prepare_origins_and_destinations(destination_geometries, od="destination")
     prepare_origins_and_destinations(start_geometries, od="origin")
 
+    epsg = destination_geometries.crs.to_epsg()
     # build UrMoAC request
     urmo_ac_request = build_request(epsg=epsg, number_of_threads=number_of_threads, date=date, start_time=start_time)
     if verbose > 0:
@@ -191,40 +214,17 @@ def distance_to_closest(start_geometries,
                    "avg_co2", "avg_interchanges", "avg_access", "avg_egress", "avg_waiting_time",
                    "avg_init_waiting_time", "avg_pt_tt", "avg_pt_interchange_time", "modes"]
 
-    output = pd.read_csv("tmp/sdg_output.txt", sep=";", header=0, names=header_list)
+    output = pd.read_csv(f"{home_directory}/.ptac/sdg_output.txt", sep=";", header=0, names=header_list)
+
+    # only use distance on road network (eliminate access and egress)
+    output['distance_pt'] = output["avg_distance"] - output["avg_access"] - output["avg_egress"]
+    output = output[["o_id", "d_id", "avg_access", "avg_egress", "distance_pt"]]
 
     # Merge output to starting geometries
     accessibility_output = start_geometries.merge(output,
                                                   how="left",
                                                   left_on="index",
                                                   right_on="o_id")
-
-    # do not take into account access and egress distances. this might not be necessary any more..
-    accessibility_output['distance_pt'] = accessibility_output["avg_distance"] \
-                                                - accessibility_output["avg_access"] \
-                                                - accessibility_output["avg_egress"]
-
-    if transport_system is None:
-        if verbose > 0:
-            stop = timeit.default_timer()
-            print("accessibility to public transport calculated in {exec_time} seconds".format(
-                exec_time=round(stop - start)))
-
-    if transport_system == "low-capacity":
-        if verbose > 0:
-            accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 500)]
-            stop = timeit.default_timer()
-            print(
-                "accessibility to {transport_system} public transport within 500 m calculated in {exec_time} seconds".format(
-                    transport_system=transport_system, exec_time=round(stop - start)))
-
-    if transport_system == "high-capacity":
-        if verbose > 0:
-            accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 1000)]
-            stop = timeit.default_timer()
-            print(
-                "accessibility to {transport_system} public transport within 1 km calculated in {exec_time} seconds".format(
-                    transport_system=transport_system, exec_time=round(stop - start)))
 
     return accessibility_output
 

@@ -4,6 +4,7 @@ import math
 import ptac.settings as settings
 from shapely.geometry import Polygon
 import pandas as pd
+from pyproj import CRS
 
 #from https://github.com/mthh/gpd_lite_toolbox/blob/ce4553c139775953c49d8756960d0a166b67c6bf/gpd_lite_toolbox/core.py#L565
 def make_grid(gdf, height, cut=True):
@@ -155,7 +156,7 @@ def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
         if to_latlong:
             # if to_latlong is True, project the gdf to latlong
             latlong_crs = settings.default_crs
-            projected_gdf = gdf[geom_col].to_crs(latlong_crs)
+            projected_gdf = gdf.to_crs(latlong_crs)
 
         else:
             # else, project the gdf to UTM
@@ -170,14 +171,11 @@ def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
             # calculate the UTM zone from this avg longitude and define the UTM
             # CRS to project
             utm_zone = int(math.floor((avg_longitude + 180) / 6.) + 1)
-            utm_crs = {'datum': 'WGS84',
-                       'ellps': 'WGS84',
-                       'proj': 'utm',
-                       'zone': utm_zone,
-                       'units': 'm'}
+            utm_crs = f"+proj = utm + datum = WGS84 + ellps = WGS84 + zone = {utm_zone} + units = m + type = crs"
 
-            # project the GeoDataFrame to the UTM CRS
-            projected_gdf = gdf.to_crs(utm_crs)
+            crs = CRS.from_proj4(utm_crs)
+            epsg = crs.to_epsg()
+            projected_gdf = gdf.to_crs(epsg)
 
     projected_gdf.gdf_name = gdf.gdf_name
     return projected_gdf
