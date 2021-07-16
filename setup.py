@@ -9,7 +9,7 @@ def readme():
     with open('README.md') as f:
         return f.read()
 setup(
-        name='PtAC',
+        name='ptac',
         version='0.0.1', 
         long_description=readme(),
         long_description_content_type='text/markdown',
@@ -21,7 +21,7 @@ setup(
             'License :: OSI Approved :: MIT License'
             ],
         licence='MIT', 
-        packages=find_packages(exclude=['test']), #['PtAC'], #
+        packages=find_packages(exclude=['test']), #['ptac'], #
         install_requires=[], 
         include_package_data=True,
         zip_safe=False)
