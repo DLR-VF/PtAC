@@ -6,7 +6,6 @@ import timeit
 from pathlib import Path
 import pandas as pd
 
-
 global home_directory
 home_directory = Path.home()
 
@@ -117,12 +116,12 @@ def build_request(epsg, number_of_threads,
                       '--dropprevious ' \
                       '--date {date} ' \
                       '--net "file;tmp/network.csv"'.format(
-                                    home_directory=home_directory,
-                                    current_path=current_path,
-                                    epsg=epsg,
-                                    number_of_threads=number_of_threads,
-                                    date=date,
-                                    start_time=int(start_time),
+        home_directory=home_directory,
+        current_path=current_path,
+        epsg=epsg,
+        number_of_threads=number_of_threads,
+        date=date,
+        start_time=int(start_time),
     )
     return urmo_ac_request
 
@@ -131,6 +130,8 @@ def distance_to_closest(start_geometries,
                         destination_geometries=None,
                         network_gdf=None,
                         boundary_geometries=None,
+                        transport_system=None,
+                        maximum_distance=None,
                         start_time=35580,
                         number_of_threads=4,
                         date=20200915,
@@ -225,12 +226,51 @@ def distance_to_closest(start_geometries,
                                                   how="left",
                                                   left_on="index",
                                                   right_on="o_id")
+    accessibility_output = subset_result(accessibility_output,
+                                         transport_system=transport_system,
+                                         maximum_distance=maximum_distance)
+    return accessibility_output
 
+
+
+def subset_result(accessibility_output, transport_system=None, maximum_distance=None):
+    """
+
+    :param accessibility_output:
+    :param start:
+    :param transport_system:
+    :param maximum_distance:
+    :return:
+    """
+
+    # if transport_system is None and maximum_distance is None:
+    #    return accessibility_output
+    if transport_system is None and maximum_distance is not None:
+        accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= maximum_distance)]
+    if transport_system is not None:
+        if transport_system == "low-capacity":
+            accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 500)]
+        if transport_system == "high-capacity":
+            accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 1000)]
+        else:
+            print("there is no such transport system. Please indicate either None, 'low-capacity' or 'high-capacity'")
     return accessibility_output
 
 
 def calculate_sdg(total_population, accessibility_output_population):
-    print("Calulating SDG 11.2. indicator ... ")
+    # start_geometries = total_population.to_crs(epsg)
+    # total_population = start_geometries['pop'].sum()
+    # if (output_high_capacity is not None) and (output_low_capacity is not None):
+    #     df_low_high = pd.concat([output_high_capacity, output_low_capacity])
+    #     df_low_high = df_low_high.drop_duplicates(subset=['index', 'o_id'])
+    #     accessibility_output_population = df_low_high['pop'].sum()
+    #     print("Calculating SDG 11.2. indicator ... ")
+    #     sdg = accessibility_output_population / total_population
+    #     print("SDG 11.2.1 indicator is calculated")
+    # else:
+    #     accessibility_output_population = output['pop'].sum()
+    #     print("Calculating SDG 11.2. indicator ... ")
+    #     sdg = accessibility_output_population / total_population
+    #     print("SDG 11.2.1 indicator is calculated")
     sdg = accessibility_output_population / total_population
-    print("SDG 11.2. indicator is calculated ")
     return sdg
