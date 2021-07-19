@@ -9,7 +9,7 @@ import osmnx as ox
 import sys
 
 
-sys.path.insert(0, os.path.abspath('..'))
+#sys.path.insert(0, os.path.abspath('..'))
 import numpy as np
 import rasterio
 from affine import Affine
@@ -323,14 +323,18 @@ def create_population_data(input_path, output_path, extension):
                 points_gdf = raster_to_points(raster_path, band=1, epsg=4326)
                 city_name = city.split(".")[0].lower()
                 points_gdf.to_file(f"{output_path}/{city_name}_pop_point.{extension}", driver="GPKG")
+                print(f"{city} population points saved as {extension} file")
             elif extension == "shp":
                 points_gdf = raster_to_points(raster_path, band=1, epsg=4326)
                 city_name = city.split(".")[0].lower()
                 points_gdf.to_file(f"{output_path}/{city_name}_pop_point.{extension}", driver="ESRI Shapefile")
+                print(f"{city} population points saved as {extension} file")
             elif extension == "csv":
                 points_gdf = raster_to_points(raster_path, band=1, epsg=4326)
                 city_name = city.split(".")[0].lower()
                 points_gdf.to_csv(f"{output_path}/{city_name}_pop_point.{extension}", sep=";", header=False)
+                print(f"{city} population points saved as {extension} file")
             else:
                 print(f"{extension} extension is not supported")
+
 
