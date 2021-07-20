@@ -231,17 +231,20 @@ def distance_to_closest(start_geometries,
     accessibility_output = subset_result(accessibility_output,
                                          transport_system=transport_system,
                                          maximum_distance=maximum_distance)
-    return accessibility_output
+    stop = timeit.default_timer()
 
+    print(f"calculation finished in {stop} seconds")
+
+    return accessibility_output
 
 
 def subset_result(accessibility_output, transport_system=None, maximum_distance=None):
     """
     :param accessibility_output:
-    :param start:
     :param transport_system:
     :param maximum_distance:
     :return:
+    :rtype:
     """
 
     if transport_system is not None and maximum_distance is not None:
@@ -260,20 +263,44 @@ def subset_result(accessibility_output, transport_system=None, maximum_distance=
     return accessibility_output
 
 
-def calculate_sdg(total_population, accessibility_output_population):
-    # start_geometries = total_population.to_crs(epsg)
-    # total_population = start_geometries['pop'].sum()
-    # if (output_high_capacity is not None) and (output_low_capacity is not None):
-    #     df_low_high = pd.concat([output_high_capacity, output_low_capacity])
-    #     df_low_high = df_low_high.drop_duplicates(subset=['index', 'o_id'])
-    #     accessibility_output_population = df_low_high['pop'].sum()
-    #     print("Calculating SDG 11.2. indicator ... ")
-    #     sdg = accessibility_output_population / total_population
-    #     print("SDG 11.2.1 indicator is calculated")
-    # else:
-    #     accessibility_output_population = output['pop'].sum()
-    #     print("Calculating SDG 11.2. indicator ... ")
-    #     sdg = accessibility_output_population / total_population
-    #     print("SDG 11.2.1 indicator is calculated")
-    sdg = accessibility_output_population / total_population
+def calculate_sdg(df_pop_total, pop_accessible, population_column):
+    """
+
+    :param df_pop_total:
+    :param pop_accessible:
+    :param population_column:
+    :return:
+    """
+    total_population = df_pop_total[population_column].sum()
+
+    if (population_column not in df_pop_total.columns) or (population_column not in pop_accessible):
+        print(f"column {population_column} does not exist in both population datasets")
+    # if input is a list of dataframes (low- and high-capacity transit systems):
+    if isinstance(pop_accessible, list):
+        if (population_column not in df_pop_total.columns) or (population_column not in pop_accessible[0]):
+            print(f"column {population_column} does not exist in both population datasets")
+            sys.quit()
+        # concatenate dataframes
+        df = pd.concat(pop_accessible)
+        # drop duplicates:
+        df = df.drop_duplicates(subset=['index', 'o_id'])
+        # sum population of accessibility output:
+        accessibility_output_population = df[population_column].sum()
+        print("Calculating SDG 11.2. indicator ... ")
+        # calculate sdg 11.2.1 indicator by dividing population
+        # of accessibility calculation result with total population:
+        sdg = accessibility_output_population / total_population
+        print("SDG 11.2.1 indicator is calculated")
+    # if input is a single dataframe:
+    else:
+        if (population_column not in df_pop_total.columns) or (population_column not in pop_accessible):
+            print(f"column {population_column} does not exist in both population datasets")
+            sys.quit()
+        # sum population of accessibility output:
+        accessibility_output_population = pop_accessible[population_column].sum()
+        print("Calculating SDG 11.2. indicator ... ")
+        # calculate sdg 11.2.1 indicator by dividing population
+        # of accessibility calculation result with total population:
+        sdg = accessibility_output_population / total_population
+        print("SDG 11.2.1 indicator is calculated")
     return sdg
