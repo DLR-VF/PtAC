@@ -1,4 +1,6 @@
 import os
+import sys
+
 import ptac.osm as osm
 import ptac.settings as settings
 import ptac.util as util
@@ -56,7 +58,7 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
         # todo: check if dataset has the right format
 
     if verbose > 0:
-        print("Preparing street network for routing.")
+        print("Preparing street network for routing")
 
     network_characteristics = settings.streettypes
     network_characteristics.reset_index(inplace=True)
@@ -235,7 +237,6 @@ def distance_to_closest(start_geometries,
 
 def subset_result(accessibility_output, transport_system=None, maximum_distance=None):
     """
-
     :param accessibility_output:
     :param start:
     :param transport_system:
@@ -243,9 +244,10 @@ def subset_result(accessibility_output, transport_system=None, maximum_distance=
     :return:
     """
 
-    # if transport_system is None and maximum_distance is None:
-    #    return accessibility_output
-    if transport_system is None and maximum_distance is not None:
+    if transport_system is not None and maximum_distance is not None:
+        print("please indicate either transport_system or maximum_distance. Not both")
+        sys.exit()
+    if maximum_distance is not None:
         accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= maximum_distance)]
     if transport_system is not None:
         if transport_system == "low-capacity":
@@ -254,6 +256,7 @@ def subset_result(accessibility_output, transport_system=None, maximum_distance=
             accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 1000)]
         else:
             print("there is no such transport system. Please indicate either None, 'low-capacity' or 'high-capacity'")
+            sys.exit()
     return accessibility_output
 
 
