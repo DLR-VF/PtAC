@@ -1,15 +1,25 @@
 import os
 import sys
-
+import geopandas as gpd
 import ptac.osm as osm
 import ptac.settings as settings
 import ptac.util as util
 import timeit
 from pathlib import Path
 import pandas as pd
+import glob
 
 global home_directory
 home_directory = Path.home()
+
+
+def clear_directory(folder=f"{home_directory}/.ptac"):
+    files = glob.glob(f"{folder}//*.csv")
+    for f in files:
+        try:
+            os.remove(f)
+        except OSError as e:
+            print("Error: %s : %s" % (f, e.strerror))
 
 
 def prepare_origins_and_destinations(dest_gdf, od="origin"):
@@ -61,8 +71,9 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
         print("Preparing street network for routing")
 
     network_characteristics = settings.streettypes
-    network_characteristics.reset_index(inplace=True)
-    network_characteristics.rename(columns={"index": "street_type"}, inplace=True)
+    if "street_type" not in network_characteristics.columns:
+        network_characteristics.reset_index(inplace=True)
+        network_characteristics.rename(columns={"index": "street_type"}, inplace=True)
     network_gdf.reset_index(inplace=True)
     network_gdf = network_gdf.rename(columns={"u": "fromnode",
                                               "v": "tonode",
@@ -112,12 +123,12 @@ def build_request(epsg, number_of_threads,
                       '--mode foot ' \
                       '--time {start_time} ' \
                       '--epsg {epsg} ' \
-                      '--ext-nm-output "file;{home_directory}/.ptac/sdg_output.txt" ' \
+                      '--ext-nm-output "file;{home_directory}/.ptac/sdg_output.csv" ' \
                       '--verbose ' \
                       '--threads {number_of_threads} ' \
                       '--dropprevious ' \
                       '--date {date} ' \
-                      '--net "file;tmp/network.csv"'.format(
+                      '--net "file;{home_directory}/.ptac/network.csv"'.format(
         home_directory=home_directory,
         current_path=current_path,
         epsg=epsg,
@@ -129,13 +140,13 @@ def build_request(epsg, number_of_threads,
 
 
 def distance_to_closest(start_geometries,
-                        destination_geometries=None,
+                        destination_geometries,
                         network_gdf=None,
                         boundary_geometries=None,
                         transport_system=None,
                         maximum_distance=None,
                         start_time=35580,
-                        number_of_threads=4,
+                        number_of_threads=1,
                         date=20200915,
                         verbose=0):
     """
@@ -147,12 +158,10 @@ def distance_to_closest(start_geometries,
         :type start_geometries: Geopandas.GeoDataFrame::POLYGON
         :param destination_geometries: Starting point for accessibility calculation
         :type destination_geometries: Geopandas.GeoDataFrame::POLYGON
-        :param epsg: EPSG code of UTM projection for a certain area of interest
-        :type epsg: String
-        :param network_exists:
-        :type network_exists: Boolean
         :param boundary_geometries:
         :type boundary_geometries: Geopandas.GeoDataFrame::POLYGON
+        :param maximum_distance: Maximum distance to next pt station (optional)
+        rtype maximum_distance: Integer
         :param start_time: time to start the routing (in seconds of the day)
         :type start_time: Integer
         :param transport_system:
@@ -177,6 +186,10 @@ def distance_to_closest(start_geometries,
 
     if not os.path.exists(f"{home_directory}/.ptac"):
         os.makedirs(f"{home_directory}/.ptac")
+
+    if boundary_geometries is None:
+        boundary_geometries = gpd.GeoDataFrame(index=[0], crs='epsg:4326',
+                                        geometry=[start_geometries.unary_union.convex_hull])
 
     if not boundary_geometries.crs == settings.default_crs:
         boundary_geometries = boundary_geometries.to_crs(settings.default_crs)
@@ -207,6 +220,7 @@ def distance_to_closest(start_geometries,
     urmo_ac_request = build_request(epsg=epsg, number_of_threads=number_of_threads, date=date, start_time=start_time)
     if verbose > 0:
         print("Starting UrMoAC to calculate accessibilities\n")
+    if verbose > 1:
         print(f"UrMoAC request: {urmo_ac_request}\n")
 
     # Use UrMoAc to calculate SDG indicator
@@ -217,7 +231,7 @@ def distance_to_closest(start_geometries,
                    "avg_co2", "avg_interchanges", "avg_access", "avg_egress", "avg_waiting_time",
                    "avg_init_waiting_time", "avg_pt_tt", "avg_pt_interchange_time", "modes"]
 
-    output = pd.read_csv(f"{home_directory}/.ptac/sdg_output.txt", sep=";", header=0, names=header_list)
+    output = pd.read_csv(f"{home_directory}/.ptac/sdg_output.csv", sep=";", header=0, names=header_list)
 
     # only use distance on road network (eliminate access and egress)
     output['distance_pt'] = output["avg_distance"] - output["avg_access"] - output["avg_egress"]
@@ -228,13 +242,15 @@ def distance_to_closest(start_geometries,
                                                   how="left",
                                                   left_on="index",
                                                   right_on="o_id")
+
+    # Subset starting points based on transport system type or maximum distance
     accessibility_output = subset_result(accessibility_output,
                                          transport_system=transport_system,
                                          maximum_distance=maximum_distance)
     stop = timeit.default_timer()
 
-    print(f"calculation finished in {stop} seconds")
-
+    print(f"calculation finished in {stop - start} seconds")
+    clear_directory()
     return accessibility_output
 
 
@@ -255,7 +271,7 @@ def subset_result(accessibility_output, transport_system=None, maximum_distance=
     if transport_system is not None:
         if transport_system == "low-capacity":
             accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 500)]
-        if transport_system == "high-capacity":
+        elif transport_system == "high-capacity":
             accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 1000)]
         else:
             print("there is no such transport system. Please indicate either None, 'low-capacity' or 'high-capacity'")
@@ -263,30 +279,30 @@ def subset_result(accessibility_output, transport_system=None, maximum_distance=
     return accessibility_output
 
 
-def calculate_sdg(df_pop_total, pop_accessible, population_column):
+def calculate_sdg(df_pop_total, pop_accessible, population_column, verbose=0):
     """
 
     :param df_pop_total:
     :param pop_accessible:
     :param population_column:
     :return:
+    :rtype:
     """
     total_population = df_pop_total[population_column].sum()
-
-    if (population_column not in df_pop_total.columns) or (population_column not in pop_accessible):
-        print(f"column {population_column} does not exist in both population datasets")
     # if input is a list of dataframes (low- and high-capacity transit systems):
     if isinstance(pop_accessible, list):
         if (population_column not in df_pop_total.columns) or (population_column not in pop_accessible[0]):
             print(f"column {population_column} does not exist in both population datasets")
-            sys.quit()
+            sys.exit()
+
         # concatenate dataframes
         df = pd.concat(pop_accessible)
         # drop duplicates:
         df = df.drop_duplicates(subset=['index', 'o_id'])
         # sum population of accessibility output:
         accessibility_output_population = df[population_column].sum()
-        print("Calculating SDG 11.2. indicator ... ")
+        if verbose < 0:
+            print("Calculating SDG 11.2. indicator ... ")
         # calculate sdg 11.2.1 indicator by dividing population
         # of accessibility calculation result with total population:
         sdg = accessibility_output_population / total_population
@@ -295,7 +311,7 @@ def calculate_sdg(df_pop_total, pop_accessible, population_column):
     else:
         if (population_column not in df_pop_total.columns) or (population_column not in pop_accessible):
             print(f"column {population_column} does not exist in both population datasets")
-            sys.quit()
+            sys.exit()
         # sum population of accessibility output:
         accessibility_output_population = pop_accessible[population_column].sum()
         print("Calculating SDG 11.2. indicator ... ")
