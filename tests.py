@@ -1,6 +1,7 @@
 import unittest
 import geopandas
 import ptac.accessibility as accessibility
+import ptac.population as population
 import pathlib
 
 # inheriting from unittest.TestCase gives access to a lot of different testing capabilities within the class
@@ -13,6 +14,7 @@ class PtACTest(unittest.TestCase):
         self.pt_high = geopandas.read_file(self.data_path+"/data/pt_high_example.gpkg")
         self.pop = geopandas.read_file(self.data_path+"/data/population_example.gpkg")
         self.net = geopandas.read_file(self.data_path + "/data/net_example.gpkg")
+        self.raster = self.data_path + "/data/friedrichshain_raster.tif"
 
     def test_dist_to_closest_max_dist(self):
         self.set_up()
@@ -53,6 +55,13 @@ class PtACTest(unittest.TestCase):
         result = accessibility.calculate_sdg(value, [value_access_low, value_access_high], population_column="pop")
         expected_result = 0.9855756017281202
         self.assertTrue(result == expected_result)
+
+    def test_raster_to_points(self):
+        self.set_up()
+        value = ((population.raster_to_points(self.raster))["geometry"].type == "Point").all()
+        expected_value = True
+        self.assertTrue(value == expected_value)
+
 
 if __name__ == '__main__':
     unittest.main()
