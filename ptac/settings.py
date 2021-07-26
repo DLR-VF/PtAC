@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+# coding:utf-8
+"""
+@name : settings.py
+@author : Simon Nieland, Serra Yosmaoglu
+@date : 26.07.2021
+@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
+"""
+
 import pandas as pd
 
 default_crs = "epsg:4326"

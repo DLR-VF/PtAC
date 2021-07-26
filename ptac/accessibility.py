@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+# coding:utf-8
+"""
+@name : accessibility.py
+@author : Simon Nieland, Serra Yosmaoglu
+@date : 26.07.2021 12:44
+@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
+"""
+
 import os
 import sys
 import geopandas as gpd
