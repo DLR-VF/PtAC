@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# coding:utf-8
+"""
+@name : util.py
+Copyright (c) 2016–2021 Geoff Boeing https://geoffboeing.com/
+"""
+
 #from osmnx
 import geopandas as gpd
 import math

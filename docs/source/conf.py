@@ -19,8 +19,8 @@ sys.setrecursionlimit(1500)
 # -- Project information -----------------------------------------------------
 
 project = 'ptac'
-copyright = '2021, Simon Nieland, Serra Yosmaouglu'
-author = 'Simon Nieland, Serra Yosmaouglu'
+copyright = '2021, Simon Nieland, Serra Yosmaoglu'
+author = 'Simon Nieland, Serra Yosmaoglu'
 
 # The full version, including alpha/beta/rc tags
 release = '0.0.1'
@@ -33,7 +33,8 @@ release = '0.0.1'
 # ones.
 extensions = ["sphinx.ext.napoleon",
               "sphinx_rtd_theme",
-                "sphinx.ext.autodoc"
+              "sphinx.ext.autodoc",
+              "sphinx_markdown_builder"
               ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -42,7 +43,9 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = [
+    "build/*"
+]
 
 master_doc = "index"
 
