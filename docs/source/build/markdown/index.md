@@ -14,10 +14,18 @@ Population points can be easily converted from rasters (.tif).
 
 ## Installation
 
-Installation instructions will be shown here:
-You can install PtAC with pip:
+You can install PtAC with [pip](https://pypi.org/project/pip/):
 
-> pip install ptac
+> pip install -i [https://test.pypi.org/simple/](https://test.pypi.org/simple/) ptac==0.0.1
+
+In order to run examples, the user might need to install jupyterlab or jupyter notebook
+with the following commands:
+
+> pip install jupyterlab
+
+> pip install notebook
+
+See [python packaging instructions](https://packaging.python.org/tutorials/installing-packages/) for further details.
 
 ## Features
 
@@ -39,17 +47,22 @@ uses UrMoAC ([https://github.com/DLR-VF/UrMoAC](https://github.com/DLR-VF/UrMoAC
 ## User Reference
 
 
-* PtAC.accessibility module
+* ptac.accessibility module
 
 
-* PtAC.osm module
+* ptac.osm module
+
+
+* ptac.population module
 
 
 ## Support
 
+If you have a usage question please contact us via email.
+
 ## License
 
-The project is licensed under the (XXXMITXXX) license.
+The project is licensed under the MIT license.
 
 # Indices
 

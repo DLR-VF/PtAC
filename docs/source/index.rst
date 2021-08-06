@@ -17,12 +17,19 @@ Population points can be easily converted from rasters (.tif).
 
 Installation
 ------------
-Installation instructions will be shown here:
-You can install PtAC with pip:
+You can install PtAC with `pip <https://pypi.org/project/pip/>`_:
 
-   pip install ptac
+   pip install -i https://test.pypi.org/simple/ ptac==0.0.1
 
+In order to run examples, the user might need to install jupyterlab or jupyter notebook
+with the following commands:
 
+   pip install jupyterlab
+
+   pip install notebook
+
+See `python packaging instructions
+<https://packaging.python.org/tutorials/installing-packages/>`_ for further details.
 
 Features
 --------
@@ -34,22 +41,22 @@ uses UrMoAC (https://github.com/DLR-VF/UrMoAC) for accessibility computation
 * Generate a population point dataset from population raster dataset
 * Calculate Sustainable Development Goal 11.2 based on starting points with population information
 
-
 .. toctree::
    :maxdepth: 2
    :caption: User Reference
    
-   PtAC
+   ptac
 
 
 Support
 --------
 
+If you have a usage question please contact us via email.
 
 License
 --------
 
-The project is licensed under the (XXXMITXXX) license.
+The project is licensed under the MIT license.
 
 
 Indices 
