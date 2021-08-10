@@ -161,8 +161,8 @@ def distance_to_closest(start_geometries,
     """
         Python wrapper for UrMoAC Accessibility Calculator
 
-        :param network_gdf network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
-        :type network_gdf Geopandas.GeoDataFrame::POLYGON
+        :param network_gdf: network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
+        :type network_gdf: Geopandas.GeoDataFrame::POLYGON
         :param start_geometries: Starting points for accessibility calculation
         :type start_geometries: Geopandas.GeoDataFrame::POLYGON
         :param destination_geometries: Starting point for accessibility calculation
@@ -181,7 +181,7 @@ def distance_to_closest(start_geometries,
         :type date:
         :param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
         :type verbose:
-        """
+    """
 
     # todo: check if dataset is geographic coordinate system, if yes get epsg code of corresponding utm projection
 

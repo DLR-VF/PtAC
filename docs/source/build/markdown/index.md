@@ -10,9 +10,17 @@ of the population that has convenient access to public transport.
 Users can calculate accessibilities from population points to public transit stops
 based on maximum distance or - if defined - two different transit systems:
 low- and high-capacity.
-Population points can be easily converted from rasters (.tif).
 
-## Installation
+In order to calculate SDG 11.2.1 indicator the necessary datasets are
+population points, public transit stops and city networks.
+You can generate population points by converting population rasters (.tif) with
+population module. Public transit stops can be obtained from
+[OpenStreetMaps (OSM)](https://wiki.openstreetmap.org/wiki/Public_transport) or
+[General Transit Feed Specification (GTFS)](https://gtfs.org/) feeds.
+If not available, the city network dataset is prepared within the module accessibility
+and downloaded as csv.
+
+# Installation
 
 You can install PtAC with [pip](https://pypi.org/project/pip/):
 
@@ -27,7 +35,7 @@ with the following commands:
 
 See [python packaging instructions](https://packaging.python.org/tutorials/installing-packages/) for further details.
 
-## Features
+# Features
 
 PtAC is built on top of osmnx, geopandas, networkx and
 uses UrMoAC ([https://github.com/DLR-VF/UrMoAC](https://github.com/DLR-VF/UrMoAC)) for accessibility computation
@@ -44,7 +52,7 @@ uses UrMoAC ([https://github.com/DLR-VF/UrMoAC](https://github.com/DLR-VF/UrMoAC
 
 * Calculate Sustainable Development Goal 11.2 based on starting points with population information
 
-## User Reference
+# User Reference
 
 
 * ptac.accessibility module
@@ -56,11 +64,14 @@ uses UrMoAC ([https://github.com/DLR-VF/UrMoAC](https://github.com/DLR-VF/UrMoAC
 * ptac.population module
 
 
-## Support
+* ptac.util module
 
-If you have a usage question please contact us via email.
 
-## License
+# Support
+
+If you have a usage question please contact us via email ([serra.yosmaoglu@dlr.de](mailto:serra.yosmaoglu@dlr.de)).
+
+# License
 
 The project is licensed under the MIT license.
 

@@ -1,3 +1,8 @@
+User reference for the PtAC package.
+
+This guide covers usage of all public modules and functions.
+Every function can be accessed via ptac.module_name.function_name().
+
 # ptac.accessibility module
 
 @name : accessibility.py
@@ -51,20 +56,28 @@ Builds requests for the UrMoAC
     
 
 
-### ptac.accessibility.clear_directory(folder='C:\\\\Users\\\\yosm_se/.ptac')
-
 ### ptac.accessibility.distance_to_closest(start_geometries, destination_geometries, network_gdf=None, boundary_geometries=None, transport_system=None, maximum_distance=None, start_time=35580, number_of_threads=1, date=20200915, verbose=0)
 Python wrapper for UrMoAC Accessibility Calculator
 
-:param network_gdf network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
-:type network_gdf Geopandas.GeoDataFrame::POLYGON
-:param start_geometries: Starting points for accessibility calculation
-:type start_geometries: Geopandas.GeoDataFrame::POLYGON
-:param destination_geometries: Starting point for accessibility calculation
-:type destination_geometries: Geopandas.GeoDataFrame::POLYGON
-:param boundary_geometries:
-:type boundary_geometries: Geopandas.GeoDataFrame::POLYGON
-:param maximum_distance: Maximum distance to next pt station (optional)
+
+* **Parameters**
+
+    
+    * **network_gdf** (*Geopandas.GeoDataFrame::POLYGON*) – network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
+
+
+    * **start_geometries** (*Geopandas.GeoDataFrame::POLYGON*) – Starting points for accessibility calculation
+
+
+    * **destination_geometries** (*Geopandas.GeoDataFrame::POLYGON*) – Starting point for accessibility calculation
+
+
+    * **boundary_geometries** (*Geopandas.GeoDataFrame::POLYGON*) – 
+
+
+    * **maximum_distance** – Maximum distance to next pt station (optional)
+
+
 rtype maximum_distance: Integer
 :param start_time: time to start the routing (in seconds of the day)
 :type start_time: Integer
@@ -144,30 +157,28 @@ prepares origin or desination data set for usage in UrMoAC
 @copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
 
 
-### ptac.osm.get_buildings(polygon)
-
-### ptac.osm.get_facility(polygon, facility)
-
-### ptac.osm.get_landuse(polygon)
-
 ### ptac.osm.get_network(polygon, network_type='walk', custom_filter=None, verbose=0)
 Download street network from osm via osmnx
 
-:param polygon boundary of the area from which to download the network (in WGS84)
-:type polygon Geopandas.GeoDataFrame::POLYGON
-:param network_type can be ..
-:type network_type String
-:param custom_filter: filter network (see osmnx for description)
-:type custom_filter: String
-:param verbose: Degree of verbosity (the higher, the more)
-:type verbose: Integer
+
+* **Parameters**
+
+    
+    * **polygon** (*Geopandas.GeoDataFrame::POLYGON*) – boundary of the area from which to download the network (in WGS84)
+
+
+    * **network_type** (*String*) – can be ..
+
+
+    * **custom_filter** (*String*) – filter network (see osmnx for description)
+
+
+    * **verbose** (*Integer*) – Degree of verbosity (the higher, the more)
+
+
 :return Network graph
 :rtype networkx.Graph
 
-
-### ptac.osm.get_parks(polygon)
-
-### ptac.osm.get_restaurants(polygon)
 # ptac.population module
 
 @name : population.py
@@ -175,8 +186,6 @@ Download street network from osm via osmnx
 @date : 26.07.2021
 @copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
 
-
-### ptac.population.download_population_raster(bounds, request)
 
 ### ptac.population.raster_to_points(path, band=1, epsg=4326)
 
@@ -201,5 +210,75 @@ Download street network from osm via osmnx
     GeoPandas.GeoDataFrame:: Point
 
 
+# ptac.util module
 
-### ptac.population.save_to_disk(input_path, output_path, driver='ESRI Shapefile')
+@name : util.py
+Copyright (c) 2016–2021 Geoff Boeing [https://geoffboeing.com/](https://geoffboeing.com/)
+
+
+### ptac.util.project_gdf(gdf, geom_col='geometry', to_crs=None, to_latlong=False)
+Project a GeoDataFrame to the UTM zone appropriate for its geometries’
+centroid.
+
+The simple calculation in this function works well for most latitudes, but
+won’t work for some far northern locations like Svalbard and parts of far
+northern Norway.
+
+
+* **Parameters**
+
+    
+    * **gdf** (*GeoDataFrame*) – the gdf to be projected
+
+
+    * **to_crs** (*dict*) – if not None, just project to this CRS instead of to UTM
+
+
+    * **to_latlong** (*bool*) – if True, projects to latlong instead of to UTM
+
+
+
+* **Returns**
+
+    
+
+
+* **Return type**
+
+    GeoDataFrame
+
+
+
+### ptac.util.project_geometry(geometry, crs=None, to_crs=None, to_latlong=False)
+Project a shapely Polygon or MultiPolygon from lat-long to UTM, or
+vice-versa
+
+
+* **Parameters**
+
+    
+    * **geometry** (*shapely Polygon or MultiPolygon*) – the geometry to project
+
+
+    * **crs** (*dict*) – the starting coordinate reference system of the passed-in geometry,
+    default value (None) will set settings.default_crs as the CRS
+
+
+    * **to_crs** (*dict*) – if not None, just project to this CRS instead of to UTM
+
+
+    * **to_latlong** (*bool*) – if True, project from crs to lat-long, if False, project from crs to
+    local UTM zone
+
+
+
+* **Returns**
+
+    (geometry_proj, crs), the projected shapely geometry and the crs of the
+    projected geometry
+
+
+
+* **Return type**
+
+    tuple
