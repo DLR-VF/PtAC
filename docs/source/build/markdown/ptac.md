@@ -46,14 +46,10 @@ Builds requests for the UrMoAC
 
 
 
-* **Returns**
-
-    
+* **Return SDG 11.2.1 indicator**
 
 
-* **Return type**
-
-    
+:rtype:Integer
 
 
 ### ptac.accessibility.distance_to_closest(start_geometries, destination_geometries, network_gdf=None, boundary_geometries=None, transport_system=None, maximum_distance=None, start_time=35580, number_of_threads=1, date=20200915, verbose=0)
@@ -78,17 +74,38 @@ Python wrapper for UrMoAC Accessibility Calculator
     * **maximum_distance** – Maximum distance to next pt station (optional)
 
 
-rtype maximum_distance: Integer
-:param start_time: time to start the routing (in seconds of the day)
-:type start_time: Integer
-:param transport_system:
-:type transport_system:
-:param number_of_threads:
-:type number_of_threads: Integer
-:param date:
-:type date:
-:param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
-:type verbose:
+    * **start_time** (*Integer*) – time to start the routing (in seconds of the day)
+
+
+    * **transport_system** – 
+
+
+    * **number_of_threads** (*Integer*) – 
+
+
+    * **date** – 
+
+
+    * **verbose** – The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
+
+
+
+* **Rtype maximum_distance**
+
+    Integer
+
+
+
+* **Returns**
+
+    A geo data frame consists of accessibility calculation outputs
+
+
+
+* **Return type**
+
+    Geopandas.GeoDataFrame::POINT
+
 
 
 ### ptac.accessibility.prepare_network(network_gdf=None, boundary=None, verbose=0)
@@ -140,14 +157,14 @@ prepares origin or desination data set for usage in UrMoAC
 
 
 
-* **Returns**
+* **Return accessibility_output**
 
-    
 
 
 * **Return type**
 
-    
+    Geopandas.GeoDataFrame::POINT
+
 
 # ptac.osm module
 
