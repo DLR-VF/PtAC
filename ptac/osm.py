@@ -38,8 +38,9 @@ def get_network(polygon, network_type="walk", custom_filter=None, verbose=0):
         :type custom_filter: String
         :param verbose: Degree of verbosity (the higher, the more)
         :type verbose: Integer
-        :return Network graph
-        :rtype networkx.Graph
+        :return: Network graph
+        :rtype: networkx.Graph
+
     """
     if verbose > 0:
         print("downloading street network. This may take some time for bigger areas\n")
