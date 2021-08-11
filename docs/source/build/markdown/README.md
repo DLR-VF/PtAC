@@ -2,7 +2,7 @@
 sphinx-quickstart on Fri Jul  9 10:40:37 2021.
 You can adapt this file completely to your liking, but it should at least
 contain the root `toctree` directive. -->
-# PtAC 0.0.1 alpha
+# PtAC 0.0.3 alpha
 
 PtAC is a Python package that allows users to automatically compute public transport
 accessbilities for the Sustainable Development Goal 11.2. monitored by the proportion
@@ -24,7 +24,7 @@ and downloaded as csv.
 
 You can install PtAC with [pip](https://pypi.org/project/pip/):
 
-> pip install -i [https://test.pypi.org/simple/](https://test.pypi.org/simple/) ptac==0.0.1
+> pip install -i [https://test.pypi.org/simple/](https://test.pypi.org/simple/) ptac
 
 There are certain packages are required to be installed before using the package.
 

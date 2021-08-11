@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-PtAC 0.0.1 alpha
+PtAC 0.0.3 alpha
 ----------------
 
 PtAC is a Python package that allows users to automatically compute public transport
@@ -27,7 +27,7 @@ Installation
 ------------
 You can install PtAC with `pip <https://pypi.org/project/pip/>`_:
 
-   pip install -i https://test.pypi.org/simple/ ptac==0.0.1
+   pip install -i https://test.pypi.org/simple/ ptac
 
 There are certain packages are required to be installed before using the package.
 

@@ -49,7 +49,11 @@ Builds requests for the UrMoAC
 * **Return SDG 11.2.1 indicator**
 
 
-:rtype:Integer
+
+* **Return type**
+
+    Integer
+
 
 
 ### ptac.accessibility.distance_to_closest(start_geometries, destination_geometries, network_gdf=None, boundary_geometries=None, transport_system=None, maximum_distance=None, start_time=35580, number_of_threads=1, date=20200915, verbose=0)
@@ -193,8 +197,17 @@ Download street network from osm via osmnx
     * **verbose** (*Integer*) – Degree of verbosity (the higher, the more)
 
 
-:return Network graph
-:rtype networkx.Graph
+
+* **Returns**
+
+    Network graph
+
+
+
+* **Return type**
+
+    networkx.Graph
+
 
 # ptac.population module
 
