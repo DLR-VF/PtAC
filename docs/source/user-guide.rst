@@ -12,7 +12,9 @@ from population points to public transit stops based on minimum street network d
 
 In order to calculate SDG 11.2.1 indicator the necessary input sources are
 population information, public transit stops and city networks.
-Worldwide population information can be downloaded via WMS from Word Settlement Footprint (WSF, https://insert_link) and converted
+Worldwide population information can be downloaded via WMS from 
+`World Settlement Footprint <https://figshare.com/articles/dataset/World_Settlement_Footprint_WSF_2015/10048412>`_
+(WSF) and converted
 to points. Public transit stops can be obtained from
 OpenStreetMaps (OSM) (https://wiki.openstreetmap.org/wiki/Public_transport) or
 General Transit Feed Specification (GTFS) (https://gtfs.org/) feeds (have a look at the examples if you want to know how this
