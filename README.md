@@ -4,21 +4,21 @@ You can adapt this file completely to your liking, but it should at least
 contain the root `toctree` directive. -->
 # PtAC 0.0.3 alpha
 
-PtAC is a Python package that allows users to automatically compute public transport
-accessbilities for the Sustainable Development Goal 11.2. monitored by the proportion
-of the population that has convenient access to public transport.
-Users can calculate accessibilities from population points to public transit stops
-based on maximum distance or - if defined - two different transit systems:
-low- and high-capacity.
+PtAC is a Python package to automatically compute walking
+accessibilities from residential areas to public transport stops for the Sustainable Development Goal 11.2
+defined by the United Nations. The goal aims to measure and monitor the proportion
+of the population in a city that has convenient access to public transport
+(see https://sdgs.un.org/goals/goal11). With this library users can download and process OSM
+street networks and population information worldwide. Based on this it is possible to calculate accessibilities
+from population points to public transit stops based on minimum street network distance.
 
-In order to calculate SDG 11.2.1 indicator the necessary datasets are
-population points, public transit stops and city networks.
-You can generate population points by converting population rasters (.tif) with
-population module. Public transit stops can be obtained from
+In order to calculate SDG 11.2.1 indicator the necessary input sources are
+population information, public transit stops and city networks.
+Worldwide population information can be downloaded via WMS from Word Settlement Footprint (WSF, https://insert_link) and converted
+to points. Public transit stops can be obtained from
 [OpenStreetMaps (OSM)](https://wiki.openstreetmap.org/wiki/Public_transport) or
-[General Transit Feed Specification (GTFS)](https://gtfs.org/) feeds.
-If not available, the city network dataset is prepared within the module accessibility
-and downloaded as csv.
+[General Transit Feed Specification (GTFS)](https://gtfs.org/) feeds (have a look at the examples if you want to know how this
+works exactly). The street network can be downloaded and prepared for routing automatically within the library.
 
 
 ## Install and Usage
