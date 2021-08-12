@@ -22,7 +22,7 @@ Worldwide population information can be downloaded via WMS from
 (WSF) 
 [Word settlement footprint] https://insert_link and converted
 to points. Public transit stops can be obtained from
-`OpenStreetMaps (OSM) <https://wiki.openstreetmap.org/wiki/Public_transport>`_ or
+`OpenStreetMap <https://wiki.openstreetmap.org/wiki/Public_transport>`_ or
 `General Transit Feed Specification (GTFS)](https://gtfs.org/) feeds (have a look at the examples if you want to know how this
 works exactly). The street network can be downloaded and prepared for routing automatically within the library.
 
