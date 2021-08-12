@@ -24,7 +24,7 @@ works exactly). The street network can be downloaded and prepared for routing au
 
 
 
-(Windows) Installation
+Getting Started on a windows computer
 ------------
 In order to run the library on a windows computer you have to have a recent python version installed
 (we recommend using Anaconda distribution of [python 3.8] https://www.anaconda.com/products/individual ).
