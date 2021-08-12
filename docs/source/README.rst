@@ -6,21 +6,21 @@
 PtAC 0.0.3 alpha
 ----------------
 
-PtAC is a Python package that allows users to automatically compute public transport
-accessbilities for the Sustainable Development Goal 11.2. monitored by the proportion
-of the population that has convenient access to public transport.
-Users can calculate accessibilities from population points to public transit stops
-based on maximum distance or - if defined - two different transit systems:
-low- and high-capacity.
+PtAC is a Python package to automatically compute walking
+accessbilities from residential areas to public transport stops for the Sustainable Development Goal 11.2
+defined by the United Nations. The goal aims to measure and monitor the proportion
+of the population in a city that has convenient access to public transport
+(see [sdg 11.2.1] https://sdgs.un.org/goals/goal11). With this library users can download and process OSM
+street networks and population information worldwide. Based on this it is possible to calculate accessibilities
+from population points to public transit stops based on minimum street network distance.
 
-In order to calculate SDG 11.2.1 indicator the necessary datasets are
-population points, public transit stops and city networks.
-You can generate population points by converting population rasters (.tif) with
-population module. Public transit stops can be obtained from
-`OpenStreetMaps (OSM) <https://wiki.openstreetmap.org/wiki/Public_transport>`_ or
-`General Transit Feed Specification (GTFS) <https://gtfs.org/>`_ feeds.
-If not available, the city network dataset is prepared within the module accessibility
-and downloaded as csv.
+In order to calculate SDG 11.2.1 indicator the necessary input sources are
+population information, public transit stops and city networks.
+Worldwide population information can be downloaded via WMS from [Word settlement footprint] https://insert_link and converted
+to points. Public transit stops can be obtained from
+[OpenStreetMaps (OSM)](https://wiki.openstreetmap.org/wiki/Public_transport) or
+[General Transit Feed Specification (GTFS)](https://gtfs.org/) feeds (have a look at the examples if you want to know how this
+works exactly). The street network can be downloaded and prepared for routing automatically within the library.
 
 
 
@@ -29,7 +29,7 @@ Getting Started on a windows computer
 In order to run the library on a windows computer you have to have a recent python version installed
 (we recommend using Anaconda distribution of [python 3.8] https://www.anaconda.com/products/individual ).
 
-**1. open the Anaconda prompt (can be found on windows start menu) and navigate to home folder.**
+**1. open the Anaconda prompt (can be found on windows start menu) and navigate to home folder**
 
 .. code-block:: bash
 
@@ -38,17 +38,20 @@ In order to run the library on a windows computer you have to have a recent pyth
 **2. generate a project folder and navigate to this folder**
 
 .. code-block:: bash
+
    mkdir ptac
    cd ptac
 
 **3. now, we can create a python virtual environment via conda and**
 
 .. code-block:: bash
+
    conda create ptac python=3.8
 
 **4. activate the created environment**
 
 .. code-block:: bash
+
    conda activate ptac
 
 nNw, (ptac) should be displayed in brackets at the starting of the line.
@@ -56,6 +59,7 @@ nNw, (ptac) should be displayed in brackets at the starting of the line.
 **5. Install necessary libraries**
 
 .. code-block:: bash
+
    conda install osmnx, rasterio
 
 
