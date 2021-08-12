@@ -24,12 +24,12 @@ works exactly). The street network can be downloaded and prepared for routing au
 
 
 
-Getting Started on a windows computer
+Getting Started
 ------------
 In order to run the library on a windows computer you have to have a recent python version installed
 (we recommend using Anaconda distribution of [python 3.8] https://www.anaconda.com/products/individual ).
 
-**1. open the Anaconda prompt (can be found on windows start menu) and navigate to home folder**
+**1. open the Anaconda prompt (can be found on windows start menu) and navigate to your home folder**
 
 .. code-block:: bash
 
@@ -42,25 +42,27 @@ In order to run the library on a windows computer you have to have a recent pyth
    mkdir ptac
    cd ptac
 
-**3. now, we can create a python virtual environment via conda and**
+**3. now, we can create a python virtual environment via conda and activate the created environment**
 
 .. code-block:: bash
 
    conda create ptac python=3.8
-
-**4. activate the created environment**
-
-.. code-block:: bash
-
    conda activate ptac
 
-nNw, (ptac) should be displayed in brackets at the starting of the line.
+(ptac) should now be displayed in brackets at the starting of the line.
 
-**5. Install necessary libraries**
+**4. in the next step, install necessary dependency libraries**
 
 .. code-block:: bash
 
    conda install osmnx, rasterio
+
+**5. you are able to install ptac now by typing **
+
+.. code-block:: bash
+
+   pip install -i https://test.pypi.org/simple/ ptac
+
 
 
 In order to demonstrate `examples <https://github.com/DLR-VF/PtAC-examples>`_,
