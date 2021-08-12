@@ -23,7 +23,7 @@ and downloaded as csv.
 
 ## Install and Usage
 
-Please see the [user guide](docs/src/README.rst) for information about installation and usage.
+Please see the [user guide](docs/source/README.rst) for information about installation and usage.
 
 # Examples
 
