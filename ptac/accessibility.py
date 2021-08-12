@@ -161,8 +161,8 @@ def distance_to_closest(start_geometries,
     """
         Python wrapper for UrMoAC Accessibility Calculator
 
-        :param network_gdf network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
-        :type network_gdf Geopandas.GeoDataFrame::POLYGON
+        :param network_gdf: network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
+        :type network_gdf: Geopandas.GeoDataFrame::POLYGON
         :param start_geometries: Starting points for accessibility calculation
         :type start_geometries: Geopandas.GeoDataFrame::POLYGON
         :param destination_geometries: Starting point for accessibility calculation
@@ -170,7 +170,7 @@ def distance_to_closest(start_geometries,
         :param boundary_geometries:
         :type boundary_geometries: Geopandas.GeoDataFrame::POLYGON
         :param maximum_distance: Maximum distance to next pt station (optional)
-        rtype maximum_distance: Integer
+        :rtype maximum_distance: Integer
         :param start_time: time to start the routing (in seconds of the day)
         :type start_time: Integer
         :param transport_system:
@@ -181,7 +181,9 @@ def distance_to_closest(start_geometries,
         :type date:
         :param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
         :type verbose:
-        """
+        :return: A geo data frame consists of accessibility calculation outputs
+        :rtype: Geopandas.GeoDataFrame::POINT
+    """
 
     # todo: check if dataset is geographic coordinate system, if yes get epsg code of corresponding utm projection
 
@@ -265,11 +267,11 @@ def distance_to_closest(start_geometries,
 
 def subset_result(accessibility_output, transport_system=None, maximum_distance=None):
     """
-    :param accessibility_output:
-    :param transport_system:
-    :param maximum_distance:
-    :return:
-    :rtype:
+        :param accessibility_output:
+        :param transport_system:
+        :param maximum_distance:
+        :return accessibility_output:
+        :rtype: Geopandas.GeoDataFrame::POINT
     """
 
     if transport_system is not None and maximum_distance is not None:
@@ -291,11 +293,12 @@ def subset_result(accessibility_output, transport_system=None, maximum_distance=
 def calculate_sdg(df_pop_total, pop_accessible, population_column, verbose=0):
     """
 
-    :param df_pop_total:
-    :param pop_accessible:
-    :param population_column:
-    :return:
-    :rtype:
+        :param df_pop_total:
+        :param pop_accessible:
+        :param population_column:
+        :return SDG 11.2.1 indicator:
+        :rtype: Integer
+
     """
     total_population = df_pop_total[population_column].sum()
     # if input is a list of dataframes (low- and high-capacity transit systems):
@@ -329,3 +332,4 @@ def calculate_sdg(df_pop_total, pop_accessible, population_column, verbose=0):
         sdg = accessibility_output_population / total_population
         print("SDG 11.2.1 indicator is calculated")
     return sdg
+

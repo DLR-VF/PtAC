@@ -52,7 +52,7 @@ in the defined corresponding version in the following via pip:
 osmnx==1.1.1, networkx>=2.5, numpy==1.20.3,
 rasterio==1.2.4, affine==2.3.0, pandas==1.2.4
 
-In order to run [examples](https://github.com/DLR-VF/PtAC-examples),
+In order to demonstrate [examples](https://github.com/DLR-VF/PtAC-examples),
 jupyter notebook needs to be installed with the following command:
 
 > pip install notebook
@@ -61,8 +61,8 @@ For further details see [python packaging instructions](https://packaging.python
 
 # Usage
 
-To get started with PtAC, read the user reference and work through its
-[examples](https://github.com/DLR-VF/PtAC-examples).
+To get started with PtAC, read the user reference and see sample code and input data in
+[examples repository](https://github.com/DLR-VF/PtAC-examples).
 
 # Features
 
@@ -81,35 +81,7 @@ uses [UrMoAC](https://github.com/DLR-VF/UrMoAC) for accessibility computation.
 
 * Calculate Sustainable Development Goal 11.2 based on starting points with population information
 
-# User Reference
-
-
-* ptac.accessibility module
-
-
-* ptac.osm module
-
-
-* ptac.population module
-
-
-* ptac.util module
-
-
 # Support
 
 If you have a usage question please contact us via email ([simon.nieland@dlr.de](mailto:simon.nieland@dlr.de),
 [serra.yosmaoglu@dlr.de](mailto:serra.yosmaoglu@dlr.de)).
-
-# License
-
-# Indices
-
-
-* Index
-
-
-* Module Index
-
-
-* Search Page

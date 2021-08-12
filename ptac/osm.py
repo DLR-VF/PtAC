@@ -28,18 +28,19 @@ def get_parks(polygon):
 
 def get_network(polygon, network_type="walk", custom_filter=None, verbose=0):
     """
-    Download street network from osm via osmnx
+        Download street network from osm via osmnx
 
-    :param polygon boundary of the area from which to download the network (in WGS84)
-    :type polygon Geopandas.GeoDataFrame::POLYGON
-    :param network_type can be ..
-    :type network_type String
-    :param custom_filter: filter network (see osmnx for description)
-    :type custom_filter: String
-    :param verbose: Degree of verbosity (the higher, the more)
-    :type verbose: Integer
-    :return Network graph
-    :rtype networkx.Graph
+        :param polygon: boundary of the area from which to download the network (in WGS84)
+        :type polygon: Geopandas.GeoDataFrame::POLYGON
+        :param network_type: can be ..
+        :type network_type: String
+        :param custom_filter: filter network (see osmnx for description)
+        :type custom_filter: String
+        :param verbose: Degree of verbosity (the higher, the more)
+        :type verbose: Integer
+        :return: Network graph
+        :rtype: networkx.Graph
+
     """
     if verbose > 0:
         print("downloading street network. This may take some time for bigger areas\n")
