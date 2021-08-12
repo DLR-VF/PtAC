@@ -29,7 +29,7 @@ Getting Started on a windows computer
 In order to run the library on a windows computer you have to have a recent python version installed
 (we recommend using Anaconda distribution of [python 3.8] https://www.anaconda.com/products/individual ).
 
-**1. open the Anaconda prompt (can be found on windows start menu) and navigate to home folder.
+**1. open the Anaconda prompt (can be found on windows start menu) and navigate to home folder.**
 
 .. code-block:: bash
 
