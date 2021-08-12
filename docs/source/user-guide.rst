@@ -3,7 +3,7 @@ PtAC 0.0.3 alpha
 ----------------
 
 PtAC is a Python package to automatically compute walking
-accessbilities from residential areas to public transport stops for the Sustainable Development Goal 11.2
+accessibilities from residential areas to public transport stops for the Sustainable Development Goal 11.2
 defined by the United Nations. The goal aims to measure and monitor the proportion
 of the population in a city that has convenient access to public transport
 (see https://sdgs.un.org/goals/goal11). With this library users can download and process OSM
@@ -14,8 +14,8 @@ In order to calculate SDG 11.2.1 indicator the necessary input sources are
 population information, public transit stops and city networks.
 Worldwide population information can be downloaded via WMS from Word Settlement Footprint (WSF, https://insert_link) and converted
 to points. Public transit stops can be obtained from
-OpenStreetMaps (OSM)(https://wiki.openstreetmap.org/wiki/Public_transport) or
-General Transit Feed Specification (GTFS)(https://gtfs.org/) feeds (have a look at the examples if you want to know how this
+OpenStreetMaps (OSM) (https://wiki.openstreetmap.org/wiki/Public_transport) or
+General Transit Feed Specification (GTFS) (https://gtfs.org/) feeds (have a look at the examples if you want to know how this
 works exactly). The street network can be downloaded and prepared for routing automatically within the library.
 
 
