@@ -16,8 +16,8 @@ Worldwide population information can be downloaded via WMS from
 `World Settlement Footprint <https://figshare.com/articles/dataset/World_Settlement_Footprint_WSF_2015/10048412>`_
 (WSF) and converted
 to points. Public transit stops can be obtained from
-OpenStreetMaps (OSM) (https://wiki.openstreetmap.org/wiki/Public_transport) or
-General Transit Feed Specification (GTFS) (https://gtfs.org/) feeds (have a look at the examples if you want to know how this
+`OpenStreetMaps <https://wiki.openstreetmap.org/wiki/Public_transport>`_ (OSM) or
+`General Transit Feed Specification <https://gtfs.org/>`_ (GTFS) feeds (have a look at the examples if you want to know how this
 works exactly). The street network can be downloaded and prepared for routing automatically within the library.
 
 
@@ -25,7 +25,7 @@ works exactly). The street network can be downloaded and prepared for routing au
 Getting Started
 ------------
 In order to run the library on a windows computer you have to have a recent python version installed
-(we recommend using Anaconda distribution of [python 3.8] https://www.anaconda.com/products/individual ).
+(we recommend using `Anaconda <https://www.anaconda.com/products/individual)>`_ distribution of [python 3.8]).
 
 **1. open the Anaconda prompt (can be found on windows start menu) and navigate to your home folder**
 
