@@ -83,7 +83,7 @@ PtAC is built on top of osmnx, geopandas, networkx and
 uses `UrMoAC <https://github.com/DLR-VF/UrMoAC>`_ for accessibility computation.
 
 * Download and prepare road networks from OpenStreetMap for accessibility calculation
-* Calculate accessbilities from origins to the next destination
+* Calculate accessibilities from origins to the next destination
 * Generate a population point dataset from population raster dataset
 * Calculate Sustainable Development Goal 11.2 based on starting points with population information
 
