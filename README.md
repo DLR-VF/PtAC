@@ -41,7 +41,7 @@ uses [UrMoAC](https://github.com/DLR-VF/UrMoAC) for accessibility computation.
 * Download and prepare road networks from OpenStreetMap for accessibility calculation
 
 
-* Calculate accessbilities from origins to the next destination
+* Calculate accessibilities from origins to the next destination
 
 
 * Generate a population point dataset from population raster dataset
