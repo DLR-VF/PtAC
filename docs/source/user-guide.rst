@@ -44,7 +44,7 @@ In order to run the library on a windows computer you have to have a recent pyth
 
 .. code-block:: bash
 
-   conda create ptac python=3.8
+   conda create -n ptac python=3.8
    conda activate ptac
 
 (ptac) should now be displayed in brackets at the starting of the line.
