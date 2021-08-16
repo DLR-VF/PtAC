@@ -125,7 +125,7 @@ def build_request(epsg, number_of_threads,
 
     """
     current_path = os.path.dirname(os.path.abspath(__file__))
-    urmo_ac_request = 'java -jar -Xmx12g {current_path}/UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
+    urmo_ac_request = 'java -jar -Xmx12g {current_path}/urmoacjar/UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
                       '--from file;"{home_directory}/.ptac/origins.csv" ' \
                       '--shortest ' \
                       '--to file;"{home_directory}/.ptac/destinations.csv" ' \

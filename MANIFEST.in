@@ -1,1 +1,1 @@
-recursive-include urmoacjar *.jar
+recursive-include ptac/urmoacjar *.jar

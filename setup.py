@@ -24,8 +24,7 @@ setup(
             #'License :: OSI Approved :: MIT License'
             ],
         licence='',
-        packages=find_packages(exclude=['test']), #['ptac'], #
-        install_requires=[], 
         include_package_data=True,
+        packages=find_packages(exclude=['test']), #['ptac'],
+        install_requires=[],
         zip_safe=False)
-        
