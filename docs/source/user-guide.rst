@@ -86,10 +86,7 @@ In order to try out the `examples <https://github.com/DLR-VF/PtAC-examples>`_,
 .. code-block:: bash 
 
    conda install -c conda-forge notebook
-  
 
-For further details see `python packaging instructions
-<https://packaging.python.org/tutorials/installing-packages/>`_.
 
 Usage
 -----
