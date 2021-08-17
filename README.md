@@ -23,7 +23,7 @@ to points. Public transit stops can be obtained from
 works exactly). The street network can be downloaded and prepared for routing automatically within the library.
 
 
-## Install and Usage
+# Install and Usage
 
 Please see the [user guide](docs/source/user-guide.rst) for information about installation and usage.
 
@@ -56,3 +56,13 @@ uses [UrMoAC](https://github.com/DLR-VF/UrMoAC) for accessibility computation.
 
 If you have a usage question please contact us via email ([simon.nieland@dlr.de](mailto:simon.nieland@dlr.de),
 [serra.yosmaoglu@dlr.de](mailto:serra.yosmaoglu@dlr.de)).
+
+# Disclaimer
+
+* This is a test version only and must not be given to any third party.
+
+* We have chosen some links to external pages as we think they contain useful information. But we are not responsible for the contents of the pages we link to.
+
+* The software is provided "AS IS".
+
+* We tested the software and it worked as expected. Nonetheless, we cannot guarantee it will work as you expect.
