@@ -57,23 +57,12 @@ uses [UrMoAC](https://github.com/DLR-VF/UrMoAC) for accessibility computation.
 
 * Mirko Goletz
 * [Daniel Krajzewicz](https://github.com/dkrajzew)
++ [Andreas Radke](https://github.com/orgs/DLR-VF/people/schakalakka) 
 
 # Support
 
 If you have a usage question, please contact us via email ([simon.nieland@dlr.de](mailto:simon.nieland@dlr.de),
 [serra.yosmaoglu@dlr.de](mailto:serra.yosmaoglu@dlr.de)).
-
-# References
-
-* Palacios-Lopez, D., Bachofer, F., Esch, T., Heldens, W., Hirner, A., Marconcini, M., ... & Reinartz, P. (2019). 
-  New perspectives for mapping global population distribution using world settlement footprint products. Sustainability, 11(21), 6056.
-
-* Palacios-Lopez, D., Bachofer, F., Esch, T., Marconcini, M., MacManus, K., Sorichetta, A., ... & Reinartz, P. (2021). 
-  High-Resolution Gridded Population Datasets: Exploring the Capabilities of the World Settlement Footprint 2019 
-  Imperviousness Layer for the African Continent. Remote Sensing, 13(6), 1142.
-
-* Marconcini, M., Metz-Marconcini, A., Üreyen, S., Palacios-Lopez, D., Hanke, W., Bachofer, F., ... & Strano, E. (2020). 
-  Outlining where humans live, the World Settlement Footprint 2015. Scientific Data, 7(1), 1-14.
 
 # License Information  
 
@@ -90,3 +79,14 @@ PtAC is licensed under the Eclipse Public License 2.0. See the [LICENSE.txt](LIC
 
 * We tested the software, and it worked as expected. Nonetheless, we cannot guarantee it will work as you expect.
 
+# References
+
+* Palacios-Lopez, D., Bachofer, F., Esch, T., Heldens, W., Hirner, A., Marconcini, M., ... & Reinartz, P. (2019). 
+  New perspectives for mapping global population distribution using world settlement footprint products. Sustainability, 11(21), 6056.
+
+* Palacios-Lopez, D., Bachofer, F., Esch, T., Marconcini, M., MacManus, K., Sorichetta, A., ... & Reinartz, P. (2021). 
+  High-Resolution Gridded Population Datasets: Exploring the Capabilities of the World Settlement Footprint 2019 
+  Imperviousness Layer for the African Continent. Remote Sensing, 13(6), 1142.
+
+* Marconcini, M., Metz-Marconcini, A., Üreyen, S., Palacios-Lopez, D., Hanke, W., Bachofer, F., ... & Strano, E. (2020). 
+  Outlining where humans live, the World Settlement Footprint 2015. Scientific Data, 7(1), 1-14.
