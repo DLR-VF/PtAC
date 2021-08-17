@@ -47,20 +47,21 @@ uses [UrMoAC](https://github.com/DLR-VF/UrMoAC) for accessibility computation.
 
 
 * Calculate Sustainable Development Goal 11.2 based on starting points with population information
-
+  
 # Authors
 
 * [Simon Nieland](https://github.com/SimonNieland) 
 * [Serra Yosmaoglu](https://github.com/serrayos)
 
+# Contributors
+
+* Mirko Goletz
+* [Daniel Krajzewicz](https://github.com/dkrajzew)
+
 # Support
 
 If you have a usage question please contact us via email ([simon.nieland@dlr.de](mailto:simon.nieland@dlr.de),
 [serra.yosmaoglu@dlr.de](mailto:serra.yosmaoglu@dlr.de)).
-
-# License Information  
-
-PtAC is licensed under the Eclipse Public License 2.0. See the [LICENSE](LICENSE.txt) file for more information.
 
 # References
 
@@ -73,6 +74,10 @@ PtAC is licensed under the Eclipse Public License 2.0. See the [LICENSE](LICENSE
 
 * Marconcini, M., Metz-Marconcini, A., Üreyen, S., Palacios-Lopez, D., Hanke, W., Bachofer, F., ... & Strano, E. (2020). 
   Outlining where humans live, the World Settlement Footprint 2015. Scientific Data, 7(1), 1-14.
+
+# License Information  
+
+PtAC is licensed under the Eclipse Public License 2.0. See the [LICENSE](LICENSE.txt) file for more information.
 
 # Disclaimer
 
