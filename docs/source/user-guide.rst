@@ -81,10 +81,12 @@ and then import the accessibility module of ptac
 if no error occurs the installation has been successful.
 
 In order to try out the `examples <https://github.com/DLR-VF/PtAC-examples>`_,
-jupyter notebook needs to be installed with the following command:
+`jupyter notebook <https://jupyter-notebook.readthedocs.io/en/stable/index.html>`_ needs to be installed with the following command:
 
-.. code-block:: bash
-   pip install notebook
+.. code-block:: bash 
+
+   conda install -c conda-forge notebook
+  
 
 For further details see `python packaging instructions
 <https://packaging.python.org/tutorials/installing-packages/>`_.
