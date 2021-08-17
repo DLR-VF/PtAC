@@ -1,3 +1,1 @@
-include LICENSE.txt
-include requirements.txt
 recursive-include ptac/urmoacjar *.jar
