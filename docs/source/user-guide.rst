@@ -51,9 +51,8 @@ In order to run the library on a windows computer you have to have a recent Pyth
    Downloading https://test-files.pythonhosted.org/packages/32/b3/a3b687fb181cc584f4308655a895299494126474ad2cb4470fa67f8e3b3a/ptac-0.0.4-py3-none-any.whl (13 kB)
    Installing collected packages: ptac
    Successfully installed ptac-0.0.4
-     
- 
- ptac should be successfully installed, now. To be sure weather it works you might start python
+
+ptac should be successfully installed, now. To be sure weather it works you might start python
  
  
  .. code-block:: bash
