@@ -23,7 +23,7 @@ to points. Public transit stops can be obtained from
 works exactly). The street network can be downloaded and prepared for routing automatically within the library.
 
 
-## Install and Usage
+# Install and Usage
 
 Please see the [user guide](docs/source/user-guide.rst) for information about installation and usage.
 
