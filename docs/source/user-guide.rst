@@ -35,7 +35,7 @@ In order to run the library on a windows computer you have to have a recent Pyth
 
 .. code-block:: bash
 
-   conda install osmnx, rasterio
+   conda install -c conda-forge osmnx, rasterio
 
 **5. you are able to install ptac now by typing**
 
