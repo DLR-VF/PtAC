@@ -56,8 +56,8 @@ uses [UrMoAC](https://github.com/DLR-VF/UrMoAC) for accessibility computation.
 # Contributors
 
 * Mirko Goletz
-* [Daniel Krajzewicz](https://github.com/dkrajzew)
-+ [Andreas Radke](https://github.com/orgs/DLR-VF/people/schakalakka) 
+* [Daniel Krajzewicz](https://github.com/dkrajzew) 
+* [Andreas Radke](https://github.com/orgs/DLR-VF/people/schakalakka) 
 
 # Support
 
