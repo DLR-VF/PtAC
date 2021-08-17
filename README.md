@@ -22,8 +22,7 @@ to points. Public transit stops can be obtained from
 [General Transit Feed Specification (GTFS)](https://gtfs.org/) feeds (have a look at the examples if you want to know how this
 works exactly). The street network can be downloaded and prepared for routing automatically within the library.
 
-
-# Install and Usage
+# Installation and Usage
 
 Please see the [user guide](docs/source/user-guide.rst) for information about installation and usage.
 
@@ -59,12 +58,30 @@ uses [UrMoAC](https://github.com/DLR-VF/UrMoAC) for accessibility computation.
 If you have a usage question please contact us via email ([simon.nieland@dlr.de](mailto:simon.nieland@dlr.de),
 [serra.yosmaoglu@dlr.de](mailto:serra.yosmaoglu@dlr.de)).
 
+# License Information  
+
+PtAC is licensed under the Eclipse Public License 2.0. See the [LICENSE](LICENSE.txt) file for more information.
+
+# References
+
+* Palacios-Lopez, D., Bachofer, F., Esch, T., Heldens, W., Hirner, A., Marconcini, M., ... & Reinartz, P. (2019). 
+  New perspectives for mapping global population distribution using world settlement footprint products. Sustainability, 11(21), 6056.
+
+* Palacios-Lopez, D., Bachofer, F., Esch, T., Marconcini, M., MacManus, K., Sorichetta, A., ... & Reinartz, P. (2021). 
+  High-Resolution Gridded Population Datasets: Exploring the Capabilities of the World Settlement Footprint 2019 
+  Imperviousness Layer for the African Continent. Remote Sensing, 13(6), 1142.
+
+* Marconcini, M., Metz-Marconcini, A., Üreyen, S., Palacios-Lopez, D., Hanke, W., Bachofer, F., ... & Strano, E. (2020). 
+  Outlining where humans live, the World Settlement Footprint 2015. Scientific Data, 7(1), 1-14.
+
 # Disclaimer
 
 * This is a test version only and must not be given to any third party.
 
-* We have chosen some links to external pages as we think they contain useful information. But we are not responsible for the contents of the pages we link to.
+* We have chosen some links to external pages as we think they contain useful information. 
+  However, we are not responsible for the contents of the pages we link to.
 
 * The software is provided "AS IS".
 
-* We tested the software and it worked as expected. Nonetheless, we cannot guarantee it will work as you expect.
+* We tested the software, and it worked as expected. Nonetheless, we cannot guarantee it will work as you expect.
+
