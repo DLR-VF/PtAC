@@ -26,5 +26,5 @@ setup(
         licence="Eclipse Public License 2.0 (EPL-2.0)",
         include_package_data=True,
         packages=find_packages(exclude=["test"]),
-        install_requires=["osmnx", "rasterio"],
+        install_requires=[],
         zip_safe=False)
