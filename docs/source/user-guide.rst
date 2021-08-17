@@ -1,26 +1,8 @@
 
-PtAC 0.0.3 alpha
+PtAC User Guide
 ----------------
 
-PtAC is a Python package to automatically compute walking
-accessibilities from residential areas to public transport stops for the Sustainable Development Goal 11.2
-defined by the United Nations. The goal aims to measure and monitor the proportion
-of the population in a city that has convenient access to public transport
-(see https://sdgs.un.org/goals/goal11). With this library users can download and process `OpenStreetMaps <https://www.openstreetmap.org>`_ (OSM)
-street networks and population information worldwide. Based on this it is possible to calculate accessibilities
-from population points to public transit stops based on minimum street network distance.
-
-In order to calculate SDG 11.2.1 indicator the necessary input sources are
-population information, public transit stops and city networks.
-Worldwide population information can be downloaded via WMS from 
-`World Settlement Footprint <https://www.nature.com/articles/s41597-020-00580-5>`_
-(WSF) and converted
-to points. Public transit stops can be obtained from
-`OpenStreetMaps <https://wiki.openstreetmap.org/wiki/Public_transport>`_ (OSM) or
-`General Transit Feed Specification <https://gtfs.org/>`_ (GTFS) feeds (have a look at the examples if you want to know how this
-works exactly). The street network can be downloaded and prepared for routing automatically within the library.
-
-
+Here you can find information about how to install and use PtAC.
 
 Getting Started
 ------------
@@ -85,7 +67,7 @@ uses `UrMoAC <https://github.com/DLR-VF/UrMoAC>`_ for accessibility computation.
 * Download and prepare road networks from OpenStreetMap for accessibility calculation
 * Calculate accessibilities from origins to the next destination
 * Generate a population point dataset from population raster dataset
-* Calculate Sustainable Development Goal 11.2 based on starting points with population information
+* Calculate Sustainable Development Goal 11.2.1 based on starting points with population information
 
 Support
 --------
