@@ -42,7 +42,9 @@ In order to run the library on a windows computer you have to have a recent Pyth
 .. code-block:: bash
 
    pip install -i https://test.pypi.org/simple/ ptac
-   
+ 
+should look like this:
+
 .. code-block:: bash
 
    (ptac) C:\>pip install -i https://test.pypi.org/simple/ ptac
@@ -55,23 +57,26 @@ In order to run the library on a windows computer you have to have a recent Pyth
 ptac should be successfully installed, now. To be sure weather it works you might start python
  
  
- .. code-block:: bash
-
+.. code-block:: bash
+   
    python
    
- 
- .. code-block:: bash
+.. code-block:: bash
 
    (ptac) C:\>python
    Python 3.8.10 | packaged by conda-forge | (default, May 11 2021, 06:25:23) [MSC v.1916 64 bit (AMD64)] on win32
    Type "help", "copyright", "credits" or "license" for more information.
    >>>
    
- and then import the accessibility module of ptac
+and then import the accessibility module of ptac
  
- .. code-block:: bash
+.. code-block:: bash
    
-   import ptac.accessibility as accessibility
+   (ptac) C:\>python
+   Python 3.8.10 | packaged by conda-forge | (default, May 11 2021, 06:25:23) [MSC v.1916 64 bit (AMD64)] on win32
+   Type "help", "copyright", "credits" or "license" for more information.
+   >>> import ptac.accessibility as accessibility
+   >>>
    
 if no error occurs the installation has been successful.
 
