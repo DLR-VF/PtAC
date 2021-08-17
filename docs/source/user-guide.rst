@@ -42,8 +42,39 @@ In order to run the library on a windows computer you have to have a recent Pyth
 .. code-block:: bash
 
    pip install -i https://test.pypi.org/simple/ ptac
+   
+.. code-block:: bash
 
+   (ptac) C:\>pip install -i https://test.pypi.org/simple/ ptac
+   Looking in indexes: https://test.pypi.org/simple/
+   Collecting ptac
+   Downloading https://test-files.pythonhosted.org/packages/32/b3/a3b687fb181cc584f4308655a895299494126474ad2cb4470fa67f8e3b3a/ptac-0.0.4-py3-none-any.whl (13 kB)
+   Installing collected packages: ptac
+   Successfully installed ptac-0.0.4
+     
+ 
+ ptac should be successfully installed, now. To be sure weather it works you might start python
+ 
+ 
+ .. code-block:: bash
 
+   python
+   
+ 
+ .. code-block:: bash
+
+   (ptac) C:\>python
+   Python 3.8.10 | packaged by conda-forge | (default, May 11 2021, 06:25:23) [MSC v.1916 64 bit (AMD64)] on win32
+   Type "help", "copyright", "credits" or "license" for more information.
+   >>>
+   
+ and then import the accessibility module of ptac
+ 
+ .. code-block:: bash
+   
+   import ptac.accessibility as accessibility
+   
+if no error occurs the installation has been successful.
 
 In order to try out the `examples <https://github.com/DLR-VF/PtAC-examples>`_,
 jupyter notebook needs to be installed with the following command:
