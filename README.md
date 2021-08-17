@@ -2,7 +2,7 @@
 sphinx-quickstart on Fri Jul  9 10:40:37 2021.
 You can adapt this file completely to your liking, but it should at least
 contain the root `toctree` directive. -->
-# PtAC 0.0.3 alpha
+# PtAC 0.0.4 alpha
 
 PtAC is a Python package to automatically compute walking
 accessibilities from residential areas to public transport stops for the Sustainable Development Goal 11.2
@@ -48,9 +48,11 @@ uses [UrMoAC](https://github.com/DLR-VF/UrMoAC) for accessibility computation.
 
 
 * Calculate Sustainable Development Goal 11.2 based on starting points with population information
+
 # Authors
 
-[Simon Nieland](https://github.com/SimonNieland), [Serra Yosmaoglu](https://github.com/serrayos).
+* [Simon Nieland](https://github.com/SimonNieland) 
+* [Serra Yosmaoglu](https://github.com/serrayos)
 
 # Support
 
