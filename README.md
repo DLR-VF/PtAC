@@ -81,6 +81,12 @@ PtAC is licensed under the Eclipse Public License 2.0. See the [LICENSE.txt](LIC
 
 # References
 
+* Boeing, G. (2017). OSMnx: New Methods for Acquiring, Constructing, Analyzing, and Visualizing Complex Street Networks. 
+  Computers, Environment and Urban Systems 65, 126-139. doi:10.1016/j.compenvurbsys.2017.05.004
+
+* Krajzewicz, D., Heinrichs, D. & Cyganski, R. (2017). Intermodal Contour Accessibility Measures Computation Using the 'UrMo Accessibility Computer'. 
+  International Journal On Advances in Systems and Measurements, 10 (3&4), Seiten 111-123. IARIA.
+
 * Palacios-Lopez, D., Bachofer, F., Esch, T., Heldens, W., Hirner, A., Marconcini, M., ... & Reinartz, P. (2019). 
   New perspectives for mapping global population distribution using world settlement footprint products. Sustainability, 11(21), 6056.
 
