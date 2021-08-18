@@ -22,14 +22,14 @@ In order to run the library on a windows computer you have to have a recent Pyth
    mkdir ptac
    cd ptac
 
-**3. now, we can create a python virtual environment and install necessary dependencies 
-with `conda <https://docs.conda.io/en/latest/>`_ and activate the created environment**
+**3. now, we can create a python virtual environment and install necessary dependencies
+with `conda <https://docs.conda.io/en/latest/>`_
+and activate the created environment**
 
 .. code-block:: bash
 
    conda config --prepend channels conda-forge
    conda create -n ptac --strict-channel-priority osmnx python=3.8
-
 
 **4. in the next step, activate the created environment**
 
