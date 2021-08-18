@@ -22,20 +22,22 @@ In order to run the library on a windows computer you have to have a recent Pyth
    mkdir ptac
    cd ptac
 
-**3. now, we can create a python virtual environment via conda and activate the created environment**
+**3. now, we can create a python virtual environment and install necessary dependencies 
+with `conda <https://docs.conda.io/en/latest/>`_ and activate the created environment**
 
 .. code-block:: bash
 
-   conda create -n ptac python=3.8
+   conda config --prepend channels conda-forge
+   conda create -n ptac --strict-channel-priority osmnx python=3.8
+
+
+**4. in the next step, activate the created environment**
+
+.. code-block:: bash
+
    conda activate ptac
 
 (ptac) should now be displayed in brackets at the starting of the line.
-
-**4. in the next step, install necessary dependency libraries**
-
-.. code-block:: bash
-
-   conda install -c conda-forge osmnx, rasterio
 
 **5. you are able to install ptac now by typing**
 
@@ -50,9 +52,9 @@ should look like this:
    (ptac) C:\>pip install -i https://test.pypi.org/simple/ ptac
    Looking in indexes: https://test.pypi.org/simple/
    Collecting ptac
-   Downloading https://test-files.pythonhosted.org/packages/32/b3/a3b687fb181cc584f4308655a895299494126474ad2cb4470fa67f8e3b3a/ptac-0.0.4-py3-none-any.whl (13 kB)
+   Downloading https://test-files.pythonhosted.org/packages/32/b3/a3b687fb181cc584f4308655a895299494126474ad2cb4470fa67f8e3b3a/ptac-0.0.5-py3-none-any.whl (13 kB)
    Installing collected packages: ptac
-   Successfully installed ptac-0.0.4
+   Successfully installed ptac-0.0.5
 
 ptac should be successfully installed, now. To be sure weather it works you might start python
  
