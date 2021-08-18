@@ -24,7 +24,8 @@ works exactly). The street network can be downloaded and prepared for routing au
 
 # Installation and Usage
 
-Please see the [user guide](docs/source/user-guide.rst) for information about installation and usage.
+Please see the [user guide](https://github.com/DLR-VF/PtAC/blob/master/docs/source/user-guide.rst) 
+for information about installation and usage.
 
 # Examples
 
@@ -66,7 +67,7 @@ If you have a usage question, please contact us via email ([simon.nieland@dlr.de
 
 # License Information  
 
-PtAC is licensed under the Eclipse Public License 2.0. See the [LICENSE.txt](LICENSE.txt) file for more information.
+PtAC is licensed under the Eclipse Public License 2.0. See the [LICENSE.txt](https://github.com/DLR-VF/PtAC/blob/master/LICENSE.txt) file for more information.
 
 # Disclaimer
 
