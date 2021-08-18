@@ -24,7 +24,7 @@ or `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_, which is a lig
    cd ptac
 
 **3. now, we can create a python virtual environment and install necessary dependencies
-with `conda <https://docs.conda.io/en/latest/>`_ and activate the created environment**
+with** `conda <https://docs.conda.io/en/latest/>`_ **and activate the created environment**
 
 .. code-block:: bash
 
