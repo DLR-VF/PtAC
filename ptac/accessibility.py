@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # coding:utf-8
 
-"""Prepare dataset for accessibility computation and computes walking accessibilities from residential areas to public transport stops """
+"""Prepares dataset for accessibility computation and computes walking accessibilities from residential areas to public transport stops."""
+
 """
 @name : accessibility.py
 @author : Simon Nieland, Serra Yosmaoglu
