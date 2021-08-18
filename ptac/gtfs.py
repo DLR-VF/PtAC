@@ -1,4 +1,12 @@
-#partly adapted from partridge (https://github.com/remix/partridge)
+#!/usr/bin/env python3
+# coding:utf-8
+"""
+@name : population.py
+@author : Simon Nieland, Serra Yosmaoglu
+@date : 26.07.2021
+@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt & 2017, Remix (https://github.com/remix/partridge)
+"""
+
 import pandas as pd
 import os
 import numpy as np
@@ -10,6 +18,7 @@ from collections import defaultdict
 from datetime import datetime
 import ptac.settings as settings
 
+#partly adapted from partridge (https://github.com/remix/partridge)
 
 DATE_FORMAT = "%Y%m%d"
 

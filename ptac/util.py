@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 # coding:utf-8
+
+"""Converts geometries between latitude/longitude & UTM coordinates"""
+
 """
 @name : util.py
 Copyright (c) 2016–2021 Geoff Boeing https://geoffboeing.com/

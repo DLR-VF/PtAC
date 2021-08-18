@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 # coding:utf-8
+
+"""Defines street types"""
+
 """
 @name : settings.py
 @author : Simon Nieland, Serra Yosmaoglu

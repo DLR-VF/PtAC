@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 # coding:utf-8
+
+"""Downloads pois, footprints and graphs from OSM"""
+
 """
 @name : osm.py
 @author : Simon Nieland, Serra Yosmaoglu

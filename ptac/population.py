@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 # coding:utf-8
+
+"""Converts population raster dataset to population points"""
+
 """
 @name : population.py
 @author : Simon Nieland, Serra Yosmaoglu
