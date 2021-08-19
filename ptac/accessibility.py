@@ -17,6 +17,7 @@ import ptac.osm as osm
 import ptac.settings as settings
 import ptac.util as util
 import timeit
+import datetime
 from pathlib import Path
 import pandas as pd
 import glob
@@ -112,8 +113,7 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
     # return network_gdf
 
 
-def build_request(epsg, number_of_threads,
-                  date, start_time):
+def build_request(epsg, number_of_threads, date, start_time):
     """
         Builds requests for the UrMoAC
 
@@ -128,14 +128,14 @@ def build_request(epsg, number_of_threads,
 
     """
     current_path = os.path.dirname(os.path.abspath(__file__))
-    urmo_ac_request = 'java -jar -Xmx12g {current_path}/urmoacjar/UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
-                      '--from file;"{home_directory}/.ptac/origins.csv" ' \
+    urmo_ac_request = 'java -jar -Xmx12g {current_path}//urmoacjar//UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
+                      '--from file;"{home_directory}\.ptac\origins.csv" ' \
                       '--shortest ' \
-                      '--to file;"{home_directory}/.ptac/destinations.csv" ' \
+                      '--to file;"{home_directory}\.ptac\destinations.csv" ' \
                       '--mode foot ' \
                       '--time {start_time} ' \
                       '--epsg {epsg} ' \
-                      '--ext-nm-output "file;{home_directory}/.ptac/sdg_output.csv" ' \
+                      '--ext-nm-output "file;{home_directory}\.ptac\{start_time}_sdg_output.csv" ' \
                       '--verbose ' \
                       '--threads {number_of_threads} ' \
                       '--dropprevious ' \
@@ -245,7 +245,7 @@ def distance_to_closest(start_geometries,
                    "avg_co2", "avg_interchanges", "avg_access", "avg_egress", "avg_waiting_time",
                    "avg_init_waiting_time", "avg_pt_tt", "avg_pt_interchange_time", "modes"]
 
-    output = pd.read_csv(f"{home_directory}/.ptac/sdg_output.csv", sep=";", header=0, names=header_list)
+    output = pd.read_csv(f"{home_directory}\.ptac\{start_time}_sdg_output.csv", sep=";", header=0, names=header_list)
 
     # only use distance on road network (eliminate access and egress)
     output['distance_pt'] = output["avg_distance"] - output["avg_access"] - output["avg_egress"]
