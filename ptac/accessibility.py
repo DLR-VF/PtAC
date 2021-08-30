@@ -22,12 +22,15 @@ from pathlib import Path
 import pandas as pd
 import glob
 
+
 global home_directory
 home_directory = Path.home()
 
+global process_id
+process_id = os.getpid()
 
 def clear_directory(folder=f"{home_directory}/.ptac"):
-    files = glob.glob(f"{folder}//*.csv")
+    files = glob.glob(f"{folder}/{process_id}_*.csv")
     for f in files:
         try:
             os.remove(f)
@@ -50,9 +53,9 @@ def prepare_origins_and_destinations(dest_gdf, od="origin"):
     dest_gdf = dest_gdf[["x", "y"]]
     if od == "origin":
         dest_gdf = dest_gdf.dropna()
-        dest_gdf.to_csv(f"{home_directory}/.ptac/origins.csv", sep=";", header=False)
+        dest_gdf.to_csv(f"{home_directory}/.ptac/{process_id}_origins.csv", sep=";", header=False)
     if od == "destination":
-        dest_gdf.to_csv(f"{home_directory}/.ptac/destinations.csv", sep=";", header=False)
+        dest_gdf.to_csv(f"{home_directory}/.ptac/{process_id}_destinations.csv", sep=";", header=False)
 
 
 def prepare_network(network_gdf=None, boundary=None, verbose=0):
@@ -109,7 +112,7 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
                                "geometry"]]
     network_gdf = pd.concat([network_gdf, network_gdf.geometry.bounds], axis=1)
     del network_gdf["geometry"]
-    network_gdf.to_csv(f"{home_directory}/.ptac/network.csv", sep=";", header=False, index=False)
+    network_gdf.to_csv(f"{home_directory}/.ptac/{process_id}_network.csv", sep=";", header=False, index=False)
     # return network_gdf
 
 
@@ -128,26 +131,28 @@ def build_request(epsg, number_of_threads, date, start_time):
 
     """
     current_path = os.path.dirname(os.path.abspath(__file__))
-    urmo_ac_request = 'java -jar -Xmx12g {current_path}//urmoacjar//UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
-                      '--from file;"{home_directory}\.ptac\origins.csv" ' \
+    urmo_ac_request = 'java -jar -Xmx12g {current_path}/urmoacjar/UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
+                      '--from file;"{home_directory}/.ptac/{process_id}_origins.csv" ' \
                       '--shortest ' \
-                      '--to file;"{home_directory}\.ptac\destinations.csv" ' \
+                      '--to file;"{home_directory}/.ptac/{process_id}_destinations.csv" ' \
                       '--mode foot ' \
                       '--time {start_time} ' \
                       '--epsg {epsg} ' \
-                      '--ext-nm-output "file;{home_directory}\.ptac\{start_time}_sdg_output.csv" ' \
+                      '--ext-nm-output "file;{home_directory}/.ptac/{process_id}_sdg_output.csv" ' \
                       '--verbose ' \
                       '--threads {number_of_threads} ' \
                       '--dropprevious ' \
                       '--date {date} ' \
-                      '--net "file;{home_directory}/.ptac/network.csv"'.format(
+                      '--net "file;{home_directory}/.ptac/{process_id}_network.csv"'.format(
         home_directory=home_directory,
         current_path=current_path,
         epsg=epsg,
         number_of_threads=number_of_threads,
         date=date,
         start_time=int(start_time),
+        process_id=process_id
     )
+    print(urmo_ac_request)
     return urmo_ac_request
 
 
@@ -245,7 +250,7 @@ def distance_to_closest(start_geometries,
                    "avg_co2", "avg_interchanges", "avg_access", "avg_egress", "avg_waiting_time",
                    "avg_init_waiting_time", "avg_pt_tt", "avg_pt_interchange_time", "modes"]
 
-    output = pd.read_csv(f"{home_directory}\.ptac\{start_time}_sdg_output.csv", sep=";", header=0, names=header_list)
+    output = pd.read_csv(f"{home_directory}/.ptac/{process_id}_sdg_output.csv", sep=";", header=0, names=header_list)
 
     # only use distance on road network (eliminate access and egress)
     output['distance_pt'] = output["avg_distance"] - output["avg_access"] - output["avg_egress"]
