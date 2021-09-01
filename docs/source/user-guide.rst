@@ -10,6 +10,9 @@ In order to run the library on a windows computer you have to have a recent Pyth
 (we recommend using Python `Anaconda <https://www.anaconda.com/products/individual>`_
 or `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_, which is a lightweight version of the conda environment).
 
+Please also ensure that a `Java Development Kit <https://java.com/de/>`_ (preferably version 1.8) is installed 
+and that the folder containing the java.exe file is in your path environment variable.
+
 **1. open the Anaconda prompt (can be found on windows start menu) and navigate to your home folder**
 
 .. code-block:: bash
