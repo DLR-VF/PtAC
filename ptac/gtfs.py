@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding:utf-8
 """
-@name : population.py
+@name : gtfs.py
 @author : Simon Nieland, Serra Yosmaoglu
 @date : 26.07.2021
 @copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt & 2017, Remix (https://github.com/remix/partridge)
@@ -87,7 +87,7 @@ class GtfsTable(object):
         """
         checks if all required columns are in the gtfs tables. if not, required columns are added and left empty
         :param table_name: name of the db table
-        :rtype table_name: String
+        :type table_name: String
 
 
         :rtype: object

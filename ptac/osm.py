@@ -12,36 +12,19 @@
 
 import osmnx as ox
 
-
-def get_facility(polygon, facility):
-    return ox.pois_from_polygon(polygon, tags=facility)
-
-
-def get_landuse(polygon, ):
-    return ox.footprints_from_polygon(polygon, footprint_type="landuse")
-
-
-def get_restaurants(polygon):
-    return ox.pois_from_polygon(polygon, tags={"amenity": 'restaurant'})
-
-
-def get_parks(polygon):
-    return ox.pois_from_polygon(polygon, tags={"leisure": 'park'})
-
-
 def get_network(polygon, network_type="walk", custom_filter=None, verbose=0):
     """
         Download street network from osm via osmnx
 
         :param polygon: boundary of the area from which to download the network (in WGS84)
         :type polygon: Geopandas.GeoDataFrame::POLYGON
-        :param network_type: can be ..
-        :type network_type: String
+        :param network_type: can be "all_private", "all", "bike", "drive", "drive_service", "walk" (see osmnx for description)
+        :type network_type: str
         :param custom_filter: filter network (see osmnx for description)
-        :type custom_filter: String
+        :type custom_filter: str
         :param verbose: Degree of verbosity (the higher, the more)
-        :type verbose: Integer
-        :return: Network graph
+        :type verbose: int
+        :return: OSM city network
         :rtype: networkx.Graph
 
     """
@@ -53,6 +36,3 @@ def get_network(polygon, network_type="walk", custom_filter=None, verbose=0):
                                                network_type=network_type,
                                                simplify=False))[1]
 
-
-def get_buildings(polygon):
-    return ox.footprints.footprints_from_polygon(polygon, footprint_type='building', retain_invalid=False)

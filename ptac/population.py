@@ -20,12 +20,12 @@ from affine import Affine
 
 def raster_to_points(path, band=1, epsg=4326):
     """
-    :param path: path to raster file. (Tested with GeoTIF)
-    :type path: String
-    :param band: Band of dataset
-    :type band: int
-    :return: Point GeoDataFrame including Raster values of specific band
-    :rtype: GeoPandas.GeoDataFrame:: Point
+        :param path: Path to raster file. (Tested with GeoTIF)
+        :type path: str
+        :param band: Band of dataset
+        :type band: int
+        :return: Point GeoDataFrame including Raster values of specific band
+        :rtype: GeoPandas.GeoDataFrame:: Point
     """
 
     with rasterio.open(path) as ds:

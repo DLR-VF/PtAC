@@ -36,12 +36,12 @@ def clear_directory(folder=f"{home_directory}/.ptac"):
 
 def prepare_origins_and_destinations(dest_gdf, od="origin"):
     """
-        prepares origin or desination data set for usage in UrMoAC
+        Prepares origin or destination dataset for usage in UrMoAC
 
         :param dest_gdf: origin or destination point data set (must be projected in UTM Projection)
         :type dest_gdf: Geopandas.GeoDataFrame:POINT
         :param od: indicate if "origin" or "destination"
-        :type od: String
+        :rtype od: str
     """
 
     dest_gdf["x"] = dest_gdf.geometry.centroid.x
@@ -62,9 +62,9 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
         :param boundary: boundary of area where to download network (must be projected in WGS84)
         :type boundary: Geopandas.GeoDataFrame:POLYGON
         :param epsg: EPSG code of UTM projection for the area of interest
-        :type epsg: Integer
+        :type epsg: int
         :param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
-        :type verbose: Integer
+        :rtype verbose: int
 
     """
 
@@ -118,13 +118,13 @@ def build_request(epsg, number_of_threads,
         Builds requests for the UrMoAC
 
         :param epsg: PSG code of UTM projection for a certain area of interest
-        :type epsg: String
-        :param number_of_threads: PSG code of UTM projection for a certain area of interest
-        :type number_of_threads: String
-        :param date: date on which the routing starts (e.g. 20200915)
-        :type date: integer
-        :param start_time: time to start the routing (in seconds of the day)
-        :type start_time: Integer
+        :type epsg: str
+        :param number_of_threads: The number of threads to use
+        :type number_of_threads: int
+        :param date: Date on which the routing starts (e.g. 20200915)
+        :type date: int
+        :param start_time: Time to start the routing (in seconds of the day)
+        :type start_time: int
 
     """
     current_path = os.path.dirname(os.path.abspath(__file__))
@@ -164,27 +164,27 @@ def distance_to_closest(start_geometries,
     """
         Python wrapper for UrMoAC Accessibility Calculator
 
-        :param network_gdf: network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
+        :param network_gdf: Network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
         :type network_gdf: Geopandas.GeoDataFrame::POLYGON
         :param start_geometries: Starting points for accessibility calculation
         :type start_geometries: Geopandas.GeoDataFrame::POLYGON
         :param destination_geometries: Starting point for accessibility calculation
         :type destination_geometries: Geopandas.GeoDataFrame::POLYGON
-        :param boundary_geometries:
+        :param boundary_geometries: Boundary dataset of the desired area
         :type boundary_geometries: Geopandas.GeoDataFrame::POLYGON
         :param maximum_distance: Maximum distance to next pt station (optional)
-        :rtype maximum_distance: Integer
-        :param start_time: time to start the routing (in seconds of the day)
-        :type start_time: Integer
-        :param transport_system:
-        :type transport_system:
-        :param number_of_threads:
-        :type number_of_threads: Integer
-        :param date:
-        :type date:
+        :type maximum_distance: int
+        :param start_time: Time to start the routing (in seconds of the day)
+        :type start_time: int
+        :param transport_system: Low-capacity or high-capacity pt system
+        :type transport_system: str
+        :param number_of_threads: The number of threads to use
+        :type number_of_threads: int
+        :param date: date on which the routing starts (e.g. 20200915)
+        :type date: int
         :param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
-        :type verbose:
-        :return: A geo data frame consists of accessibility calculation outputs
+        :type verbose: int
+        :return accessibility_output: A geo data frame consists of accessibility calculation outputs
         :rtype: Geopandas.GeoDataFrame::POINT
     """
 
@@ -257,7 +257,7 @@ def distance_to_closest(start_geometries,
                                                   left_on="index",
                                                   right_on="o_id")
 
-    # Subset starting points based on transport system type or maximum distance
+    # Subset accessibility results based on transport system type or maximum distance
     accessibility_output = subset_result(accessibility_output,
                                          transport_system=transport_system,
                                          maximum_distance=maximum_distance)
@@ -270,10 +270,16 @@ def distance_to_closest(start_geometries,
 
 def subset_result(accessibility_output, transport_system=None, maximum_distance=None):
     """
-        :param accessibility_output:
-        :param transport_system:
-        :param maximum_distance:
-        :return accessibility_output:
+        Subset accessibility results based on transport system type or maximum distance
+
+        :param accessibility_output: A geo data frame consists of accessibility calculation outputs
+        :type: Geopandas.GeoDataFrame::POINT
+        :param transport_system: Low-capacity or high-capacity pt system
+        :type transport_system: str
+        :param maximum_distance: Maximum walkable distance
+        :type maximum_distance: int
+        :return accessibility_output: A geo data frame consists of accessibility calculation outputs based on
+        the type of defined transport system
         :rtype: Geopandas.GeoDataFrame::POINT
     """
 
@@ -296,11 +302,14 @@ def subset_result(accessibility_output, transport_system=None, maximum_distance=
 def calculate_sdg(df_pop_total, pop_accessible, population_column, verbose=0):
     """
 
-        :param df_pop_total:
-        :param pop_accessible:
-        :param population_column:
-        :return SDG 11.2.1 indicator:
-        :rtype: Integer
+        :param df_pop_total: Population points GeoDataFrame (start geometries)
+        :type df_pop_total: Geopandas.GeoDataFrame::POINT
+        :param pop_accessible: A geo dataframe or a list of two geo dataframes consists of accessibility calculation outputs
+        :type pop_accessible: Geopandas.GeoDataFrame::POINT
+        :param population_column: The name of the population column in accessibility output dataframe
+        :type: str
+        :return SDG 11.2.1 indicator: SDG 11.2.1 indicator
+        :rtype: int
 
     """
     total_population = df_pop_total[population_column].sum()

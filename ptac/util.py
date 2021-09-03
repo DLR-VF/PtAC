@@ -5,7 +5,7 @@
 
 """
 @name : util.py
-Copyright (c) 2016–2021 Geoff Boeing https://geoffboeing.com/
+@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt & 2016–2021 Geoff Boeing https://geoffboeing.com/
 """
 
 #from osmnx
@@ -20,27 +20,21 @@ from pyproj import CRS
 # from osmnx
 def project_geometry(geometry, crs=None, to_crs=None, to_latlong=False):
     """
-    Project a shapely Polygon or MultiPolygon from lat-long to UTM, or
-    vice-versa
+        Project a shapely Polygon or MultiPolygon from lat-long to UTM, or vice-versa
 
-    Parameters
-    ----------
-    geometry : shapely Polygon or MultiPolygon
-        the geometry to project
-    crs : dict
-        the starting coordinate reference system of the passed-in geometry,
+        :param geometry: shapely Polygon or MultiPolygon the geometry to project
+        :type geometry: Geopandas.GeoDataFrame::POLYGON
+        :param crs: The starting coordinate reference system of the passed-in geometry,
         default value (None) will set settings.default_crs as the CRS
-    to_crs : dict
-        if not None, just project to this CRS instead of to UTM
-    to_latlong : bool
-        if True, project from crs to lat-long, if False, project from crs to
+        :type crs: dict
+        :param to_crs: if not None, just project to this CRS instead of to UTM
+        :type to_crs: dict
+        :param to_latlong: if True, project from crs to lat-long, if False, project from crs to
         local UTM zone
-
-    Returns
-    -------
-    tuple
-        (geometry_proj, crs), the projected shapely geometry and the crs of the
+        :type to_latlong: bool
+        :return: (geometry_proj, crs), the projected shapely geometry and the crs of the
         projected geometry
+        :rtype: tuple
     """
 
     if crs is None:
@@ -58,25 +52,21 @@ def project_geometry(geometry, crs=None, to_crs=None, to_latlong=False):
 
 def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
     """
-    Project a GeoDataFrame to the UTM zone appropriate for its geometries'
-    centroid.
+        Project a GeoDataFrame to the UTM zone appropriate for its geometries'
+        centroid.
+    
+        The simple calculation in this function works well for most latitudes, but
+        won't work for some far northern locations like Svalbard and parts of far
+        northern Norway.
 
-    The simple calculation in this function works well for most latitudes, but
-    won't work for some far northern locations like Svalbard and parts of far
-    northern Norway.
-
-    Parameters
-    ----------
-    gdf : GeoDataFrame
-        the gdf to be projected
-    to_crs : dict
-        if not None, just project to this CRS instead of to UTM
-    to_latlong : bool
-        if True, projects to latlong instead of to UTM
-
-    Returns
-    -------
-    GeoDataFrame
+        :param gdf: the gdf to be projected
+        :type gdf: Geopandas.GeoDataFrame::POINT
+        :param to_crs: CRS code. if not None, just project to this CRS instead of to UTM
+        :type to_crs: int
+        :param to_latlong : If True, projects to latlong instead of to UTM
+        :type to_latlong: bool
+        :return projected_gdf: A projected GeoDataFrame to the UTM zone
+        :rtype projected_gdf: Geopandas.GeoDataFrame::POINT
     """
     assert len(gdf) > 0, 'You cannot project an empty GeoDataFrame.'
 
