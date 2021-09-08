@@ -18,15 +18,18 @@ If you would prefer to set the JAVA_HOME (or JRE_HOME) variable via the command 
 
 * Set the value of the environment variable to your JDK (or JRE) installation path as follows:
 
+.. code-block:: bash
+
   setx -m JAVA_HOME "C:\path\to\Java\installation\bin"
 
-  If the path contains spaces, use the shortened path name.
+ If the path contains spaces, use the shortened path name.
 
 * Restart Command Prompt to reload the environment variables then use the following command to check the it's been added correctly.
 
+.. code-block:: bash
+  
   echo %JAVA_HOME%
 
-  You should see the path to your JDK (or JRE) installation.
 
 **1. open the Anaconda prompt (can be found on windows start menu) and navigate to your home folder**
 
