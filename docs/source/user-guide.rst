@@ -11,7 +11,22 @@ In order to run the library on a windows computer you have to have a recent Pyth
 or `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_, which is a lightweight version of the conda environment).
 
 Please also ensure that a `Java Development Kit <https://java.com/de/>`_ (preferably version 1.8) is installed 
-and that the folder containing the java.exe file is in your path environment variable.
+and that the folder containing the java.exe file is set in your path environment variable.
+If you would prefer to set the JAVA_HOME (or JRE_HOME) variable via the command line:
+
+* Open Command Prompt (make sure you Run as administrator so you're able to add a system environment variable).
+
+* Set the value of the environment variable to your JDK (or JRE) installation path as follows:
+
+  setx -m JAVA_HOME "C:\path\to\Java\installation\bin"
+
+  If the path contains spaces, use the shortened path name.
+
+* Restart Command Prompt to reload the environment variables then use the following command to check the it's been added correctly.
+
+  echo %JAVA_HOME%
+
+  You should see the path to your JDK (or JRE) installation.
 
 **1. open the Anaconda prompt (can be found on windows start menu) and navigate to your home folder**
 
