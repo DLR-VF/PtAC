@@ -20,7 +20,7 @@ If you would prefer to set the JAVA_HOME (or JRE_HOME) variable via the command 
 
   .. code-block:: bash
 
-     setx -m JAVA_HOME "C:\path\to\Java\installation\bin"
+     setx -m JAVA_HOME "C:\Progra~1\Java\jdk1.8.0_XX"
 
 * Restart Command Prompt to reload the environment variables then use the following command to check the it's been added correctly.
   
