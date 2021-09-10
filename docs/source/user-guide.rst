@@ -33,7 +33,7 @@ If you would prefer to set the JAVA_HOME (or JRE_HOME) variable via the command 
 
 .. code-block:: bash
 
-   cd C:\Users\ptac_user
+   cd C:\Users\YOUR_USERNAME
 
 **2. generate a project folder and navigate to this folder**
 
