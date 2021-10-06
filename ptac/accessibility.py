@@ -92,9 +92,8 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
                                               "maxspeed": "vmax_osm",
                                               "highway": "street_type",
                                               "lanes": "lanes_osm",
-                                              "index": "oid",
+                                              "index": "oid"
                                               })
-
     network_gdf = network_gdf.merge(network_characteristics, on="street_type", how="left")
     network_gdf = network_gdf.reset_index()
     network_gdf = network_gdf[["index",
@@ -135,7 +134,7 @@ def build_request(epsg, number_of_threads,
                       '--mode foot ' \
                       '--time {start_time} ' \
                       '--epsg {epsg} ' \
-                      '--ext-nm-output "file;{home_directory}/.ptac/sdg_output.csv" ' \
+                      '--nm-output "file;{home_directory}/.ptac/sdg_output.csv" ' \
                       '--verbose ' \
                       '--threads {number_of_threads} ' \
                       '--dropprevious ' \
@@ -148,7 +147,26 @@ def build_request(epsg, number_of_threads,
         date=date,
         start_time=int(start_time),
     )
+
+    # try:
+    #     with open(file, 'r') as file:
+    #         file = file.read()
+    #         return file.encode('UTF-8')
+    # except (IOError, OSError) as e:
+    #     print(e.errno)
+    #
+    # # try:
+    # #     os_cmd = urmo_ac_request
+    # #     if os.system(os_cmd) != 0:
+    # #         raise Exception('wrongcommand does not exist')
+    # # except:
+    # #     print("command does not work")
+
     return urmo_ac_request
+
+build_request(epsg='4326', start_time=35580,
+                        number_of_threads=1,
+                        date=20200915)
 
 
 def distance_to_closest(start_geometries,
@@ -203,7 +221,7 @@ def distance_to_closest(start_geometries,
 
     if boundary_geometries is None:
         boundary_geometries = gpd.GeoDataFrame(index=[0], crs='epsg:4326',
-                                        geometry=[start_geometries.unary_union.convex_hull])
+                                        geometry=[start_geometries.unary_union])
 
     if not boundary_geometries.crs == settings.default_crs:
         boundary_geometries = boundary_geometries.to_crs(settings.default_crs)
@@ -241,15 +259,13 @@ def distance_to_closest(start_geometries,
     os.system(urmo_ac_request)
 
     # read UrMoAC output
-    header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_v", "avg_num", "avg_value", "avg_kcal", "avg_price",
-                   "avg_co2", "avg_interchanges", "avg_access", "avg_egress", "avg_waiting_time",
-                   "avg_init_waiting_time", "avg_pt_tt", "avg_pt_interchange_time", "modes"]
+    header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_v", "avg_num", "avg_value"]
 
     output = pd.read_csv(f"{home_directory}/.ptac/sdg_output.csv", sep=";", header=0, names=header_list)
 
     # only use distance on road network (eliminate access and egress)
-    output['distance_pt'] = output["avg_distance"] - output["avg_access"] - output["avg_egress"]
-    output = output[["o_id", "d_id", "avg_access", "avg_egress", "distance_pt"]]
+    output['distance_pt'] = output["avg_distance"]# - output["avg_access"] - output["avg_egress"]
+    output = output[["o_id", "d_id", "distance_pt"]]
 
     # Merge output to starting geometries
     accessibility_output = start_geometries.merge(output,
@@ -264,7 +280,7 @@ def distance_to_closest(start_geometries,
     stop = timeit.default_timer()
 
     print(f"calculation finished in {stop - start} seconds")
-    clear_directory()
+    #clear_directory()
     return accessibility_output
 
 
