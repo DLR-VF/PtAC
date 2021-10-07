@@ -92,7 +92,7 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
                                               "maxspeed": "vmax_osm",
                                               "highway": "street_type",
                                               "lanes": "lanes_osm",
-                                              "index": "oid"
+                                              "index": "oid",
                                               })
     network_gdf = network_gdf.merge(network_characteristics, on="street_type", how="left")
     network_gdf = network_gdf.reset_index()
@@ -237,7 +237,7 @@ def distance_to_closest(start_geometries,
     if "index" in start_geometries.columns:
         del start_geometries["index"]
     if "index" in destination_geometries.columns:
-        del start_geometries["index"]
+        del destination_geometries["index"]
 
     # generate unique ids for origins and destinations
     start_geometries.reset_index(inplace=True)
