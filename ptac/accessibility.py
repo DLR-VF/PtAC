@@ -259,7 +259,7 @@ def distance_to_closest(start_geometries,
     os.system(urmo_ac_request)
 
     # read UrMoAC output
-    header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_v", "avg_num", "avg_value"]
+    header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_num", "avg_value"]
 
     output = pd.read_csv(f"{home_directory}/.ptac/sdg_output.csv", sep=";", header=0, names=header_list)
 
