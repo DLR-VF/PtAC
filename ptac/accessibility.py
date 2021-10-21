@@ -134,12 +134,12 @@ def build_request(epsg, number_of_threads,
                       '--mode foot ' \
                       '--time {start_time} ' \
                       '--epsg {epsg} ' \
-                      '--nm-output "file;{home_directory}/.ptac/sdg_output.csv" ' \
+                      '--nm-output file;"{home_directory}/.ptac/sdg_output.csv" ' \
                       '--verbose ' \
                       '--threads {number_of_threads} ' \
                       '--dropprevious ' \
                       '--date {date} ' \
-                      '--net "file;{home_directory}/.ptac/network.csv"'.format(
+                      '--net file;"{home_directory}/.ptac/network.csv"'.format(
         home_directory=home_directory,
         current_path=current_path,
         epsg=epsg,
@@ -163,10 +163,6 @@ def build_request(epsg, number_of_threads,
     # #     print("command does not work")
 
     return urmo_ac_request
-
-build_request(epsg='4326', start_time=35580,
-                        number_of_threads=1,
-                        date=20200915)
 
 
 def distance_to_closest(start_geometries,
