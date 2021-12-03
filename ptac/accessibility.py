@@ -219,8 +219,8 @@ def distance_to_closest(start_geometries,
         del start_geometries["index"]
 
     # generate unique ids for origins and destinations
-    start_geometries.reset_index(inplace=True)
-    destination_geometries.reset_index(inplace=True)
+    start_geometries = start_geometries.reset_index()
+    destination_geometries = destination_geometries.reset_index()
 
     # write origins and destinations to disk
     prepare_origins_and_destinations(destination_geometries, od="destination")

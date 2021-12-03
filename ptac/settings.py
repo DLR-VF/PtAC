@@ -56,3 +56,21 @@ streettypes = pd.DataFrame.from_dict({
     #.reset_index(inplace=True)\
     #.rename(columns={"index": "street_type"}, inplace=True)
 
+old_route_types = {
+    "bus" : 3,
+    "tram": 0,
+    "rail": 2,
+    "subway": 1,
+    "ferry": 4,
+}
+
+#todo: properly include new route types
+new_route_types = {
+    "bus" : 700,
+    "tram": 900,
+    "rail": 100,
+    "subway": 400,
+    "ferry": 1000,
+    "suburban": 109,
+    "ic": 2
+}
