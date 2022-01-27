@@ -34,7 +34,7 @@ def clear_directory(folder=f"{home_directory}/.ptac"):
             print("Error: %s : %s" % (f, e.strerror))
 
 
-def prepare_origins_and_destinations(dest_gdf, od="origin"):
+def prepare_origins_and_destinations(dest_gdf, od): #="origin"
     """
         Prepares origin or destination dataset for usage in UrMoAC
 
@@ -51,6 +51,7 @@ def prepare_origins_and_destinations(dest_gdf, od="origin"):
         dest_gdf = dest_gdf.dropna()
         dest_gdf.to_csv(f"{home_directory}/.ptac/origins.csv", sep=";", header=False)
     if od == "destination":
+        dest_gdf = dest_gdf.dropna()
         dest_gdf.to_csv(f"{home_directory}/.ptac/destinations.csv", sep=";", header=False)
 
 
@@ -92,7 +93,7 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
                                               "maxspeed": "vmax_osm",
                                               "highway": "street_type",
                                               "lanes": "lanes_osm",
-                                              "index": "oid",
+                                              "index": "oid"
                                               })
     network_gdf = network_gdf.merge(network_characteristics, on="street_type", how="left")
     network_gdf = network_gdf.reset_index()
@@ -148,8 +149,14 @@ def build_request(epsg, number_of_threads,
         start_time=int(start_time),
     )
 
-    return urmo_ac_request
+    #try:
+        #os_cmd = urmo_ac_request
+        #if os.system(os_cmd) != 0:
+            #raise Exception('wrongcommand does not exist')
+    #except: 
+        #print("command does not work")
 
+    return urmo_ac_request
 
 def distance_to_closest(start_geometries,
                         destination_geometries,
@@ -222,8 +229,14 @@ def distance_to_closest(start_geometries,
         del destination_geometries["index"]
 
     # generate unique ids for origins and destinations
-    start_geometries.reset_index()
-    destination_geometries.reset_index()
+
+
+    start_geometries = start_geometries.reset_index() 
+    destination_geometries = destination_geometries.reset_index()
+    destination_geometries = destination_geometries.reset_index()
+    del destination_geometries["index"]
+    destination_geometries["index"] = destination_geometries["level_0"]
+    del destination_geometries["level_0"]
 
     # write origins and destinations to disk
     prepare_origins_and_destinations(destination_geometries, od="destination")
@@ -245,7 +258,7 @@ def distance_to_closest(start_geometries,
 
     output = pd.read_csv(f"{home_directory}/.ptac/sdg_output.csv", sep=";", header=0, names=header_list)
 
-    # only use distance on road network
+    # only use distance on road network 
     output['distance_pt'] = output["avg_distance"]
     output = output[["o_id", "d_id", "distance_pt"]]
 
