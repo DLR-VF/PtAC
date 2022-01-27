@@ -127,7 +127,7 @@ def build_request(epsg, number_of_threads,
 
     """
     current_path = os.path.dirname(os.path.abspath(__file__))
-    urmo_ac_request = 'java -jar -Xmx12g {current_path}/urmoacjar/UrMoAccessibilityComputer-0.1-PRERELEASE-shaded.jar ' \
+    urmo_ac_request = 'java -jar -Xmx12g {current_path}/urmoacjar/UrMoAC.jar ' \
                       '--from file;"{home_directory}/.ptac/origins.csv" ' \
                       '--shortest ' \
                       '--to file;"{home_directory}/.ptac/destinations.csv" ' \
@@ -147,20 +147,6 @@ def build_request(epsg, number_of_threads,
         date=date,
         start_time=int(start_time),
     )
-
-    # try:
-    #     with open(file, 'r') as file:
-    #         file = file.read()
-    #         return file.encode('UTF-8')
-    # except (IOError, OSError) as e:
-    #     print(e.errno)
-    #
-    # # try:
-    # #     os_cmd = urmo_ac_request
-    # #     if os.system(os_cmd) != 0:
-    # #         raise Exception('wrongcommand does not exist')
-    # # except:
-    # #     print("command does not work")
 
     return urmo_ac_request
 
@@ -236,8 +222,8 @@ def distance_to_closest(start_geometries,
         del destination_geometries["index"]
 
     # generate unique ids for origins and destinations
-    start_geometries.reset_index(inplace=True)
-    destination_geometries.reset_index(inplace=True)
+    start_geometries.reset_index()
+    destination_geometries.reset_index()
 
     # write origins and destinations to disk
     prepare_origins_and_destinations(destination_geometries, od="destination")
@@ -259,8 +245,8 @@ def distance_to_closest(start_geometries,
 
     output = pd.read_csv(f"{home_directory}/.ptac/sdg_output.csv", sep=";", header=0, names=header_list)
 
-    # only use distance on road network (eliminate access and egress)
-    output['distance_pt'] = output["avg_distance"]# - output["avg_access"] - output["avg_egress"]
+    # only use distance on road network
+    output['distance_pt'] = output["avg_distance"]
     output = output[["o_id", "d_id", "distance_pt"]]
 
     # Merge output to starting geometries
