@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # coding:utf-8
 
+import osmnx as ox
+
 """Downloads pois, footprints and graphs from OSM"""
 
 """
@@ -10,7 +12,6 @@
 @copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
 """
 
-import osmnx as ox
 
 def get_network(polygon, network_type="walk", custom_filter=None, verbose=0):
     """
@@ -31,8 +32,10 @@ def get_network(polygon, network_type="walk", custom_filter=None, verbose=0):
     if verbose > 0:
         print("downloading street network. This may take some time for bigger areas\n")
     bounds = polygon.unary_union.bounds
-    return ox.graph_to_gdfs(ox.graph_from_bbox(north=bounds[3], south=bounds[1], east=bounds[2], west=bounds[0],
+    return ox.graph_to_gdfs(ox.graph_from_bbox(north=bounds[3],
+                                               south=bounds[1],
+                                               east=bounds[2],
+                                               west=bounds[0],
                                                custom_filter=custom_filter,
                                                network_type=network_type,
                                                simplify=False))[1]
-

@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
 # coding:utf-8
 
+import geopandas as gpd
+import math
+import ptac.settings as settings
+from pyproj import CRS
+
 """Converts geometries between latitude/longitude & UTM coordinates"""
 
 """
 @name : util.py
 @copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt & 2016–2021 Geoff Boeing https://geoffboeing.com/
 """
-
-#from osmnx
-import geopandas as gpd
-import math
-import ptac.settings as settings
-from shapely.geometry import Polygon
-import pandas as pd
-from pyproj import CRS
 
 
 # from osmnx
@@ -54,7 +51,6 @@ def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
     """
         Project a GeoDataFrame to the UTM zone appropriate for its geometries'
         centroid.
-    
         The simple calculation in this function works well for most latitudes, but
         won't work for some far northern locations like Svalbard and parts of far
         northern Norway.
@@ -89,7 +85,7 @@ def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
         else:
             # else, project the gdf to UTM
             # if GeoDataFrame is already in UTM, just return it
-            if (gdf.crs is not None) and gdf.crs.is_geographic==False:
+            if (gdf.crs is not None) and (gdf.crs.is_geographic is False):
                 return gdf
 
             # calculate the centroid of the union of all the geometries in the

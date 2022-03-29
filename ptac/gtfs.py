@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
 # coding:utf-8
-"""
-@name : gtfs.py
-@author : Simon Nieland, Serra Yosmaoglu
-@date : 26.07.2021
-@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt & 2017, Remix (https://github.com/remix/partridge)
-"""
 
 import pandas as pd
 import os
 import numpy as np
 import geopandas as gpd
-import sys
-from shapely.geometry import Point, LineString
-import datetime
-from collections import defaultdict
+from shapely.geometry import Point
 from datetime import datetime
 import ptac.settings as settings
 
-#partly adapted from partridge (https://github.com/remix/partridge)
+"""
+@name : gtfs.py
+@author : Simon Nieland, Serra Yosmaoglu
+@date : 26.07.2021
+@copyright : Institut fuer Verkehrsforschung,
+             Deutsches Zentrum fuer Luft- und Raumfahrt &
+             2017, Remix (https://github.com/remix/partridge)
+"""
+
+# partly adapted from partridge (https://github.com/remix/partridge)
 
 DATE_FORMAT = "%Y%m%d"
 
@@ -35,9 +35,8 @@ DAY_NAMES = (
 
 def parse_date(val: str) -> datetime.date:
     """
-
-    :param val: 
-    :return: 
+    :param val:
+    :return:
     """
     return datetime.datetime.strptime(val, DATE_FORMAT).date()
 
@@ -45,8 +44,9 @@ def parse_date(val: str) -> datetime.date:
 def parse_time(val: str) -> np.float64:
     """
     :param val:
-    :return: 
+    :return:
     """
+
     if val is np.nan:
         return val
 
@@ -64,10 +64,10 @@ def parse_time(val: str) -> np.float64:
 
 def empty_df(columns=None) -> pd.DataFrame:
     """
-
     :param columns:
     :return:
     """
+
     # todo: docstrings
     columns = [] if columns is None else columns
     empty = {col: [] for col in columns}
@@ -81,15 +81,13 @@ class GtfsTable(object):
         self.required_columns = ()
         self.get_required_columns(table_name)
         self.df = pd.DataFrame()
-        #self.conn
+        # self.conn
 
     def get_required_columns(self, table_name):
         """
         checks if all required columns are in the gtfs tables. if not, required columns are added and left empty
         :param table_name: name of the db table
         :type table_name: String
-
-
         :rtype: object
         """
         # todo: docstrings
@@ -107,7 +105,7 @@ class GtfsTable(object):
                 "stop_id": "",
                 "stop_name": "",
                 "stop_lat": "numeric",
-                "stop_lon": "numeric", #todo: add pos column
+                "stop_lon": "numeric",  # todo: add pos column
             }
 
         if table_name == "stop_times.txt":
@@ -124,7 +122,6 @@ class GtfsTable(object):
 
     def add_required_columns(self, df):
         """
-
         :param df:
         """
         # todo: docstrings
@@ -149,7 +146,6 @@ class Feed(object):
 
     def _stops_to_gdf(self, crs=settings.default_crs):
         """
-
         :param crs:
         """
         # todo: docstrings
@@ -160,7 +156,6 @@ class Feed(object):
 
         self.stops.drop(["stop_lon", "stop_lat"], axis=1, inplace=True)
         self.stops = gpd.GeoDataFrame(self.stops, crs=crs)
-
 
     def _read_file(self, file_name):
         """
@@ -188,7 +183,7 @@ class Feed(object):
                 df[column] = pd.to_datetime(df[column], format="%Y%m%d", errors='ignore')
             if gtfs_table.required_columns[column] == "time":
                 df[column] = pd.to_datetime(df[column], format="%H%M%S", errors='ignore')
-            #patch
+            # patch
             if gtfs_table.required_columns[column] == "string":
                 df[column] = df[column].astype(str)
 
@@ -203,18 +198,18 @@ class Feed(object):
         :param old_route_type_def:
         :return:
         """
-        #todo: docstrings
-        #if 'zone_id' not in area_gdf.columns:
+        # todo: docstrings
+        # if 'zone_id' not in area_gdf.columns:
         #    area_gdf.loc[:, 'zone_id'] = area_gdf.index
 
-        #area_gdf_buffered = area_gdf.copy()
-        #area_gdf_buffered["geometry"] = area_gdf.buffer(200)
+        # area_gdf_buffered = area_gdf.copy()
+        # area_gdf_buffered["geometry"] = area_gdf.buffer(200)
 
-        #dateobj = datetime.strptime(date, DATE_FORMAT).date()
-        #day_of_week = dateobj.strftime('%A').lower()
+        # dateobj = datetime.strptime(date, DATE_FORMAT).date()
+        # day_of_week = dateobj.strftime('%A').lower()
 
-        #calendar = self.calendar[self.calendar[day_of_week]==1]
-        #print(self.calendar_dates["date"].dt.date)
+        # calendar = self.calendar[self.calendar[day_of_week]==1]
+        # print(self.calendar_dates["date"].dt.date)
 
         # calendar_dates = self.calendar_dates[self.calendar_dates["date"].dt.date==dateobj]
         # select only trips with relevant service_id
@@ -223,8 +218,8 @@ class Feed(object):
         else:
             route_types = settings.new_route_types
 
-        #trips = self.trips[self.trips.service_id == calendar.service_id.iloc[0]]
-        count = self.stop_times.groupby(["stop_id"])
+        # trips = self.trips[self.trips.service_id == calendar.service_id.iloc[0]]
+        # count = self.stop_times.groupby(["stop_id"])
         trips = self.trips.merge(self.routes, how="left", on="route_id")
         stop_times = self.stop_times.merge(trips, how="left", on="trip_id")
         stop_times["bus"] = 0

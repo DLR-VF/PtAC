@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # coding:utf-8
 
+import pandas as pd
+
 """Defines street types"""
 
 """
@@ -10,10 +12,7 @@
 @copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
 """
 
-import pandas as pd
-
 default_crs = "epsg:4326"
-
 
 streettypes = pd.DataFrame.from_dict({
     "motorway": [False, False, True,  160, 2],
@@ -55,7 +54,6 @@ streettypes = pd.DataFrame.from_dict({
     "railway_light_rail": [False, False, False, 100, 1],
     "railway_subway": [False, False, False, 100, 1],
     "railway_preserved": [False, False, False, 100, 1]
-        },      orient="index", columns=['mode_walk', 'mode_bike', 'mode_mit', 'vmax', 'lanes'])\
-    #.reset_index(inplace=True)\
-    #.rename(columns={"index": "street_type"}, inplace=True)
-
+    },
+    orient="index",
+    columns=['mode_walk', 'mode_bike', 'mode_mit', 'vmax', 'lanes'])

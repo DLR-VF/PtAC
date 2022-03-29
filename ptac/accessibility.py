@@ -1,15 +1,6 @@
 #!/usr/bin/env python3
 # coding:utf-8
 
-"""Prepares dataset for accessibility computation and computes walking accessibilities from residential areas to public transport stops."""
-
-"""
-@name : accessibility.py
-@author : Simon Nieland, Serra Yosmaoglu
-@date : 26.07.2021 12:44
-@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
-"""
-
 import os
 import sys
 import geopandas as gpd
@@ -21,6 +12,15 @@ from pathlib import Path
 import pandas as pd
 import glob
 
+"""Prepares dataset for accessibility computation and computes walking accessibilities from residential areas to public transport stops."""
+
+"""
+@name : accessibility.py
+@author : Simon Nieland, Serra Yosmaoglu
+@date : 26.07.2021 12:44
+@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
+"""
+
 global home_directory
 home_directory = Path.home()
 
@@ -30,11 +30,11 @@ def clear_directory(folder=f"{home_directory}/.ptac"):
     for f in files:
         try:
             os.remove(f)
-        except OSError as e:
+        except os.error as e:
             print("Error: %s : %s" % (f, e.strerror))
 
 
-def prepare_origins_and_destinations(dest_gdf, od): #="origin"
+def prepare_origins_and_destinations(dest_gdf, od):
     """
         Prepares origin or destination dataset for usage in UrMoAC
 
@@ -149,14 +149,8 @@ def build_request(epsg, number_of_threads,
         start_time=int(start_time),
     )
 
-    #try:
-        #os_cmd = urmo_ac_request
-        #if os.system(os_cmd) != 0:
-            #raise Exception('wrongcommand does not exist')
-    #except: 
-        #print("command does not work")
-
     return urmo_ac_request
+
 
 def distance_to_closest(start_geometries,
                         destination_geometries,
@@ -209,8 +203,9 @@ def distance_to_closest(start_geometries,
         os.makedirs(f"{home_directory}/.ptac")
 
     if boundary_geometries is None:
-        boundary_geometries = gpd.GeoDataFrame(index=[0], crs='epsg:4326',
-                                        geometry=[start_geometries.unary_union])
+        boundary_geometries = gpd.GeoDataFrame(index=[0],
+                                               crs='epsg:4326',
+                                               geometry=[start_geometries.unary_union])
 
     if not boundary_geometries.crs == settings.default_crs:
         boundary_geometries = boundary_geometries.to_crs(settings.default_crs)
@@ -229,9 +224,7 @@ def distance_to_closest(start_geometries,
         del destination_geometries["index"]
 
     # generate unique ids for origins and destinations
-
-
-    start_geometries = start_geometries.reset_index() 
+    start_geometries = start_geometries.reset_index()
     destination_geometries = destination_geometries.reset_index()
     destination_geometries = destination_geometries.reset_index()
     del destination_geometries["index"]
@@ -255,10 +248,9 @@ def distance_to_closest(start_geometries,
 
     # read UrMoAC output
     header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_num", "avg_value"]
-
     output = pd.read_csv(f"{home_directory}/.ptac/sdg_output.csv", sep=";", header=0, names=header_list)
 
-    # only use distance on road network 
+    # only use distance on road network
     output['distance_pt'] = output["avg_distance"]
     output = output[["o_id", "d_id", "distance_pt"]]
 
@@ -275,7 +267,7 @@ def distance_to_closest(start_geometries,
     stop = timeit.default_timer()
 
     print(f"calculation finished in {stop - start} seconds")
-    #clear_directory()
+    clear_directory()
     return accessibility_output
 
 
@@ -353,6 +345,5 @@ def calculate_sdg(df_pop_total, pop_accessible, population_column, verbose=0):
         # calculate sdg 11.2.1 indicator by dividing population
         # of accessibility calculation result with total population:
         sdg = accessibility_output_population / total_population
-        print("SDG 11.2.1 indicator is calculated")
+        # print("SDG 11.2.1 indicator is calculated")
     return sdg
-
