@@ -31,9 +31,13 @@ def raster_to_points(path, band=1, epsg=4326):
     with rasterio.open(path) as src:
         # create 1D coordinate arrays (coordinates of the pixel center)
         xmin, ymax = np.around(src.xy(0.00, 0.00), 9)  # src.xy(0, 0)
-        xmax, ymin = np.around(src.xy(src.height-1, src.width-1), 9)  # src.xy(src.width-1, src.height-1)
+        xmax, ymin = np.around(
+            src.xy(src.height - 1, src.width - 1), 9
+        )  # src.xy(src.width-1, src.height-1)
         x = np.linspace(xmin, xmax, src.width)
-        y = np.linspace(ymax, ymin, src.height)  # max -> min so coords are top -> bottom
+        y = np.linspace(
+            ymax, ymin, src.height
+        )  # max -> min so coords are top -> bottom
 
         # create 2D arrays
         xs, ys = np.meshgrid(x, y)
@@ -43,9 +47,13 @@ def raster_to_points(path, band=1, epsg=4326):
         mask = src.read_masks(1) > 0
         xs, ys, pop = xs[mask], ys[mask], pop[mask]
 
-    data = {"X": pd.Series(xs.ravel()), "Y": pd.Series(ys.ravel()), "pop": pd.Series(pop.ravel())}
+    data = {
+        "X": pd.Series(xs.ravel()),
+        "Y": pd.Series(ys.ravel()),
+        "pop": pd.Series(pop.ravel()),
+    }
     df = pd.DataFrame(data=data)
-    df = df[df['pop'] > 0]
+    df = df[df["pop"] > 0]
     geometry = gpd.points_from_xy(df.X, df.Y)
     geo_df = gpd.GeoDataFrame(df, crs=f"EPSG:{epsg}", geometry=geometry)
     return geo_df

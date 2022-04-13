@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # coding:utf-8
 
-import geopandas as gpd
 import math
 import ptac.settings as settings
 from pyproj import CRS
@@ -32,11 +31,11 @@ def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
         :return projected_gdf: A projected GeoDataFrame to the UTM zone
         :rtype projected_gdf: Geopandas.GeoDataFrame::POINT
     """
-    assert len(gdf) > 0, 'You cannot project an empty GeoDataFrame.'
+    assert len(gdf) > 0, "You cannot project an empty GeoDataFrame."
 
     # if gdf has no gdf_name attribute, create one now
-    if not hasattr(gdf, 'gdf_name'):
-        gdf.gdf_name = 'unnamed'
+    if not hasattr(gdf, "gdf_name"):
+        gdf.gdf_name = "unnamed"
 
     # if to_crs was passed-in, use this value to project the gdf
     if to_crs is not None:
@@ -62,7 +61,7 @@ def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
 
             # calculate the UTM zone from this avg longitude and define the UTM
             # CRS to project
-            utm_zone = int(math.floor((avg_longitude + 180) / 6.) + 1)
+            utm_zone = int(math.floor((avg_longitude + 180) / 6.0) + 1)
             utm_crs = f"+proj = utm + datum = WGS84 + ellps = WGS84 + zone = {utm_zone} + units = m + type = crs"
             crs = CRS.from_proj4(utm_crs)
             epsg = crs.to_epsg()

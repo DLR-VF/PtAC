@@ -54,7 +54,9 @@ def prepare_origins_and_destinations(dest_gdf, od):
         dest_gdf.to_csv(f"{home_directory}/.ptac/origins.csv", sep=";", header=False)
     if od == "destination":
         dest_gdf = dest_gdf.dropna()
-        dest_gdf.to_csv(f"{home_directory}/.ptac/destinations.csv", sep=";", header=False)
+        dest_gdf.to_csv(
+            f"{home_directory}/.ptac/destinations.csv", sep=";", header=False
+        )
 
 
 def prepare_network(network_gdf=None, boundary=None, verbose=0):
@@ -75,8 +77,8 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
         if verbose > 0:
             print("No street network was specified. Loading osm network..\n")
         network_gdf = osm.get_network(boundary)
-        network_gdf = util.project_gdf(network_gdf, to_latlong=True)
-        network_gdf = util.project_gdf(network_gdf, to_latlong=False)
+    network_gdf = util.project_gdf(network_gdf, to_latlong=True)
+    network_gdf = util.project_gdf(network_gdf, to_latlong=False)
 
     else:
         if verbose > 0:
@@ -91,32 +93,42 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
         network_characteristics.reset_index(inplace=True)
         network_characteristics.rename(columns={"index": "street_type"}, inplace=True)
     network_gdf.reset_index(inplace=True)
-    network_gdf = network_gdf.rename(columns={"u": "fromnode",
-                                              "v": "tonode",
-                                              "maxspeed": "vmax_osm",
-                                              "highway": "street_type",
-                                              "lanes": "lanes_osm",
-                                              "index": "oid"
-                                              })
-    network_gdf = network_gdf.merge(network_characteristics, on="street_type", how="left")
+    network_gdf = network_gdf.rename(
+        columns={
+            "u": "fromnode",
+            "v": "tonode",
+            "maxspeed": "vmax_osm",
+            "highway": "street_type",
+            "lanes": "lanes_osm",
+            "index": "oid",
+        }
+    )
+    network_gdf = network_gdf.merge(
+        network_characteristics, on="street_type", how="left"
+    )
     network_gdf = network_gdf.reset_index()
-    network_gdf = network_gdf[["index",
-                               "fromnode",
-                               "tonode",
-                               "mode_walk",
-                               "mode_bike",
-                               "mode_mit",
-                               "vmax",
-                               "length",
-                               "geometry"]]
+    network_gdf = network_gdf[
+        [
+            "index",
+            "fromnode",
+            "tonode",
+            "mode_walk",
+            "mode_bike",
+            "mode_mit",
+            "vmax",
+            "length",
+            "geometry",
+        ]
+    ]
     network_gdf = pd.concat([network_gdf, network_gdf.geometry.bounds], axis=1)
     del network_gdf["geometry"]
-    network_gdf.to_csv(f"{home_directory}/.ptac/network.csv", sep=";", header=False, index=False)
+    network_gdf.to_csv(
+        f"{home_directory}/.ptac/network.csv", sep=";", header=False, index=False
+    )
     return network_gdf
 
 
-def build_request(epsg, number_of_threads,
-                  date, start_time):
+def build_request(epsg, number_of_threads, date, start_time):
     """
         Builds requests for the UrMoAC
 
@@ -131,38 +143,44 @@ def build_request(epsg, number_of_threads,
 
     """
     current_path = os.path.dirname(os.path.abspath(__file__))
-    urmo_ac_request = 'java -jar -Xmx12g {current_path}/urmoacjar/UrMoAC.jar ' \
-                      '--from file;"{home_directory}/.ptac/origins.csv" ' \
-                      '--shortest ' \
-                      '--to file;"{home_directory}/.ptac/destinations.csv" ' \
-                      '--mode foot ' \
-                      '--time {start_time} ' \
-                      '--epsg {epsg} ' \
-                      '--nm-output file;"{home_directory}/.ptac/sdg_output.csv" ' \
-                      '--verbose ' \
-                      '--threads {number_of_threads} ' \
-                      '--dropprevious ' \
-                      '--date {date} ' \
-                      '--net file;"{home_directory}/.ptac/network.csv"'.format(home_directory=home_directory,
-                                                                               current_path=current_path,
-                                                                               epsg=epsg,
-                                                                               number_of_threads=number_of_threads,
-                                                                               date=date,
-                                                                               start_time=int(start_time))
+    urmo_ac_request = (
+        "java -jar -Xmx12g {current_path}/urmoacjar/UrMoAC.jar "
+        '--from file;"{home_directory}/.ptac/origins.csv" '
+        "--shortest "
+        '--to file;"{home_directory}/.ptac/destinations.csv" '
+        "--mode foot "
+        "--time {start_time} "
+        "--epsg {epsg} "
+        '--nm-output file;"{home_directory}/.ptac/sdg_output.csv" '
+        "--verbose "
+        "--threads {number_of_threads} "
+        "--dropprevious "
+        "--date {date} "
+        '--net file;"{home_directory}/.ptac/network.csv"'.format(
+            home_directory=home_directory,
+            current_path=current_path,
+            epsg=epsg,
+            number_of_threads=number_of_threads,
+            date=date,
+            start_time=int(start_time),
+        )
+    )
 
     return urmo_ac_request
 
 
-def distance_to_closest(start_geometries,
-                        destination_geometries,
-                        network_gdf=None,
-                        boundary_geometries=None,
-                        transport_system=None,
-                        maximum_distance=None,
-                        start_time=35580,
-                        number_of_threads=1,
-                        date=20200915,
-                        verbose=0):
+def distance_to_closest(
+    start_geometries,
+    destination_geometries,
+    network_gdf=None,
+    boundary_geometries=None,
+    transport_system=None,
+    maximum_distance=None,
+    start_time=35580,
+    number_of_threads=1,
+    date=20200915,
+    verbose=0,
+):
     """
         Python wrapper for UrMoAC Accessibility Calculator
 
@@ -204,9 +222,9 @@ def distance_to_closest(start_geometries,
         os.makedirs(f"{home_directory}/.ptac")
 
     if boundary_geometries is None:
-        boundary_geometries = gpd.GeoDataFrame(index=[0],
-                                               crs='epsg:4326',
-                                               geometry=[start_geometries.unary_union])
+        boundary_geometries = gpd.GeoDataFrame(
+            index=[0], crs="epsg:4326", geometry=[start_geometries.unary_union]
+        )
 
     if not boundary_geometries.crs == settings.default_crs:
         boundary_geometries = boundary_geometries.to_crs(settings.default_crs)
@@ -217,7 +235,9 @@ def distance_to_closest(start_geometries,
     else:
         network_gdf = util.project_gdf(network_gdf, to_latlong=True)
         network_gdf = util.project_gdf(network_gdf, to_latlong=False)
-        prepare_network(network_gdf=network_gdf, boundary=boundary_geometries, verbose=verbose)
+        prepare_network(
+            network_gdf=network_gdf, boundary=boundary_geometries, verbose=verbose
+        )
 
     if "index" in start_geometries.columns:
         del start_geometries["index"]
@@ -238,7 +258,9 @@ def distance_to_closest(start_geometries,
 
     epsg = destination_geometries.crs.to_epsg()
     # build UrMoAC request
-    urmo_ac_request = build_request(epsg=epsg, number_of_threads=number_of_threads, date=date, start_time=start_time)
+    urmo_ac_request = build_request(
+        epsg=epsg, number_of_threads=number_of_threads, date=date, start_time=start_time
+    )
     if verbose > 0:
         print("Starting UrMoAC to calculate accessibilities\n")
     if verbose > 1:
@@ -249,22 +271,25 @@ def distance_to_closest(start_geometries,
 
     # read UrMoAC output
     header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_num", "avg_value"]
-    output = pd.read_csv(f"{home_directory}/.ptac/sdg_output.csv", sep=";", header=0, names=header_list)
+    output = pd.read_csv(
+        f"{home_directory}/.ptac/sdg_output.csv", sep=";", header=0, names=header_list
+    )
 
     # only use distance on road network
-    output['distance_pt'] = output["avg_distance"]
+    output["distance_pt"] = output["avg_distance"]
     output = output[["o_id", "d_id", "distance_pt"]]
 
     # Merge output to starting geometries
-    accessibility_output = start_geometries.merge(output,
-                                                  how="left",
-                                                  left_on="index",
-                                                  right_on="o_id")
+    accessibility_output = start_geometries.merge(
+        output, how="left", left_on="index", right_on="o_id"
+    )
 
     # Subset accessibility results based on transport system type or maximum distance
-    accessibility_output = subset_result(accessibility_output,
-                                         transport_system=transport_system,
-                                         maximum_distance=maximum_distance)
+    accessibility_output = subset_result(
+        accessibility_output,
+        transport_system=transport_system,
+        maximum_distance=maximum_distance,
+    )
     stop = timeit.default_timer()
 
     print(f"calculation finished in {stop - start} seconds")
@@ -291,14 +316,22 @@ def subset_result(accessibility_output, transport_system=None, maximum_distance=
         print("please indicate either transport_system or maximum_distance. Not both")
         sys.exit()
     if maximum_distance is not None:
-        accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= maximum_distance)]
+        accessibility_output = accessibility_output[
+            (accessibility_output["distance_pt"] <= maximum_distance)
+        ]
     if transport_system is not None:
         if transport_system == "low-capacity":
-            accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 500)]
+            accessibility_output = accessibility_output[
+                (accessibility_output["distance_pt"] <= 500)
+            ]
         elif transport_system == "high-capacity":
-            accessibility_output = accessibility_output[(accessibility_output["distance_pt"] <= 1000)]
+            accessibility_output = accessibility_output[
+                (accessibility_output["distance_pt"] <= 1000)
+            ]
         else:
-            print("there is no such transport system. Please indicate either None, 'low-capacity' or 'high-capacity'")
+            print(
+                "there is no such transport system. Please indicate either None, 'low-capacity' or 'high-capacity'"
+            )
             sys.exit()
     return accessibility_output
 
@@ -319,14 +352,18 @@ def calculate_sdg(df_pop_total, pop_accessible, population_column, verbose=0):
     total_population = df_pop_total[population_column].sum()
     # if input is a list of dataframes (low- and high-capacity transit systems):
     if isinstance(pop_accessible, list):
-        if (population_column not in df_pop_total.columns) or (population_column not in pop_accessible[0]):
-            print(f"column {population_column} does not exist in both population datasets")
+        if (population_column not in df_pop_total.columns) or (
+            population_column not in pop_accessible[0]
+        ):
+            print(
+                f"column {population_column} does not exist in both population datasets"
+            )
             sys.exit()
 
         # concatenate dataframes
         df = pd.concat(pop_accessible)
         # drop duplicates:
-        df = df.drop_duplicates(subset=['index', 'o_id'])
+        df = df.drop_duplicates(subset=["index", "o_id"])
         # sum population of accessibility output:
         accessibility_output_population = df[population_column].sum()
         if verbose < 0:
@@ -337,8 +374,12 @@ def calculate_sdg(df_pop_total, pop_accessible, population_column, verbose=0):
         print("SDG 11.2.1 indicator is calculated")
     # if input is a single dataframe:
     else:
-        if (population_column not in df_pop_total.columns) or (population_column not in pop_accessible):
-            print(f"column {population_column} does not exist in both population datasets")
+        if (population_column not in df_pop_total.columns) or (
+            population_column not in pop_accessible
+        ):
+            print(
+                f"column {population_column} does not exist in both population datasets"
+            )
             sys.exit()
         # sum population of accessibility output:
         accessibility_output_population = pop_accessible[population_column].sum()
