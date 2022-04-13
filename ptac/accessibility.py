@@ -24,6 +24,8 @@ import glob
 global home_directory
 home_directory = Path.home()
 
+print(home_directory)
+
 
 def clear_directory(folder=f"{home_directory}/.ptac"):
     files = glob.glob(f"{folder}//*.csv")
@@ -73,6 +75,7 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
         if verbose > 0:
             print("No street network was specified. Loading osm network..\n")
         network_gdf = osm.get_network(boundary)
+        network_gdf = util.project_gdf(network_gdf, to_latlong=True)
         network_gdf = util.project_gdf(network_gdf, to_latlong=False)
 
     else:
@@ -109,7 +112,7 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
     network_gdf = pd.concat([network_gdf, network_gdf.geometry.bounds], axis=1)
     del network_gdf["geometry"]
     network_gdf.to_csv(f"{home_directory}/.ptac/network.csv", sep=";", header=False, index=False)
-    # return network_gdf
+    return network_gdf
 
 
 def build_request(epsg, number_of_threads,
@@ -140,14 +143,12 @@ def build_request(epsg, number_of_threads,
                       '--threads {number_of_threads} ' \
                       '--dropprevious ' \
                       '--date {date} ' \
-                      '--net file;"{home_directory}/.ptac/network.csv"'.format(
-        home_directory=home_directory,
-        current_path=current_path,
-        epsg=epsg,
-        number_of_threads=number_of_threads,
-        date=date,
-        start_time=int(start_time),
-    )
+                      '--net file;"{home_directory}/.ptac/network.csv"'.format(home_directory=home_directory,
+                                                                               current_path=current_path,
+                                                                               epsg=epsg,
+                                                                               number_of_threads=number_of_threads,
+                                                                               date=date,
+                                                                               start_time=int(start_time))
 
     return urmo_ac_request
 

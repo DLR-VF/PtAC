@@ -15,38 +15,6 @@ from pyproj import CRS
 
 
 # from osmnx
-def project_geometry(geometry, crs=None, to_crs=None, to_latlong=False):
-    """
-        Project a shapely Polygon or MultiPolygon from lat-long to UTM, or vice-versa
-
-        :param geometry: shapely Polygon or MultiPolygon the geometry to project
-        :type geometry: Geopandas.GeoDataFrame::POLYGON
-        :param crs: The starting coordinate reference system of the passed-in geometry,
-        default value (None) will set settings.default_crs as the CRS
-        :type crs: dict
-        :param to_crs: if not None, just project to this CRS instead of to UTM
-        :type to_crs: dict
-        :param to_latlong: if True, project from crs to lat-long, if False, project from crs to
-        local UTM zone
-        :type to_latlong: bool
-        :return: (geometry_proj, crs), the projected shapely geometry and the crs of the
-        projected geometry
-        :rtype: tuple
-    """
-
-    if crs is None:
-        crs = settings.default_crs
-
-    gdf = gpd.GeoDataFrame()
-    gdf.crs = crs
-    gdf.gdf_name = 'geometry to project'
-    gdf['geometry'] = None
-    gdf.loc[0, 'geometry'] = geometry
-    gdf_proj = project_gdf(gdf, to_crs=to_crs, to_latlong=to_latlong)
-    geometry_proj = gdf_proj['geometry'].iloc[0]
-    return geometry_proj, gdf_proj.crs
-
-
 def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
     """
         Project a GeoDataFrame to the UTM zone appropriate for its geometries'

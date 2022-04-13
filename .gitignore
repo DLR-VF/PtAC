@@ -1,5 +1,6 @@
 .temp
 .pytest_cache
+.mypy_cache
 tests/run_tests.bat
 *.vrt
 
@@ -90,6 +91,7 @@ nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
+.mypy/
 
 # Translations
 *.mo

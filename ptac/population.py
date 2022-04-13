@@ -5,7 +5,7 @@ import geopandas as gpd
 import numpy as np
 import pandas as pd
 import rasterio
-import time
+
 
 """Converts population raster dataset to population points"""
 
@@ -27,9 +27,8 @@ def raster_to_points(path, band=1, epsg=4326):
         :return: Point GeoDataFrame including Raster values of specific band
         :rtype: GeoPandas.GeoDataFrame:: Point
     """
-    start = time.time()
+
     with rasterio.open(path) as src:
-        crs = src.crs
         # create 1D coordinate arrays (coordinates of the pixel center)
         xmin, ymax = np.around(src.xy(0.00, 0.00), 9)  # src.xy(0, 0)
         xmax, ymin = np.around(src.xy(src.height-1, src.width-1), 9)  # src.xy(src.width-1, src.height-1)
@@ -43,16 +42,10 @@ def raster_to_points(path, band=1, epsg=4326):
         # Apply NoData mask
         mask = src.read_masks(1) > 0
         xs, ys, pop = xs[mask], ys[mask], pop[mask]
-    
-    data = {"X": pd.Series(xs.ravel()),"Y": pd.Series(ys.ravel()),"pop": pd.Series(pop.ravel())}
+
+    data = {"X": pd.Series(xs.ravel()), "Y": pd.Series(ys.ravel()), "pop": pd.Series(pop.ravel())}
     df = pd.DataFrame(data=data)
     df = df[df['pop'] > 0]
-    #print(df)
     geometry = gpd.points_from_xy(df.X, df.Y)
     geo_df = gpd.GeoDataFrame(df, crs=f"EPSG:{epsg}", geometry=geometry)
-    #print(gdf.head())
-    # geo_df.to_file('data/city_pop_points.gpkg', driver='GPKG')
-    #print('saved as gpkg')
-    # end = time.time()
-    # print(end-start)
     return geo_df
