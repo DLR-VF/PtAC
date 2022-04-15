@@ -1,23 +1,31 @@
+[tool.poetry]
+name = "ptac"
+version = "0.0.1"
+description = ""
+authors = ["Simon Nieland <Simon.Nieland@dlr.de>", "Serra Yosmaoglu <Serra.Yosmaoglu@dlr.de>]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.26"
+osmnx = "1.1.1"
+geopandas = "0.9.0"
+networkx = "^2.5"
+numpy = "1.20.3"
+Shapely = "1.7.1"
+pyproj = "3.1.0"
+rasterio = "1.2.4"
+pandas = "1.2.4"
+matplotlib = "^3.4"
+Rtree = "^0.9"
+
+[tool.poetry.dev-dependencies]
+pytest = "7.1.1"
+pytest-cov = "3.0.0"
+mypy = "0.910"
+# tox-conda = "0.9.2"
+tox = "3.24.5"
+flake8 = "4.0.1"
+
 [build-system]
-requires = ["setuptools>=62.0.0", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[tool.pytest.ini_options]
-addopts = "--cov=ptac"
-testpaths = [
-    "tests",
-]
-
-[tool.mypy]
-#mypy_path = "ptac"
-check_untyped_defs = true
-disallow_any_generics = true
-ignore_missing_imports = true
-no_implicit_optional = true
-show_error_codes = true
-strict_equality = true
-warn_redundant_casts = true
-warn_return_any = true
-warn_unreachable = true
-warn_unused_configs = true
-no_implicit_reexport = true
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
