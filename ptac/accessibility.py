@@ -21,8 +21,8 @@ import glob
 @copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
 """
 
-global home_directory
-home_directory = Path.home()
+#global home_directory
+home_directory = Path.home() #os.path.abspath('../../')  #Path.home()
 
 print(home_directory)
 
@@ -77,8 +77,8 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
         if verbose > 0:
             print("No street network was specified. Loading osm network..\n")
         network_gdf = osm.get_network(boundary)
-    network_gdf = util.project_gdf(network_gdf, to_latlong=True)
-    network_gdf = util.project_gdf(network_gdf, to_latlong=False)
+        network_gdf = util.project_gdf(network_gdf, to_latlong=True)
+        network_gdf = util.project_gdf(network_gdf, to_latlong=False)
 
     else:
         if verbose > 0:
@@ -145,18 +145,18 @@ def build_request(epsg, number_of_threads, date, start_time):
     current_path = os.path.dirname(os.path.abspath(__file__))
     urmo_ac_request = (
         "java -jar -Xmx12g {current_path}/urmoacjar/UrMoAC.jar "
-        '--from file;"{home_directory}/.ptac/origins.csv" '
+        '--from "file;{home_directory}/.ptac/origins.csv" '
         "--shortest "
-        '--to file;"{home_directory}/.ptac/destinations.csv" '
+        '--to "file;{home_directory}/.ptac/destinations.csv" '
         "--mode foot "
         "--time {start_time} "
         "--epsg {epsg} "
-        '--nm-output file;"{home_directory}/.ptac/sdg_output.csv" '
+        '--nm-output "file;{home_directory}/.ptac/sdg_output.csv" '
         "--verbose "
         "--threads {number_of_threads} "
         "--dropprevious "
         "--date {date} "
-        '--net file;"{home_directory}/.ptac/network.csv"'.format(
+        '--net "file;{home_directory}/.ptac/network.csv"'.format(
             home_directory=home_directory,
             current_path=current_path,
             epsg=epsg,
