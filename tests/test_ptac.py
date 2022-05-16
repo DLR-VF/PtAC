@@ -48,9 +48,9 @@ class PtACTest(unittest.TestCase):
             maximum_distance=500,
         )["pop"].sum()
         print(value2)
-        expected_value = 84902
-        self.assertEqual(round(value), expected_value)
-        self.assertEqual(round(value2), expected_value)
+        expected_value = 84901.69
+        self.assertEqual(round(value, 2), expected_value)
+        self.assertEqual(round(value2, 2), expected_value)
 
     def test_dist_to_closest_transport_system(self):
         self.set_up()
@@ -106,8 +106,8 @@ class PtACTest(unittest.TestCase):
         result = accessibility.calculate_sdg(
             value, [value_access_low, value_access_high], population_column="pop"
         )
-        expected_result = 0.9912564
-        self.assertEqual(result, expected_result)
+        expected_result = 0.9913
+        self.assertEqual(round(result, 4), expected_result)
 
     def test_prepare_network(self):
         self.set_up()
@@ -121,7 +121,7 @@ class PtACTest(unittest.TestCase):
         value = population.raster_to_points(self.raster)
         value = float(value["pop"].sum())
         expected_value = 88270.71
-        self.assertEqual(value, expected_value)
+        self.assertEqual(round(value, 2), expected_value)
 
     def test_get_network(self):
         self.set_up()
