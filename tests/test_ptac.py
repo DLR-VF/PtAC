@@ -21,7 +21,7 @@ location_point = (37.791427, -122.410018)
 # inheriting from unittest. TestCase gives access to a lot of different testing capabilities within the class
 class PtACTest(unittest.TestCase):
     def set_up(self):
-        self.data_path = str(THIS_DIR) #pathlib.Path(__file__).parent.absolute())
+        self.data_path = str(pathlib.Path(__file__).parent.absolute())
         self.pt = gpd.read_file(self.data_path + "/input_data/pt_example.gpkg")#.copy()
         #print(self.pt["osmid"].count())
         self.pt_low = gpd.read_file(self.data_path + "/input_data/pt_low_example.gpkg")#.copy()
@@ -133,12 +133,6 @@ class PtACTest(unittest.TestCase):
         expected_result = 0.9913
         self.assertEqual(round(result, 4), expected_result)
 
-    def test_prepare_network(self):
-        self.set_up()
-        df_prepare_network = accessibility.prepare_network(network_gdf=None, boundary=self.boundary)#["index"].count()
-        # expected_value = 58706
-        # self.assertEqual(value, expected_value)
-
     def test_raster_to_points(self):
         self.set_up()
         # value = ((population.raster_to_points(self.raster))["geometry"].type == "Point")
@@ -146,14 +140,6 @@ class PtACTest(unittest.TestCase):
         value = float(value["pop"].sum())
         expected_value = 88270.71
         self.assertEqual(round(value, 2), expected_value)
-
-    def test_get_network(self):
-        self.set_up()
-        df_osm_network = osm.get_network(
-            polygon=self.boundary, network_type="walk", custom_filter=None, verbose=0
-        ) #["osmid"].count()
-        # expected_value = 58706
-        # self.assertEqual(value, expected_value)
 
     def test_project_gdf(self):
         self.set_up()
