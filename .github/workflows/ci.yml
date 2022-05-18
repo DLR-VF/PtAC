@@ -25,7 +25,6 @@ jobs:
     - name: Install dependencies
       run: |
         curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-        poetry shell
         poetry install
     - name: Test with pytest
       run: poetry run pytest -v
