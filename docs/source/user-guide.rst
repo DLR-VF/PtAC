@@ -16,11 +16,11 @@ If you would prefer to set the JAVA_HOME (or JRE_HOME) variable via the command 
 
 * Open Command Prompt (make sure you Run as administrator so you're able to add a system environment variable).
 
-* Set the value of the environment variable to your JDK (or JRE) installation path as follows: 
+* Set the value of the environment variable to your JDK (or JRE) installation path as follows
 
   .. code-block:: bash
 
-     setx -m JAVA_HOME "C:\Progra~1\Java\jdk1.8.0_XX"
+     setx -m JAVA_HOME "C:\Program Files\Java\jdk1.8.0_XX"
 
 * Restart Command Prompt to reload the environment variables then use the following command to check the it's been added correctly.
   
@@ -129,6 +129,4 @@ Support
 
 If you have a usage question please contact us via email (simon.nieland@dlr.de,
 serra.yosmaoglu@dlr.de).
-
-
 
