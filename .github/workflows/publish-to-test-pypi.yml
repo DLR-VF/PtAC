@@ -1,10 +1,12 @@
-name: Publish Python 🐍 distributions 📦 to TestPyPI
+name: Publish Python distribution to PyTestPI #🐍 distributions 📦 to TestPyPI
 
 on:
   push:
     branches: [ continuous-integration ]
     tags:
       - '*.*.*'
+  pull_request:
+    branches: [ continuous-integration ]
 
 jobs:
   test:
