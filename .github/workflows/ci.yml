@@ -50,7 +50,7 @@ jobs:
         uses: JRubics/poetry-publish@v1.11
         with:
           python_version: "3.8"
-          pypi_token: ${{ secrets.TEST_PYPI_TOKEN }}
+          pypi_token: ${{ secrets.TEST_PYPI_API_KEY }}
           repository_name: "testpypi"
           repository_url: "https://test.pypi.org/legacy/"
           build_format: "sdist"
