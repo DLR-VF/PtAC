@@ -11,6 +11,8 @@ name: Test PtAC
 on:
   push:
     branches: [ continuous-integration ]
+    tags:
+      - "v*.*.*"
   pull_request:
     branches: [ continuous-integration ]
 # Allows you to run this workflow manually from the Actions tab
@@ -45,13 +47,13 @@ jobs:
 
       # Upload to TestPyPI
       - name: Build and Upload Publish Python 🐍 distributions 📦 to TestPyPI
-        run: |
-          python3 setup.py sdist bdist_wheel
-          python3 -m twine upload dist/*
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_KEY }}
-          TWINE_REPOSITORY: testpypi
+        uses: JRubics/poetry-publish@v1.11
+        with:
+          python_version: "3.8"
+          pypi_token: ${{ secrets.TEST_PYPI_TOKEN }}
+          repository_name: "testpypi"
+          repository_url: "https://test.pypi.org/legacy/"
+          build_format: "sdist"
 #jobs:
 #  test:
 #    runs-on: ubuntu-latest
