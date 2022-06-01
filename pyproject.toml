@@ -1,9 +1,12 @@
 [tool.poetry]
 name = "ptac"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Simon Nieland <Simon.Nieland@dlr.de>", 
            "Serra Yosmaoglu <Serra.Yosmaoglu@dlr.de>"]
+licence = "Eclipse Public License 2.0 (EPL-2.0)"
+readme = "README.md"
+include = ["CHANGELOG.md"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
