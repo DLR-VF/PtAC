@@ -31,9 +31,9 @@ def clear_directory(folder=f"{home_directory}/.ptac"):
             print("Error: %s : %s" % (f, e.strerror))
 
 
-def prepare_origins_and_destinations(dest_gdf, od="origin"):
+def prepare_origins_and_destinations(dest_gdf, od="origin", verbose=0):
     """
-        prepares origin or desination data set for usage in UrMoAC
+        prepares origin or destination data set for usage in UrMoAC
 
         :param dest_gdf: origin or destination point data set (must be projected in UTM Projection)
         :type dest_gdf: Geopandas.GeoDataFrame:POINT
@@ -45,9 +45,13 @@ def prepare_origins_and_destinations(dest_gdf, od="origin"):
     dest_gdf["y"] = dest_gdf.geometry.centroid.y
     dest_gdf = dest_gdf[["x", "y"]]
     if od == "origin":
+        if verbose>1:
+            print("preparing origin geometries")
         dest_gdf = dest_gdf.dropna()
         dest_gdf.to_csv(f"{home_directory}/.ptac/origins.csv", sep=";", header=False)
     if od == "destination":
+        if verbose>1:
+            print("preparing destination geometries")
         dest_gdf.to_csv(f"{home_directory}/.ptac/destinations.csv", sep=";", header=False)
 
 
@@ -223,8 +227,8 @@ def distance_to_closest(start_geometries,
     destination_geometries = destination_geometries.reset_index()
 
     # write origins and destinations to disk
-    prepare_origins_and_destinations(destination_geometries, od="destination")
-    prepare_origins_and_destinations(start_geometries, od="origin")
+    prepare_origins_and_destinations(destination_geometries, od="destination", verbose=verbose)
+    prepare_origins_and_destinations(start_geometries, od="origin", verbose=verbose)
 
     epsg = destination_geometries.crs.to_epsg()
     # build UrMoAC request
