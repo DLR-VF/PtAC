@@ -24,9 +24,6 @@ import glob
 #global home_directory
 home_directory = Path.home() #os.path.abspath('../../')  #Path.home()
 
-print(home_directory)
-
-
 def clear_directory(folder=f"{home_directory}/.ptac"):
     files = glob.glob(f"{folder}//*.csv")
     for f in files:
@@ -108,8 +105,7 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
     )
     network_gdf = network_gdf.reset_index()
     network_gdf = network_gdf[
-        [
-            "index",
+        ["index",
             "fromnode",
             "tonode",
             "mode_walk",

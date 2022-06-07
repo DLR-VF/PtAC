@@ -6,52 +6,37 @@ import unittest
 import geopandas as gpd
 import ptac.accessibility as accessibility
 import ptac.population as population
-import ptac.osm as osm
 import ptac.util as util
 import pathlib
-from pathlib import Path
 import os
 
-THIS_DIR = os.path.dirname(os.path.abspath(__file__))
-# print(THIS_DIR)
-
-# define queries to use throughout tests
-location_point = (37.791427, -122.410018)
 
 # inheriting from unittest. TestCase gives access to a lot of different testing capabilities within the class
 class PtACTest(unittest.TestCase):
     def set_up(self):
         self.data_path = str(pathlib.Path(__file__).parent.absolute())
-        self.pt = gpd.read_file(self.data_path + "/input_data/pt_example.gpkg")#.copy()
-        #print(self.pt["osmid"].count())
-        self.pt_low = gpd.read_file(self.data_path + "/input_data/pt_low_example.gpkg")#.copy()
-        self.pt_high = gpd.read_file(self.data_path + "/input_data/pt_high_example.gpkg")#.copy()
-        #print("count pt_low: ", self.pt_low["osmid"].count())
-        #print("count pt_high: ", self.pt_high["osmid"].count())
-        self.pop = gpd.read_file(self.data_path + "/input_data/population_example.gpkg")#.copy()
-        #print("sum pop: ", self.pop["pop"].sum())
-        self.net = gpd.read_file(self.data_path + "/input_data/net_example.gpkg")#.copy()
-        #print("count network: ", self.net["osmid"].count())
-        self.boundary = gpd.read_file(self.data_path + "/input_data/boundary_example.gpkg")
-        #self.boundary = gpd.GeoDataFrame(
-        #    index=[0], crs="epsg:4326", geometry=[self.pop.unary_union]
-        #)
-        #self.net = osm.get_network(self.boundary)
-        self.raster = self.data_path + "/input_data/friedrichshain_raster.tif"
+        self.pt = gpd.read_file(self.data_path + "/input_data/pt_test.gpkg")
+        self.pt_low = gpd.read_file(self.data_path + "/input_data/pt_low_test.gpkg")
+        self.pt_high = gpd.read_file(self.data_path + "/input_data/pt_high_test.gpkg")
+        self.pop = gpd.read_file(self.data_path + "/input_data/pop_test.gpkg")
+        self.net = gpd.read_file(self.data_path + "/input_data/net_test.gpkg")
+        self.boundary = gpd.read_file(self.data_path + "/input_data/pop_test.gpkg")
+        self.raster = self.data_path + "/input_data/raster_test.tif"
 
     def test_prepare_network(self):
         self.set_up()
-        df_prepare_network = accessibility.prepare_network(network_gdf=None, boundary=self.boundary)
+        df_prepare_network = accessibility.prepare_network(network_gdf=self.net, boundary=self.boundary)
         value = df_prepare_network["index"].count()
-        # expected_value = 59432
-        # self.assertEqual(value, expected_value)
+        self.assertEqual(value, 50)
 
-    def test_get_network(self):
+    def test_network_colums(self):
+        # test if network dataset contains necessary columns
         self.set_up()
-        df_osm_network = osm.get_network(polygon=self.boundary, network_type="walk", custom_filter=None, verbose=0)
-        value = df_osm_network["osmid"].count()
-        # expected_value = 59432
-        # self.assertEqual(value, expected_value)
+        df_prepare_network = accessibility.prepare_network(network_gdf=self.net, boundary=self.boundary)
+        diff_columns = len(list(set(["index", "fromnode", "tonode", "mode_walk", "mode_bike", "mode_mit", "vmax", "length"]) \
+            - set(df_prepare_network.columns)))
+        accessibility.clear_directory()
+        self.assertEqual(diff_columns, 0)
 
     def test_dist_to_closest_max_dist(self):
         self.set_up()
@@ -59,22 +44,11 @@ class PtACTest(unittest.TestCase):
             self.pop,
             self.pt,
             network_gdf=self.net,
-            maximum_distance=500,
+            maximum_distance=50,
         )
-        # value = df_accessibility["pop"].sum()
-        # expected_value = 84902
-        # self.assertEqual(round(value), expected_value)
-
-    #def test_dist_to_closest_max_dist2(self):
-    #    value2 = accessibility.distance_to_closest(
-    #        self.pop,
-    #        self.pt,
-    #        network_gdf=None,
-    #        boundary_geometries=self.boundary,
-    #        maximum_distance=500,
-    #    )["pop"].sum()
-    #    expected_value = 84902
-    #    self.assertEqual(round(value2), expected_value)
+        value = df_accessibility["pop"].sum()
+        expected_value = 199
+        self.assertEqual(round(value), expected_value)
 
     def test_dist_to_closest_transport_system_low(self):
         self.set_up()
@@ -84,10 +58,10 @@ class PtACTest(unittest.TestCase):
             network_gdf=self.net,
             transport_system="low-capacity"
         )
-        # value = df_accessibility["pop"].sum()
-        # expected_value = 67933
-        # self.assertEqual(round(value), expected_value)
-        
+        value = df_accessibility["pop"].sum()
+        expected_value = 217
+        self.assertEqual(round(value), expected_value)
+
     def test_dist_to_closest_transport_system_high(self):
         self.set_up()
         df_accessibility = accessibility.distance_to_closest(
@@ -96,22 +70,9 @@ class PtACTest(unittest.TestCase):
             network_gdf=self.net,
             transport_system="high-capacity",
         )
-        # value = df_accessibility["pop"].sum()
-        # expected_value = 83298
-        # self.assertEqual(round(value), expected_value)
-
-    #def test_dist_to_closest_transport_system_high2(self):
-    #    self.set_up()
-    #    df_accessibility = accessibility.distance_to_closest(
-    #        self.pop,
-    #        self.pt_high,
-    #        network_gdf=None,
-    #        boundary_geometries=self.boundary,
-    #        transport_system="high-capacity",
-    #    )
-    #    value = df_accessibility["pop"].sum()
-    #    expected_value = 83298
-    #    self.assertEqual(round(value), expected_value)
+        value = df_accessibility["pop"].sum()
+        expected_value = 217
+        self.assertEqual(round(value), expected_value)
 
     def test_calculate_sdg(self):
         self.set_up()
@@ -129,26 +90,23 @@ class PtACTest(unittest.TestCase):
         )
         value = self.pop
         result = accessibility.calculate_sdg(
-                value, [df_accessibility_low, df_accessibility_high], population_column="pop"
+            value, [df_accessibility_low, df_accessibility_high], population_column="pop"
         )
-        # expected_result = 0.9912 # 3
-        # self.assertEqual(round(result, 4), expected_result)
+        self.assertEqual(round(result, 4), 0.957)
 
     def test_raster_to_points(self):
         self.set_up()
         # value = ((population.raster_to_points(self.raster))["geometry"].type == "Point")
         value = population.raster_to_points(self.raster)
         value = float(value["pop"].sum())
-        expected_value = 88270.71
-        self.assertEqual(round(value, 2), expected_value)
+        self.assertEqual(round(value), 227)
 
     def test_project_gdf(self):
         self.set_up()
         value = util.project_gdf(
             gdf=self.pop, geom_col="geometry", to_crs=None, to_latlong=False
         ).crs
-        expected_value = "epsg:32633"
-        self.assertEqual(value, expected_value)
+        self.assertEqual(value, "epsg:32633")
 
 
 if __name__ == "__main__":
