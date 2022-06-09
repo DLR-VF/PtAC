@@ -10,7 +10,7 @@ import ptac.util as util
 import pathlib
 import os
 
-
+# todo: check columns
 # inheriting from unittest. TestCase gives access to a lot of different testing capabilities within the class
 class PtACTest(unittest.TestCase):
     def set_up(self):
@@ -75,6 +75,7 @@ class PtACTest(unittest.TestCase):
         self.assertEqual(round(value), expected_value)
 
     def test_calculate_sdg(self):
+        #todo: why it is not 100%?
         self.set_up()
         df_accessibility_low = accessibility.distance_to_closest(
             self.pop,
