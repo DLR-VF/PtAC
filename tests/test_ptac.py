@@ -63,8 +63,11 @@ class PtACTest(unittest.TestCase):
             transport_system="low-capacity"
         )
         value = df_accessibility["pop"].sum()
-        expected_value = 217
-        self.assertEqual(round(value), expected_value)
+
+        if sys.platform.startswith('win'):
+            self.assertEqual(round(value), 217)
+        elif sys.platform.startswith('linux'):
+            self.assertEqual(round(value), 218)
 
     def test_dist_to_closest_transport_system_high(self):
         self.set_up()
@@ -111,11 +114,8 @@ class PtACTest(unittest.TestCase):
         # value = ((population.raster_to_points(self.raster))["geometry"].type == "Point")
         value = population.raster_to_points(self.raster)
         value = float(value["pop"].sum())
+        self.assertEqual(round(value), 227)
 
-        if sys.platform.startswith('win'):
-            self.assertEqual(round(value), 217)
-        elif sys.platform.startswith('linux'):
-            self.assertEqual(round(value), 218)
 
     def test_project_gdf(self):
         self.set_up()
