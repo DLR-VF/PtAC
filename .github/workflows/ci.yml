@@ -9,6 +9,7 @@
 
 # todo: why do the tests  fail on ubuntu and not on windows
 # include workflow for miniconda environment
+# todo: change installation for windows
 name: Test PtAC
 
 on:
@@ -41,23 +42,22 @@ jobs:
       # Installs and upgrades pip, installs other dependencies and installs the package from setup.py
       - name: Install dependencies
         run: |
-      # todo: change installation for windows
-          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+          python -m pip install poetry
           poetry install
 
       # Test with poetry pytest
       - name: Test with pytest
         run: poetry run pytest -v
 
-      # Upload to TestPyPI
-      - name: Build and Upload Publish Python 🐍 distributions 📦 to TestPyPI
-        uses: JRubics/poetry-publish@v1.11
-        with:
-          python_version: "3.8"
-          pypi_token: ${{ secrets.TEST_PYPI_API_KEY }}
-          repository_name: "testpypi"
-          repository_url: "https://test.pypi.org/legacy/"
-          build_format: "sdist"
+#      # Upload to TestPyPI
+#      - name: Build and Upload Publish Python 🐍 distributions 📦 to TestPyPI
+#        uses: JRubics/poetry-publish@v1.11
+#        with:
+#          python_version: "3.8"
+#          pypi_token: ${{ secrets.TEST_PYPI_API_KEY }}
+#          repository_name: "testpypi"
+#          repository_url: "https://test.pypi.org/legacy/"
+#          build_format: "sdist"
 #jobs:
 #  test:
 #    runs-on: ubuntu-latest
