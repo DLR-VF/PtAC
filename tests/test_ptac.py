@@ -116,7 +116,6 @@ class PtACTest(unittest.TestCase):
         value = float(value["pop"].sum())
         self.assertEqual(round(value), 227)
 
-
     def test_project_gdf(self):
         self.set_up()
         value = util.project_gdf(
