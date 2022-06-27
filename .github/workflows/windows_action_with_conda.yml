@@ -1,4 +1,4 @@
-name: Github Actions in Windows
+name: Github Actions in Windows for PtAC
 
 on:
   push:
