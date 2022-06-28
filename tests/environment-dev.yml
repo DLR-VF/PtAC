@@ -5,25 +5,18 @@ channels:
 
 dependencies:
     # required
+    - osmnx
     - geopandas
-    - matplotlib
     - networkx
     - numpy
     - pandas
     - pyproj
-    - requests
-    - Rtree
-    - Shapely
-
-    # extras
-    - folium
-    - gdal
     - rasterio
-    - scikit-learn
-    - scipy
+    - Shapely
 
     # linting/testing
     - black=22.*
+    - pylint
     - coverage
     - flake8
     - flake8-bugbear
