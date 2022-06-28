@@ -49,27 +49,31 @@ jobs:
           miniforge-variant: ${{ matrix.miniforge-variant }}
           miniforge-version: ${{ matrix.miniforge-version }}
 
-      - name: Install OSMnx
+      # Installs and upgrades pip, installs other dependencies and installs the package from setup.py
+      - name: Install dependencies
         run: |
-          python setup.py install
-          conda list
-          conda info --all
+          python -m pip install poetry
+          poetry install
 
-      - name: Lint code
-        run: |
-          isort . --check-only
-          black . --line-length 100 --check --diff
-          flake8 .
-          pydocstyle .
+      # Test with poetry pytest
+      - name: Test with pytest
+        run: poetry run pytest -v
 
-      - name: Test docs
-        run: make -C ./docs html
+      #- name: Lint code
+        #run: |
+          #isort . --check-only
+          #black . --line-length 100 --check --diff
+          #flake8 .
+          #pydocstyle .
 
-      - name: Test code
-        run: |
-          coverage run --source ./ptac --module pytest --verbose
-          coverage xml -i
-          coverage report -m
+      #- name: Test docs
+        #run: make -C ./docs html
 
-      - name: Upload coverage report
-        uses: codecov/codecov-action@v1
+      #- name: Test code
+        #run: |
+          #coverage run --source ./ptac --module pytest --verbose
+          #coverage xml -i
+          #coverage report -m
+
+      #- name: Upload coverage report
+        #uses: codecov/codecov-action@v1
