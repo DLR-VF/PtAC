@@ -20,6 +20,12 @@ jobs:
         run: |
           conda info
           conda list
+      - name: Install PtAC
+        run: |
+          python setup.py install
+          conda list
+          conda info --all
+
       - name: Lint
         shell: bash -l {0}
         run: |

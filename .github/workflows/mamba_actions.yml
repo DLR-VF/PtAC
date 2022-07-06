@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.8', '3.9', '3.10']
+        python-version: ['3.8'] #, '3.9', '3.10']
         os: [ubuntu-latest]
         include:
           - os: ubuntu-latest
@@ -61,6 +61,7 @@ jobs:
           black . --line-length 100 --check --diff
           flake8 .
           pydocstyle .
+      
       - name: Test docs
         run: make -C ./docs html
 
