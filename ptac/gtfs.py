@@ -140,7 +140,7 @@ class Feed(object):
 
     def _stops_to_gdf(self, crs=settings.default_crs):
         """
-
+        # todo: docstrings
         :param crs:
         """
         # todo: docstrings
