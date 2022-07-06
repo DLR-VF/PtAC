@@ -8,9 +8,9 @@ import os
 from setuptools import setup
 
 
-# def readme():
-    # with open("README.md") as f:
-        # return f.read()
+def readme():
+    with open("README.md") as f:
+        return f.read()
 
 
 # if __name__ == "__main__":
@@ -30,8 +30,8 @@ setup(
             'Programming Language :: Python :: 3',
             'Operating System :: OS Independent',
             'License :: OSI Approved :: Eclipse Public License 2.0 (EPL-2.0)'
-            ],
-        )
+            ]
+    )
 #         licence="Eclipse Public License 2.0 (EPL-2.0)",
 #         include_package_data=True,
 #         packages=find_packages(exclude=["test"]),

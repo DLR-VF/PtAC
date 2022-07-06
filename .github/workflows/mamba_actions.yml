@@ -23,7 +23,7 @@ jobs:
         os: [ubuntu-latest]
         include:
           - os: ubuntu-latest
-            environment-file: environment/windows/environment.yml
+            environment-file: tests/environment.yml
             miniforge-variant: Mambaforge
             miniforge-version: 4.9.2-4
 
@@ -48,7 +48,7 @@ jobs:
           environment-file: ${{ matrix.environment-file }}
           miniforge-variant: ${{ matrix.miniforge-variant }}
           miniforge-version: ${{ matrix.miniforge-version }}
-      
+
       - name: Install PtAC
         run: |
           python setup.py install
