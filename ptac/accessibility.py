@@ -196,7 +196,7 @@ def distance_to_closest(
         :type transport_system: str
         :param number_of_threads: The number of threads to use
         :type number_of_threads: int
-        :param date: date on which the routing starts (e.g. 20200915)
+        :param date: date on which the routing starts (e.g. 20200915) (not implemented yet)
         :type date: int
         :param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
         :type verbose: int
