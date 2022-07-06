@@ -24,9 +24,6 @@ import glob
 #global home_directory
 home_directory = Path.home() #os.path.abspath('../../')  #Path.home()
 
-print(home_directory)
-
-
 def clear_directory(folder=f"{home_directory}/.ptac"):
     files = glob.glob(f"{folder}//*.csv")
     for f in files:
@@ -108,8 +105,7 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
     )
     network_gdf = network_gdf.reset_index()
     network_gdf = network_gdf[
-        [
-            "index",
+        ["index",
             "fromnode",
             "tonode",
             "mode_walk",
@@ -200,7 +196,7 @@ def distance_to_closest(
         :type transport_system: str
         :param number_of_threads: The number of threads to use
         :type number_of_threads: int
-        :param date: date on which the routing starts (e.g. 20200915)
+        :param date: date on which the routing starts (e.g. 20200915) (not implemented yet)
         :type date: int
         :param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
         :type verbose: int
@@ -247,10 +243,6 @@ def distance_to_closest(
     # generate unique ids for origins and destinations
     start_geometries = start_geometries.reset_index()
     destination_geometries = destination_geometries.reset_index()
-    destination_geometries = destination_geometries.reset_index()
-    del destination_geometries["index"]
-    destination_geometries["index"] = destination_geometries["level_0"]
-    del destination_geometries["level_0"]
 
     # write origins and destinations to disk
     prepare_origins_and_destinations(destination_geometries, od="destination")

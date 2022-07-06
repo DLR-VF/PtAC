@@ -6,15 +6,19 @@
 #      run: poetry run pytest -v
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+# todo: why do the tests  fail on ubuntu and not on windows
+# include workflow for miniconda environment
+# todo: change installation for windows
 name: Test PtAC
 
 on:
   push:
-    branches: [ continuous-integration ]
+    branches: [ continuous-integration-sn ]
     tags:
       - "v*.*.*"
   pull_request:
-    branches: [ continuous-integration ]
+    branches: [ continuous-integration-sn ]
 # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -23,7 +27,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -45,15 +49,15 @@ jobs:
       - name: Test with pytest
         run: poetry run pytest -v
 
-      # Upload to TestPyPI
-      - name: Build and Upload Publish Python 🐍 distributions 📦 to TestPyPI
-        uses: JRubics/poetry-publish@v1.11
-        with:
-          python_version: "3.8"
-          pypi_token: ${{ secrets.TEST_PYPI_API_KEY }}
-          repository_name: "testpypi"
-          repository_url: "https://test.pypi.org/legacy/"
-          build_format: "sdist"
+#      # Upload to TestPyPI
+#      - name: Build and Upload Publish Python 🐍 distributions 📦 to TestPyPI
+#        uses: JRubics/poetry-publish@v1.11
+#        with:
+#          python_version: "3.8"
+#          pypi_token: ${{ secrets.TEST_PYPI_API_KEY }}
+#          repository_name: "testpypi"
+#          repository_url: "https://test.pypi.org/legacy/"
+#          build_format: "sdist"
 #jobs:
 #  test:
 #    runs-on: ubuntu-latest
