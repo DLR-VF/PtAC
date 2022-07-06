@@ -62,8 +62,8 @@ jobs:
       #flake8 .
       #pydocstyle .
       
-      - name: Test docs
-        run: make -C ./docs html
+      #- name: Test docs
+      #run: make -C ./docs html
 
       - name: Test code
         run: |

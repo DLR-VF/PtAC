@@ -16,10 +16,12 @@ jobs:
           environment-file: tests/environment-dev.yml
           python-version: 3.8
           auto-activate-base: false
+      
       - shell: bash -l {0}
         run: |
           conda info
           conda list
+
       - name: Install PtAC
         run: |
           python setup.py install
@@ -32,6 +34,7 @@ jobs:
             conda install flake8
             python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
             python -m flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      
       - name: Run pytest
         shell: bash -l {0}
         run: |
