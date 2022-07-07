@@ -1,7 +1,7 @@
 name: ptac-dev
 
-channels:
-    - conda-forge
+  #channels:
+  #- conda-forge
 
 dependencies:
     # required
@@ -25,4 +25,3 @@ dependencies:
     - pytest
     - sphinx
     - sphinx_rtd_theme
-    - numpy.core._multiarray_umath
