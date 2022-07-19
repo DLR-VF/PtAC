@@ -1,0 +1,27 @@
+name: test #ptac-dev
+
+  #channels:
+  #- conda-forge
+
+dependencies:
+    # required
+    - osmnx
+    - geopandas
+    - networkx
+    - numpy
+    - pandas
+    - pyproj
+    - rasterio
+    - Shapely
+
+    # linting/testing
+    - black=22.*
+    - pylint
+    - coverage
+    - flake8
+    - flake8-bugbear
+    - isort
+    - pydocstyle
+    - pytest
+    - sphinx
+    - sphinx_rtd_theme
