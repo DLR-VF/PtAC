@@ -1,4 +1,4 @@
-name: ptac-dev
+name: base #ptac-dev
 
   #channels:
   #- conda-forge
