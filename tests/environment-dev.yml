@@ -15,11 +15,9 @@ dependencies:
     - Shapely
 
     # linting/testing
-    - black=22.*
     - pylint
     - coverage
     - flake8
-    - flake8-bugbear
     - isort
     - pydocstyle
     - pytest
