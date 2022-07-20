@@ -15,6 +15,14 @@ def readme():
 
 # if __name__ == "__main__":
 #    setup()
+
+# only specify install_requires if not in RTD environment
+if os.getenv("READTHEDOCS") == "True":
+    INSTALL_REQUIRES = []
+else:
+    with open("requirements.txt") as f:
+        INSTALL_REQUIRES = [line.strip() for line in f.readlines()]
+
 setup(
         name="ptac",
         version="0.1.0",
@@ -23,8 +31,10 @@ setup(
         long_description=readme(),
         long_description_content_type='text/markdown',
         url="https://github.com/DLR-VF/PtAC",
+        platforms="any",
         packages=["ptac"],
         python_requires=">=3.8",
+        install_requires=INSTALL_REQUIRES,
         classifiers=[
             'Development Status :: 5 - Production/Stable',
             'Programming Language :: Python :: 3',
