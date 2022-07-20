@@ -22,7 +22,7 @@ jobs:
         python-version: 3.8
     - name: Install dependencies
       run: |
-        C:\Miniconda\condabin\conda.bat env update --file etc/environment-dev.yml --name base
+        C:\Miniconda\condabin\conda.bat env update --file etc/environment-dev.yml --name ptac-dev
         C:\Miniconda\condabin\conda.bat init powershell
     - name: Install PtAC
       run: |
@@ -32,8 +32,8 @@ jobs:
     - name: Lint with flake8
       run: |
         # Activate the base environment
-        C:\Miniconda\condabin\conda.bat activate base
-        C:\Miniconda\condabin\conda.bat install flake8
+        C:\Miniconda\condabin\conda.bat activate ptac-dev
+        # C:\Miniconda\condabin\conda.bat install flake8
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
@@ -41,6 +41,6 @@ jobs:
     - name: Test with pytest
       run: |
         # Activate the base environment
-        C:\Miniconda\condabin\conda.bat activate base
-        C:\Miniconda\condabin\conda.bat install pytest
+        C:\Miniconda\condabin\conda.bat activate ptac-dev
+        #C:\Miniconda\condabin\conda.bat install pytest
         pytest

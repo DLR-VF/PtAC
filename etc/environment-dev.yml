@@ -2,19 +2,22 @@ name: ptac-dev
 
 channels:
   - conda-forge
+  - defaults
 
 dependencies:
     # required
-    - osmnx
-    - geopandas
-    - networkx
-    - numpy
-    - pandas
-    - pyproj
-    - rasterio
-    - Shapely
-
-    # linting/testing
+    - python=3.8
+    - osmnx==1.1.1
+    - networkx>=2.5
+    - numpy==1.20.3
+    - Shapely==1.7.1
+    - pyproj==3.1.0
+    - geopandas==0.9.0
+    - rasterio==1.2.4
+    - pandas==1.2.4
+    # - rasterio
+      
+  # linting/testing
     - pylint
     - coverage
     - flake8
