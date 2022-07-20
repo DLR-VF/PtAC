@@ -24,6 +24,11 @@ jobs:
       run: |
         C:\Miniconda\condabin\conda.bat env update --file etc/environment-dev.yml --name ptac-dev
         C:\Miniconda\condabin\conda.bat init powershell
+    - name: Install PtAC
+      run: |
+          python setup.py install
+          conda list
+          conda info --all
     - name: Lint with flake8
       run: |
         # Activate the base environment
