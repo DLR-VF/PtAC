@@ -1,4 +1,4 @@
-name: Github Actions in Windows
+name: Use Setup-Miniconda in Windows 
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
         python-version: 3.8
     - name: Install dependencies
       run: |
-        C:\Miniconda\condabin\conda.bat env update --file tests/environment-dev.yml --name base
+        C:\Miniconda\condabin\conda.bat env update --file etc/environment-dev.yml --name ptac-dev
         C:\Miniconda\condabin\conda.bat init powershell
     - name: Lint with flake8
       run: |

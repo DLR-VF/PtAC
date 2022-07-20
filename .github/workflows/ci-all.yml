@@ -1,4 +1,4 @@
-name: Use Setup-Miniconda for all OSs
+name: Use Setup-Miniconda in Linux & Windows
 on:
   push:
     branches: [ continuous-integration ]
@@ -20,8 +20,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: conda-incubator/setup-miniconda@v2
         with:
-          activate-environment: base
-          environment-file: tests/environment-dev.yml
+          activate-environment: ptac-dev
+          environment-file: etc/environment-dev.yml
           python-version: 3.8
           auto-activate-base: false
       - shell: bash -l {0}

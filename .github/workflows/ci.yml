@@ -1,4 +1,4 @@
-name: Test PtAC with Mamba
+name: Test PtAC with Mamba in Linux
 
 on:
   push:
@@ -20,14 +20,10 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ['3.8', '3.9', '3.10']
-        os: ["ubuntu-latest", "windows-latest"]
+        os: ["ubuntu-latest"]
         include:
           - os: ubuntu-latest
-            environment-file: tests/environment-dev.yml
-            miniforge-variant: Mambaforge
-            miniforge-version: 4.9.2-4
-          - os: windows-latest
-            environment-file: tests/environment-dev.yml
+            environment-file: etc/environment-dev.yml
             miniforge-variant: Mambaforge
             miniforge-version: 4.9.2-4
 
