@@ -15,9 +15,12 @@ dependencies:
     - geopandas==0.9.0
     - rasterio==1.2.4
     - pandas==1.2.4
-    # - rasterio
-      
-  # linting/testing
+  
+    # extras
+    - gdal
+    - rasterio
+
+    # linting/testing
     - pylint
     - coverage
     - flake8

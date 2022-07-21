@@ -26,7 +26,7 @@ setup(
         url="https://github.com/DLR-VF/PtAC",
         platforms="any",
         packages=["ptac"],
-        python_requires=">=3.8",
+        #python_requires=">=3.8",
         #install_requires=INSTALL_REQUIRES,
         classifiers=[
             'Development Status :: 5 - Production/Stable',
