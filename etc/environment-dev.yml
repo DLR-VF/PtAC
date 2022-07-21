@@ -29,3 +29,4 @@ dependencies:
     - pytest
     - sphinx
     - sphinx_rtd_theme
+    - setuptools
