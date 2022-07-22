@@ -1,4 +1,4 @@
-name: Test PtAC with Mamba in Linux
+name: Test PtAC with Mamba in Linux & Windows
 
 on:
   push:
