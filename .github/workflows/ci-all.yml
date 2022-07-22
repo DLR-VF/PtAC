@@ -25,7 +25,8 @@ jobs:
           python-version: 3.8
           auto-activate-base: false
       - name: Install PtAC
-        python setup.py install
+        run: | 
+          python setup.py install
       - shell: bash -l {0}
         run: |
           conda info
