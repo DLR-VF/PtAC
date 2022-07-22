@@ -19,8 +19,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.8', '3.9', '3.10']
-        os: ["ubuntu-latest", "windows-latst"]
+        python-version: ['3.8'] # , '3.9', '3.10']
+        os: ["ubuntu-latest", "windows-latest"]
         include:
           - os: ubuntu-latest
             environment-file: etc/environment-dev.yml
