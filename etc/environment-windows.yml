@@ -8,12 +8,13 @@ dependencies:
     # required
     # - python=3.8
     - osmnx==1.1.1
-    - networkx>=2.5
-    - numpy #==1.20.3
-    - pandas==1.2.4
-    - Shapely==1.7.1
-    - pyproj==3.1.0
+    - networkx #>=2.5
+    - numpy #>=1.20.3
+    - pandas #==1.2.4
+    - Shapely #==1.7.1
+    - pyproj #==3.1.0
     - geopandas==0.9.0
+    - setuptools
 
     # extras
     - folium
@@ -31,4 +32,3 @@ dependencies:
     - pytest
     - sphinx
     - sphinx_rtd_theme
-    - setuptools

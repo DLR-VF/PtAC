@@ -20,12 +20,12 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ['3.8'] # , '3.9', '3.10']
-        os: ["ubuntu-latest", "windows-latest"]
+        os: ["windows-latest"]
         include:
-          - os: ubuntu-latest
-            environment-file: etc/environment-linux.yml
-            miniforge-variant: Mambaforge
-            miniforge-version: 4.9.2-4
+          #- os: ubuntu-latest
+          #environment-file: etc/environment-linux.yml
+          #miniforge-variant: Mambaforge
+          #miniforge-version: 4.9.2-4
           - os: windows-latest
             environment-file: etc/environment-windows.yml
             miniforge-variant: Mambaforge
