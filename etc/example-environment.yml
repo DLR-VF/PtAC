@@ -6,4 +6,4 @@ dependencies:
   - anaconda-client
   - pip
   - pip:
-      - -r ../../requirements.txt
+      - -r requirements.txt
