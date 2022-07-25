@@ -27,7 +27,7 @@ jobs:
           #miniforge-variant: Mambaforge
           #miniforge-version: 4.9.2-4
           - os: windows-latest
-            environment-file: etc/environment-windows.yml
+            environment-file: etc/example-environment.yml #-windows.yml
             miniforge-variant: Mambaforge
             miniforge-version: 4.9.2-4
 

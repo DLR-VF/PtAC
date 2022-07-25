@@ -24,7 +24,7 @@ setup(
         long_description=readme(),
         long_description_content_type='text/markdown',
         url="https://github.com/DLR-VF/PtAC",
-        platforms="any",
+        #platforms="any",
         packages=["ptac"],
         #python_requires=">=3.8",
         #install_requires=INSTALL_REQUIRES,
