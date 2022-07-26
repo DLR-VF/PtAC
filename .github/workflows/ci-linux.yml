@@ -20,9 +20,13 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ['3.8', '3.9', '3.10']
-        os: ["ubuntu-latest"]
+        # os: ["ubuntu-latest"]
         include:
           - os: ubuntu-latest
+            environment-file: environment.yml
+            miniforge-variant: Mambaforge
+            miniforge-version: 4.9.2-4
+          - os: macos-latest
             environment-file: environment.yml
             miniforge-variant: Mambaforge
             miniforge-version: 4.9.2-4
@@ -62,7 +66,7 @@ jobs:
           python -m flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test code
         run: |
-          pytest ./tests
+          pytest
           #coverage run --source ./ptac --module pytest --verbose
           #coverage xml -i
           #coverage report -m 
