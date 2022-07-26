@@ -7,7 +7,6 @@ channels:
 dependencies:
     # required
     # - python=3.8
-    - pip
     - osmnx==1.1.1
     - networkx #>=2.5
     - numpy>=1.22

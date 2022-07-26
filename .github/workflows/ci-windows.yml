@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.9'] # , '3.9', '3.10']
+        python-version: ['3.8'] # , '3.9', '3.10']
         os: ["windows-latest"]
         include:
           #- os: ubuntu-latest
@@ -55,8 +55,7 @@ jobs:
 
       - name: Install PtAC
         run: |
-          # python setup.py install
-          pip install -e .
+          python setup.py install
           conda list
           conda info --all
       - name: Import numpy
