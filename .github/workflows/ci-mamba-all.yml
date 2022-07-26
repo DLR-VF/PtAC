@@ -1,4 +1,4 @@
-name: Test PtAC with Mamba in Linux, macOS & Windows
+name: Test PtAC with Mamba in Windows
 
 on:
   push:
@@ -22,13 +22,13 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
-            label: linux-64
-            prefix: /usr/share/miniconda3/envs/ptac-dev
+          #- os: ubuntu-latest
+          #label: linux-64
+          #prefix: /usr/share/miniconda3/envs/ptac-dev
 
-          - os: macos-latest
-            label: osx-64
-            prefix: /Users/runner/miniconda3/envs/ptac-dev
+          #- os: macos-latest
+          #label: osx-64
+          #prefix: /Users/runner/miniconda3/envs/ptac-dev
 
           - os: windows-latest
             label: win-64
@@ -70,4 +70,4 @@ jobs:
 
       - name: Run tests
         shell: bash -l {0}
-        run: pytest -v
+        run: pytest ./tests
