@@ -60,6 +60,12 @@ jobs:
         run: mamba env update -n ptac-dev -f environment.yml
         if: steps.cache.outputs.cache-hit != 'true'
 
+      - name: Install PtAC
+        run: |
+          python setup.py install
+          conda list
+          conda info --all
+
       - name: Run tests
         shell: bash -l {0}
         run: pytest ./tests
