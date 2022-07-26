@@ -18,10 +18,12 @@ env:
 
 jobs:
   build:
-
+    name: Python ${{ matrix.python-version }} ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         python-version: ['3.8', '3.9', '3.10']
+        os: [windows-latest]
         include:
           #- os: ubuntu-latest
           #label: linux-64
