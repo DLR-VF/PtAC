@@ -50,8 +50,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
           use-only-tar-bz2: true
       - name: Install conda dependencies
-        run: |-
+        run: |
           mamba env update -f $CONDA_ENV_FILE
+          conda list
+          conda info --all
       - name: Install PtAC
         run: |
           python setup.py install
@@ -66,5 +68,5 @@ jobs:
       - name: import numpy
         run: python -c "import numpy"
       - name: Run pytest
-        shell: bash -l {0}
-        run: pytest ./tests
+        #shell: bash -l {0}
+        run: pytest -v

@@ -1,0 +1,82 @@
+name: Test PtAC with Mamba in Windows
+
+on:
+  push:
+    branches: [ continuous-integration ]
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches: [ continuous-integration ]
+# Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    name: Python ${{ matrix.python-version }} ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.9'] # , '3.9', '3.10']
+        os: ["windows-latest"]
+        include:
+          #- os: ubuntu-latest
+          #environment-file: etc/environment-linux.yml
+          #miniforge-variant: Mambaforge
+          #miniforge-version: 4.9.2-4
+          - os: windows-latest
+            environment-file: etc/environment-windows.yml
+            miniforge-variant: Mambaforge
+            miniforge-version: 4.9.2-4
+
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Setup conda environment with mambaforge
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          use-mamba: true
+          activate-environment: ptac-dev
+          python-version: ${{ matrix.python-version }}
+          condarc-file: ${{ matrix.condarc-file }}
+          environment-file: ${{ matrix.environment-file }}
+          miniforge-variant: ${{ matrix.miniforge-variant }}
+          miniforge-version: ${{ matrix.miniforge-version }}
+
+      - name: Install PtAC
+        run: |
+          # python setup.py install
+          pip install -e .
+          conda list
+          conda info --all
+      - name: Import numpy
+        run: python -c "import numpy;print('numpy is imported.')"
+      # - name: Lint code
+      # run: |
+      #isort . --check-only
+      #black . --line-length 100 --check --diff
+      #flake8 .
+      #pydocstyle .
+      
+      #- name: Test docs
+      #run: make -C ./docs html
+
+      - name: Test code
+        run: |
+          pytest -v
+          #coverage run --source ./ptac --module pytest --verbose
+          #coverage xml -i
+          #coverage report -m
+      
+          #- name: Upload coverage report
+          #uses: codecov/codecov-action@v2
