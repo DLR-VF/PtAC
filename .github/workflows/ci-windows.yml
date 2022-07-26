@@ -21,6 +21,7 @@ jobs:
 
     strategy:
       matrix:
+        python-version: ['3.8', '3.9', '3.10']
         include:
           #- os: ubuntu-latest
           #label: linux-64
@@ -31,7 +32,7 @@ jobs:
           #prefix: /Users/runner/miniconda3/envs/ptac-dev
 
           - os: windows-latest
-            label: win-64
+            # label: win-64
             prefix: C:\Miniconda3\envs\ptac-dev
 
     name: ${{ matrix.label }}
@@ -67,6 +68,13 @@ jobs:
           python setup.py install
           conda list
           conda info --all
+
+      - name: Lint
+        shell: bash -l {0}
+        run: |
+          # conda install flake8
+          python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          python -m flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Run tests
         shell: bash -l {0}

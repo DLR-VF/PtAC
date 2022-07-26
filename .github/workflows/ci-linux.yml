@@ -1,4 +1,4 @@
-name: Test PtAC with Mamba in Linux & Windows
+name: Test PtAC with Mamba in Linux
 
 on:
   push:
@@ -19,15 +19,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.9'] # , '3.9', '3.10']
-        os: ["windows-latest"]
+        python-version: ['3.8', '3.9', '3.10']
+        os: ["ubuntu-latest"]
         include:
-          #- os: ubuntu-latest
-          #environment-file: etc/environment-linux.yml
-          #miniforge-variant: Mambaforge
-          #miniforge-version: 4.9.2-4
-          - os: windows-latest
-            environment-file: etc/environment-windows.yml
+          - os: ubuntu-latest
+            environment-file: environment.yml
             miniforge-variant: Mambaforge
             miniforge-version: 4.9.2-4
 
@@ -58,22 +54,15 @@ jobs:
           python setup.py install
           conda list
           conda info --all
-
-      # - name: Lint code
-      # run: |
-      #isort . --check-only
-      #black . --line-length 100 --check --diff
-      #flake8 .
-      #pydocstyle .
-      
-      #- name: Test docs
-      #run: make -C ./docs html
-
+      - name: Lint
+        shell: bash -l {0}
+        run: |
+          # conda install flake8
+          python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          python -m flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test code
         run: |
-          coverage run --source ./ptac --module pytest --verbose
-          coverage xml -i
-          coverage report -m
-      
-      - name: Upload coverage report
-        uses: codecov/codecov-action@v2
+          pytest ./tests
+          #coverage run --source ./ptac --module pytest --verbose
+          #coverage xml -i
+          #coverage report -m 
