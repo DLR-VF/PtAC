@@ -61,7 +61,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Install PtAC
-        #shell: bash -l {0}
+        shell: bash -l {0}
         run: |
           conda activate ptac-dev
           python setup.py install
