@@ -9,7 +9,7 @@ import ptac.population as population
 import ptac.util as util
 import pathlib
 import sys
-import os
+
 
 # todo: check columns
 # inheriting from unittest. TestCase gives access to a lot of different testing capabilities within the class
@@ -34,8 +34,17 @@ class PtACTest(unittest.TestCase):
         # test if network dataset contains necessary columns
         self.set_up()
         df_prepare_network = accessibility.prepare_network(network_gdf=self.net, boundary=self.boundary)
-        diff_columns = len(list(set(["index", "fromnode", "tonode", "mode_walk", "mode_bike", "mode_mit", "vmax", "length"]) \
-            - set(df_prepare_network.columns)))
+        diff_columns = len(
+                list(
+                    set(
+                        ["index",
+                         "fromnode", 
+                         "tonode", 
+                         "mode_walk", 
+                         "mode_bike", 
+                         "mode_mit", 
+                         "vmax", 
+                         "length"]) - set(df_prepare_network.columns)))
         accessibility.clear_directory()
         self.assertEqual(diff_columns, 0)
 
@@ -84,30 +93,29 @@ class PtACTest(unittest.TestCase):
         elif sys.platform.startswith('linux'):
             self.assertEqual(round(value), 218)
 
-
-    #def test_calculate_sdg(self):
-        #todo: why it is not 100%?
-        #self.set_up()
-        #df_accessibility_low = accessibility.distance_to_closest(
-            #self.pop,
-            #self.pt_low,
-            #network_gdf=self.net,
-            #transport_system="low-capacity"
-        #)
-        #df_accessibility_high = accessibility.distance_to_closest(
-            #self.pop,
-            #self.pt_high,
-            #network_gdf=self.net,
-            #transport_system="high-capacity",
-        #)
-        #value = self.pop
-        #result = accessibility.calculate_sdg(
-            #value, [df_accessibility_low, df_accessibility_high], population_column="pop"
-        #)
-        #if sys.platform.startswith('win'):
-            #self.assertEqual(round(result, 4), 0.957)
-        #elif sys.platform.startswith('linux'):
-            #self.assertEqual(round(result, 4), 0.9614)
+    def test_calculate_sdg(self):
+        # todo: why it is not 100%?
+        self.set_up()
+        df_accessibility_low = accessibility.distance_to_closest(
+            self.pop,
+            self.pt_low,
+            network_gdf=self.net,
+            transport_system="low-capacity"
+        )
+        df_accessibility_high = accessibility.distance_to_closest(
+            self.pop,
+            self.pt_high,
+            network_gdf=self.net,
+            transport_system="high-capacity",
+        )
+        value = self.pop
+        result = accessibility.calculate_sdg(
+                value, [df_accessibility_low, df_accessibility_high], population_column="pop"
+        )
+        if sys.platform.startswith('win'):
+            self.assertEqual(round(result, 4), 0.957)
+        elif sys.platform.startswith('linux'):
+            self.assertEqual(round(result, 4), 0.9614)
 
     def test_raster_to_points(self):
         self.set_up()
