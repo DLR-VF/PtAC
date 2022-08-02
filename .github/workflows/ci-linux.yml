@@ -56,20 +56,12 @@ jobs:
           conda info --all
 
       - name: Lint code
+        shell: bash -l {0}
         run: |
-          isort . --check-only
-          black . --line-length 100 --check --diff
-          flake8 .
-          pydocstyle .
-
-      - name: Test docs
-        run: make -C ./docs html
+          python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          python -m flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Test code
+        shell: bash -l {0}
         run: |
-          coverage run --source ./ptac --module pytest --verbose
-          coverage xml -i
-          coverage report -m
-
-      #- name: Upload coverage report
-        #uses: codecov/codecov-action@v1
+          pytest 
