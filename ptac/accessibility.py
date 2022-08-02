@@ -12,7 +12,8 @@ from pathlib import Path
 import pandas as pd
 import glob
 
-"""Prepares dataset for accessibility computation and computes walking accessibilities from residential areas to public transport stops."""
+"""Prepares dataset for accessibility computation and computes walking accessibilities 
+   from residential areas to public transport stops."""
 
 """
 @name : accessibility.py
@@ -21,8 +22,9 @@ import glob
 @copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
 """
 
-#global home_directory
-home_directory = Path.home() #os.path.abspath('../../')  #Path.home()
+# global home_directory
+home_directory = Path.home(i)  # os.path.abspath('../../')  # Path.home()
+
 
 def clear_directory(folder=f"{home_directory}/.ptac"):
     files = glob.glob(f"{folder}//*.csv")
@@ -60,7 +62,8 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
     """
         Loads road network from OpenStreetMap and prepares network for usage in UrMoAC
 
-        :param network_gdf: network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
+        :param network_gdf: network dataset to use 
+               (optional, if None is provided dataset will be downloaded from osm automatically)
         :param boundary: boundary of area where to download network (must be projected in WGS84)
         :type boundary: Geopandas.GeoDataFrame:POLYGON
         :param epsg: EPSG code of UTM projection for the area of interest
@@ -106,14 +109,14 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
     network_gdf = network_gdf.reset_index()
     network_gdf = network_gdf[
         ["index",
-            "fromnode",
-            "tonode",
-            "mode_walk",
-            "mode_bike",
-            "mode_mit",
-            "vmax",
-            "length",
-            "geometry",
+         "fromnode",
+         "tonode",
+         "mode_walk",
+         "mode_bike",
+         "mode_mit",
+         "vmax",
+         "length",
+         "geometry",
         ]
     ]
     network_gdf = pd.concat([network_gdf, network_gdf.geometry.bounds], axis=1)
@@ -180,7 +183,8 @@ def distance_to_closest(
     """
         Python wrapper for UrMoAC Accessibility Calculator
 
-        :param network_gdf: Network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
+        :param network_gdf: Network dataset to use 
+        (optional, if None is provided dataset will be downloaded from osm automatically)
         :type network_gdf: Geopandas.GeoDataFrame::POLYGON
         :param start_geometries: Starting points for accessibility calculation
         :type start_geometries: Geopandas.GeoDataFrame::POLYGON

@@ -9,7 +9,8 @@ from pyproj import CRS
 
 """
 @name : util.py
-@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt & 2016–2021 Geoff Boeing https://geoffboeing.com/
+@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt 
+             & 2016–2021 Geoff Boeing https://geoffboeing.com/
 """
 
 
