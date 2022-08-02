@@ -23,7 +23,7 @@ import glob
 """
 
 # global home_directory
-home_directory = Path.home(i)  # os.path.abspath('../../')  # Path.home()
+home_directory = Path.home()  # os.path.abspath('../../')  # Path.home()
 
 
 def clear_directory(folder=f"{home_directory}/.ptac"):
