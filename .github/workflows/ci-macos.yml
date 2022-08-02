@@ -1,4 +1,4 @@
-name: Test PtAC with Mamba in Linux
+name: Test PtAC with Mamba in macOS
 
 on:
   push:
@@ -20,9 +20,9 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ['3.8', '3.9', '3.10']
-        os: [ubuntu-latest]
+        os: ["macos-latest"]
         include:
-          - os: ubuntu-latest
+          - os: macos-latest
             environment-file: environment.yml
             miniforge-variant: Mambaforge
             miniforge-version: 4.9.2-4
@@ -54,22 +54,17 @@ jobs:
           python setup.py install
           conda list
           conda info --all
-
-      - name: Lint code
+      - name: Lint
+        shell: bash -l {0}
         run: |
-          isort . --check-only
-          black . --line-length 100 --check --diff
-          flake8 .
-          pydocstyle .
-
-      - name: Test docs
-        run: make -C ./docs html
-
+          conda install flake8
+          python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          python -m flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test code
+        shell: bash -l {0}
         run: |
-          coverage run --source ./ptac --module pytest --verbose
-          coverage xml -i
-          coverage report -m
-
-      #- name: Upload coverage report
-        #uses: codecov/codecov-action@v1
+          conda install pytest
+          pytest
+          #coverage run --source ./ptac --module pytest --verbose
+          #coverage xml -i
+          #coverage report -m 
