@@ -3,7 +3,6 @@ PtAC setup script.
 
 See license in LICENSE
 """
-import os
 
 from setuptools import setup
 
@@ -24,10 +23,10 @@ setup(
         long_description=readme(),
         long_description_content_type='text/markdown',
         url="https://github.com/DLR-VF/PtAC",
-        #platforms="any",
+        # platforms="any",
         packages=["ptac"],
-        #python_requires=">=3.8",
-        #install_requires=INSTALL_REQUIRES,
+        # python_requires=">=3.8",
+        # install_requires=INSTALL_REQUIRES,
         classifiers=[
             'Development Status :: 5 - Production/Stable',
             'Programming Language :: Python :: 3',
@@ -35,7 +34,7 @@ setup(
             'License :: OSI Approved :: Eclipse Public License 2.0 (EPL-2.0)'
             ]
     )
-#         licence="Eclipse Public License 2.0 (EPL-2.0)",
-#         include_package_data=True,
-#         packages=find_packages(exclude=["test"]),
-#         zip_safe=False)
+# licence="Eclipse Public License 2.0 (EPL-2.0)",
+# include_package_data=True,
+# packages=find_packages(exclude=["test"]),
+# zip_safe=False)
