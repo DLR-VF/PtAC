@@ -34,10 +34,10 @@ jobs:
           #prefix: /Users/runner/miniconda3/envs/ptac-dev
 
           - os: windows-latest
-            # label: win-64
+            label: win-64
             prefix: C:\Miniconda3\envs\ptac-dev
 
-    name: ${{ matrix.os }}
+    name: ${{ matrix.label }}
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
