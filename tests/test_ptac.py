@@ -62,6 +62,8 @@ class PtACTest(unittest.TestCase):
             self.assertEqual(round(value), 199)
         elif sys.platform.startswith('linux'):
             self.assertEqual(round(value), 200)
+        elif sys.platform.startswith('macos'):
+            self.assertEqual(round(value), 200)
 
     def test_dist_to_closest_transport_system_low(self):
         self.set_up()
@@ -76,6 +78,8 @@ class PtACTest(unittest.TestCase):
         if sys.platform.startswith('win'):
             self.assertEqual(round(value), 217)
         elif sys.platform.startswith('linux'):
+            self.assertEqual(round(value), 218)
+        elif sys.platform.startswith('macos'):
             self.assertEqual(round(value), 218)
 
     def test_dist_to_closest_transport_system_high(self):
@@ -92,6 +96,9 @@ class PtACTest(unittest.TestCase):
             self.assertEqual(round(value), 217)
         elif sys.platform.startswith('linux'):
             self.assertEqual(round(value), 218)
+        elif sys.platform.startswith('macos'):
+            self.assertEqual(round(value), 218)
+
 
     def test_calculate_sdg(self):
         # todo: why it is not 100%?
@@ -115,6 +122,8 @@ class PtACTest(unittest.TestCase):
         if sys.platform.startswith('win'):
             self.assertEqual(round(result, 4), 0.9561)
         elif sys.platform.startswith('linux'):
+            self.assertEqual(round(result, 4), 0.9614)
+        elif sys.platform.startswith('macos'):
             self.assertEqual(round(result, 4), 0.9614)
 
     def test_raster_to_points(self):

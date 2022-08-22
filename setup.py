@@ -17,9 +17,13 @@ def readme():
 
 setup(
         name="ptac",
-        version="0.1.0",
-        author="Simon Nieland, Serra Yosmaoglu",
-        author_email="Simon.Nieland@dlr.de, Serra.Yosmaoglu@dlr.de",
+        version="0.0.1a1",
+        #author="Simon Nieland, Serra Yosmaoglu",
+        #author_email="Simon.Nieland@dlr.de, Serra.Yosmaoglu@dlr.de",
+        contributors=[
+            ['Simon Nieland', 'Simon.Nieland@dlr.de', 'author'],
+            ['Serra Yosmaoglu', 'Serra.Yosmaoglu@dlr.de', 'author'],
+            ],
         long_description=readme(),
         long_description_content_type='text/markdown',
         url="https://github.com/DLR-VF/PtAC",
