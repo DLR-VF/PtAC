@@ -2,8 +2,10 @@
 # coding:utf-8
 
 import math
-import ptac.settings as settings
+
 from pyproj import CRS
+
+import ptac.settings as settings
 
 """Converts geometries between latitude/longitude & UTM coordinates"""
 

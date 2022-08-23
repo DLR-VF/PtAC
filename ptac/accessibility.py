@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 # coding:utf-8
 
+import glob
 import os
 import sys
+import timeit
+from pathlib import Path
+
 import geopandas as gpd
+import pandas as pd
+
 import ptac.osm as osm
 import ptac.settings as settings
 import ptac.util as util
-import timeit
-from pathlib import Path
-import pandas as pd
-import glob
 
 """Prepares dataset for accessibility computation and computes walking accessibilities 
    from residential areas to public transport stops."""
@@ -108,15 +110,16 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
     )
     network_gdf = network_gdf.reset_index()
     network_gdf = network_gdf[
-        ["index",
-         "fromnode",
-         "tonode",
-         "mode_walk",
-         "mode_bike",
-         "mode_mit",
-         "vmax",
-         "length",
-         "geometry",
+        [
+            "index",
+            "fromnode",
+            "tonode",
+            "mode_walk",
+            "mode_bike",
+            "mode_mit",
+            "vmax",
+            "length",
+            "geometry",
         ]
     ]
     network_gdf = pd.concat([network_gdf, network_gdf.geometry.bounds], axis=1)

@@ -32,7 +32,7 @@ streettypes = pd.DataFrame.from_dict(
         "road": [True, True, True, 30, 1],
         "service": [True, True, False, 20, 1],
         "track": [True, True, True, 20, 1],
-        # True, True, True only if destination 
+        # True, True, True only if destination
         # (http://wiki.openstreetmap.org/wiki/OSM_tags_for_routing/Access-Restrictions#Germany)
         "services": [True, True, True, 30, 1],
         "unsurfaced": [True, True, True, 30, 1],
