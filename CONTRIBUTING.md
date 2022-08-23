@@ -3,38 +3,24 @@
 Thanks for using `PtAC` and considering contributing code, reporting bugs, fixing bugs or discussing the future of this project. 
 As a contributor, here are the guidelines we would like you to follow:
 
- - [Code of Conduct](#coc)
  - [Issues and Bugs](#issue)
  - [Feature Requests](#feature)
  - [Code Conventions](#rules)
  - [Submission Guidelines](#submit)
  - [Signing the CLA](#cla)
 
-## <a name="coc"></a> Code of Conduct
-Help us keep `PtAC` open and inclusive. Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+## <a name="issue"></a> If you found a bug:
+If you find a bug in the source code, you can help us by [submitting an issue](#submit-issue) to our [GitHub Repository](https://github.com/dlr-vf/PtAC). Even better, you can [submit a Pull Request](#submit-pr) with a fix.
 
-## <a name="issue"></a> Found a Bug?
-If you find a bug in the source code, you can help us by
-[submitting an issue](#submit-issue) to our [GitHub Repository](https://github.com/dlr-vf/PtAC). Even better, you can
-[submit a Pull Request](#submit-pr) with a fix.
-
-## <a name="feature"></a> Missing a Feature?
-You can *request* a new feature by [submitting an issue](#submit-issue) to our GitHub
-Repository. If you would like to *implement* a new feature, please submit an issue with
-a proposal for your work first, to be sure that we can use it.
-
-## <a name="rules"></a> Code Conventions
-To ensure consistency throughout the source code, keep these rules in mind as you are working:
-
-* All features or bug fixes **must be tested** by one or more specs (unit-tests).
-* Please follow [PEP 8](https://www.python.org/dev/peps/pep-0008/).
-* We use a line-length of 120 and [black](https://github.com/psf/black) to format our code.
+## <a name="feature"></a> If you have a feature proposal or want to contribute:
+  - You can *request* a new feature on the [submitting an issue](https://github.com/DLR-VF/PtAC/issues), so that we can review it together as some of the proposals may not be a good fit to the project.
+  - Please follow the [submission guidelines](#submit)
 
 ## <a name="submit"></a> Submission Guidelines
 
 ### <a name="submit-issue"></a> Submitting an Issue
 
-Before you submit an issue, please search the issue tracker, maybe an issue for your problem already exists and the discussion might inform you of workarounds readily available.
+  - Before you submit an issue, please search the issue tracker, maybe an issue for your problem already exists and the discussion might inform you of workarounds readily available.
 
 We want to fix all the issues as soon as possible, but before fixing a bug we need to reproduce and confirm it. In order to reproduce bugs, we will systematically ask you to provide a minimal reproduction. Having a minimal reproducible scenario gives us a wealth of important information without going back & forth to you with additional questions.
 
@@ -48,22 +34,22 @@ Before you submit your Pull Request (PR) consider the following guidelines:
   Discussing the design up front helps to ensure that we're ready to accept your work.
 1. Please sign our [Contributor License Agreement (CLA)](#cla) before sending PRs.
   We cannot accept code without this. Make sure you sign with the primary email address of the Git identity that has been granted access to the UKIS repository.
-1. Fork the UKIS repo.
+1. Fork the PtAC repo.
 1. Make your changes in a new git branch:
 
      ```shell
      git checkout -b my-fix-branch master
      ```
 
-1. Create your patch, **including appropriate test cases**.
-1. Document your changes in the [changelog](CHANGELOG.md).
+1. [Test your changes](./tests)
+1. Document your changes in the [changelog](CHANGELOG.md), please follow the [changelog guidelines](changelogGuidelines)
     
      ```shell
      git commit -a -m "some useful message"
      ```
     Note: the optional commit `-a` command line option will automatically "add" and "rm" edited files.
 
-1. Push your branch to GitHub:
+1. Submit a PR:
    
     ```shell
     git push origin my-fix-branch

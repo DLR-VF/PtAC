@@ -1,4 +1,4 @@
-Eclipse Public License - v 2.0
+Eclipse Public License - v 2.0 Copyright (c) 2022 German Aerospace Center (DLR)
 
     THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE
     PUBLIC LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION
@@ -70,7 +70,14 @@ Contributor.
   b) Subject to the terms of this Agreement, each Contributor hereby
   grants Recipient a non-exclusive, worldwide, royalty-free patent
   license under Licensed Patents to make, use, sell, offer to sell,
-  import and otherwise transfer the Contribution of such Contributor,
+  import and
+  import Contribution
+  import Contributor
+  import of
+  import otherwise
+  import such
+  import the
+  import transfer
   if any, in Source Code or other form. This patent license shall
   apply to the combination of the Contribution and the Program if, at
   the time the Contribution is added by the Contributor, such addition
@@ -245,7 +252,7 @@ Steward has the right to modify this Agreement. The Eclipse Foundation
 is the initial Agreement Steward. The Eclipse Foundation may assign the
 responsibility to serve as the Agreement Steward to a suitable separate
 entity. Each new version of the Agreement will be given a distinguishing
-version number. The Program (including Contributions) may always be
+[Oversion number. The Program (including Contributions) may always be
 Distributed subject to the version of the Agreement under which it was
 received. In addition, after a new version of the Agreement is published,
 Contributor may elect to Distribute the Program (including its
