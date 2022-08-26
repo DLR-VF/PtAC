@@ -1,4 +1,4 @@
-include LICENSE
+include LICENSE.md
 include CHANGELOG.md
 include requirements.txt
 recursive-include ptac/urmoacjar *.jar

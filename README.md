@@ -68,7 +68,7 @@ If you have a usage question, please contact us via email ([simon.nieland@dlr.de
 
 # License Information  
 
-PtAC is licensed under the Eclipse Public License 2.0. See the [LICENSE.txt](https://github.com/DLR-VF/PtAC/blob/master/LICENSE.txt) file for more information.
+PtAC is licensed under the Eclipse Public License 2.0. See the [LICENSE.md](https://github.com/DLR-VF/PtAC/blob/master/LICENSE.md) file for more information.
 
 # Disclaimer
 

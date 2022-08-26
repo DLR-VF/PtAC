@@ -1,7 +1,7 @@
 """
 PtAC setup script.
 
-See license in LICENSE
+See license in LICENSE.md
 """
 
 from setuptools import setup
@@ -15,13 +15,8 @@ def readme():
 setup(
     name="ptac",
     version="0.0.1a1",
-    # author="Simon Nieland, Serra Yosmaoglu",
-    # author_email="Simon.Nieland@dlr.de, Serra.Yosmaoglu@dlr.de",
-    contributors=[
-        ["Simon Nieland", "Simon.Nieland@dlr.de", "author"],
-        ["Serra Yosmaoglu", "Serra.Yosmaoglu@dlr.de", "author"],
-        ["Daniel Krajzewicz", "Daniel.Krajzewicz@dlr.de", "maintainer"],
-    ],
+    author="'Simon Nieland', 'Serra Yosmaoglu'",
+    author_email="'Simon.Nieland@dlr.de', 'Serra.Yosmaoglu@dlr.de'",
     long_description=readme(),
     long_description_content_type="text/markdown",
     url="https://github.com/DLR-VF/PtAC",
