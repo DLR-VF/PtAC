@@ -2,7 +2,8 @@
 sphinx-quickstart on Fri Jul  9 10:40:37 2021.
 You can adapt this file completely to your liking, but it should at least
 contain the root `toctree` directive. -->
-# PtAC 0.0.1a1
+
+# PtAC
 
 PtAC is a Python package to automatically compute walking
 accessibilities from residential areas to public transport stops for the Sustainable Development Goal 11.2

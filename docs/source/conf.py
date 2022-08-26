@@ -12,18 +12,19 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../..'))
+
+sys.path.insert(0, os.path.abspath("../.."))
 sys.setrecursionlimit(1500)
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'ptac'
-copyright = '2021, Simon Nieland, Serra Yosmaoglu'
-author = 'Simon Nieland, Serra Yosmaoglu'
+project = "ptac"
+copyright = "2022, Simon Nieland, Serra Yosmaoglu"
+author = "Simon Nieland, Serra Yosmaoglu"
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = "0.0.1a1"
 
 
 # -- General configuration ---------------------------------------------------
@@ -31,14 +32,15 @@ release = '0.0.1'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.napoleon",
-              "sphinx_rtd_theme",
-              "sphinx.ext.autodoc",
-              "sphinx.ext.coverage",
-              "sphinx_markdown_builder",
-              "myst_parser",
-              "sphinxcontrib.email"
-              ]
+extensions = [
+    "sphinx.ext.napoleon",
+    "sphinx_rtd_theme",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.coverage",
+    "sphinx_markdown_builder",
+    "myst_parser",
+    "sphinxcontrib.email",
+]
 
 # napoleon extension options:
 napoleon_google_docstring = False
@@ -46,14 +48,12 @@ napoleon_use_param = False
 napoleon_use_ivar = True
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = [
-    "build/*"
-]
+exclude_patterns = ["build/*"]
 
 master_doc = "index"
 
@@ -72,21 +72,21 @@ source_suffix = ".rst"
 master_doc = "index"
 
 html_theme_options = {
-    'canonical_url': '',
-    'analytics_id': 'UA-XXXXXXX-1',  # Provided by Google in your dashboard
-    'analytics_anonymize_ip': False,
-    'logo_only': False,
-    'display_version': True,
-    'prev_next_buttons_location': 'bottom',
-    'style_external_links': False,
-    'vcs_pageview_mode': '',
-    'style_nav_header_background': 'white',
+    "canonical_url": "",
+    "analytics_id": "UA-XXXXXXX-1",  # Provided by Google in your dashboard
+    "analytics_anonymize_ip": False,
+    "logo_only": False,
+    "display_version": True,
+    "prev_next_buttons_location": "bottom",
+    "style_external_links": False,
+    "vcs_pageview_mode": "",
+    "style_nav_header_background": "white",
     # Toc options
-    'collapse_navigation': True,
-    'sticky_navigation': True,
-    'navigation_depth': 4,
-    'includehidden': True,
-    'titles_only': False
+    "collapse_navigation": True,
+    "sticky_navigation": True,
+    "navigation_depth": 4,
+    "includehidden": True,
+    "titles_only": False,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
