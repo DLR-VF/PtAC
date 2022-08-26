@@ -54,11 +54,11 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ${{ matrix.prefix }}
-          key: ${{ matrix.label }}-conda-${{ hashFiles('environment.yml') }}-${{ env.DATE }}-${{ env.CACHE_NUMBER }}
+          key: ${{ matrix.label }}-conda-${{ hashFiles('tests/environment.yml') }}-${{ env.DATE }}-${{ env.CACHE_NUMBER }}
         id: cache
 
       - name: Update environment
-        run: mamba env update -n ptac-dev -f environment.yml
+        run: mamba env update -n ptac-dev -f tests/environment.yml
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Install PtAC

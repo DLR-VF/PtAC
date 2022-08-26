@@ -23,7 +23,7 @@ jobs:
         os: ["macos-latest"]
         include:
           - os: macos-latest
-            environment-file: environment.yml
+            environment-file: tests/environment.yml
             miniforge-variant: Mambaforge
             miniforge-version: 4.9.2-4
 
