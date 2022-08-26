@@ -19,7 +19,7 @@ sys.setrecursionlimit(1500)
 
 # -- Project information -----------------------------------------------------
 
-project = "ptacc"
+project = "ptac"
 copyright = "2022, Simon Nieland, Serra Yosmaoglu"
 author = 'Simon Nieland, Serra Yosmaoglu'
 
