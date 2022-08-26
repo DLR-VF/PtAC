@@ -14,7 +14,7 @@ def readme():
 
 setup(
     name="ptac",
-    version="0.0.1a",
+    version="0.0.1b1",
     author='Simon Nieland, Serra Yosmaoglu',
     author_email='Simon.Nieland@dlr.de, Serra.Yosmaoglu@dlr.de',
     long_description=readme(),
