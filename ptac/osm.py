@@ -19,7 +19,8 @@ def get_network(polygon, network_type="walk", custom_filter=None, verbose=0):
 
     :param polygon: boundary of the area from which to download the network (in WGS84)
     :type polygon: Geopandas.GeoDataFrame::POLYGON
-    :param network_type: can be "all_private", "all", "bike", "drive", "drive_service", "walk" (see osmnx for description)
+    :param network_type: can be "all_private", "all", "bike", "drive", "drive_service", "walk" (see osmnx for
+    description)
     :type network_type: str
     :param custom_filter: filter network (see osmnx for description)
     :type custom_filter: str

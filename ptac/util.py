@@ -11,7 +11,7 @@ import ptac.settings as settings
 
 """
 @name : util.py
-@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt 
+@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
              & 2016–2021 Geoff Boeing https://geoffboeing.com/
 """
 

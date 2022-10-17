@@ -14,7 +14,7 @@ import ptac.osm as osm
 import ptac.settings as settings
 import ptac.util as util
 
-"""Prepares dataset for accessibility computation and computes walking accessibilities 
+"""Prepares dataset for accessibility computation and computes walking accessibilities
    from residential areas to public transport stops."""
 
 """
