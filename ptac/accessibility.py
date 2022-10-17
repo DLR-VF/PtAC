@@ -39,14 +39,13 @@ def clear_directory(folder=f"{home_directory}/.ptac"):
 
 def prepare_origins_and_destinations(dest_gdf, od):
     """
-    Prepares origin or destination dataset for usage in UrMoAC
+    Prepare origin or destination dataset for usage in UrMoAC.
 
     :param dest_gdf: origin or destination point data set (must be projected in UTM Projection)
     :type dest_gdf: Geopandas.GeoDataFrame:POINT
     :param od: indicate if "origin" or "destination"
     :rtype od: str
     """
-
     dest_gdf["x"] = dest_gdf.geometry.centroid.x
     dest_gdf["y"] = dest_gdf.geometry.centroid.y
     dest_gdf = dest_gdf[["x", "y"]]
@@ -62,7 +61,7 @@ def prepare_origins_and_destinations(dest_gdf, od):
 
 def prepare_network(network_gdf=None, boundary=None, verbose=0):
     """
-    Loads road network from OpenStreetMap and prepares network for usage in UrMoAC
+    Load road network from OpenStreetMap and prepares network for usage in UrMoAC.
 
     :param network_gdf: network dataset to use
            (optional, if None is provided dataset will be downloaded from osm automatically)
@@ -74,7 +73,6 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
     :rtype verbose: int
 
     """
-
     if network_gdf is None:
         if verbose > 0:
             print("No street network was specified. Loading osm network..\n")
@@ -132,7 +130,8 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
 
 def build_request(epsg, number_of_threads, date, start_time):
     """
-    Builds requests for the UrMoAC
+    Build request for the UrMoAC.
+
     :param epsg: PSG code of UTM projection for a certain area of interest
     :type epsg: str
     :param number_of_threads: The number of threads to use
@@ -141,7 +140,6 @@ def build_request(epsg, number_of_threads, date, start_time):
     :type date: int
     :param start_time: Time to start the routing (in seconds of the day)
     :type start_time: int
-
     """
     current_path = os.path.dirname(os.path.abspath(__file__))
     urmo_ac_request = (
@@ -183,34 +181,32 @@ def distance_to_closest(
     verbose=0,
 ):
     """
-            Python wrapper for UrMoAC Accessibility Calculator
+    Python wrapper for UrMoAC Accessibility Calculator.
+
     :param network_gdf: Network dataset to use
-            (optional, if None is provided dataset will be downloaded from osm automatically)
-            :type network_gdf: Geopandas.GeoDataFrame::POLYGON
-            :param start_geometries: Starting points for accessibility calculation
-            :type start_geometries: Geopandas.GeoDataFrame::POLYGON
-            :param destination_geometries: Starting point for accessibility calculation
-            :type destination_geometries: Geopandas.GeoDataFrame::POLYGON
-            :param boundary_geometries: Boundary dataset of the desired area
-            :type boundary_geometries: Geopandas.GeoDataFrame::POLYGON
-            :param maximum_distance: Maximum distance to next pt station (optional)
-            :type maximum_distance: int
-            :param start_time: Time to start the routing (in seconds of the day)
-            :type start_time: int
-            :param transport_system: Low-capacity or high-capacity pt system
-            :type transport_system: str
-            :param number_of_threads: The number of threads to use
-            :type number_of_threads: int
-            :param date: date on which the routing starts (e.g. 20200915) (not implemented yet)
-            :type date: int
-            :param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
-            :type verbose: int
-            :return accessibility_output: A geo data frame consists of accessibility calculation outputs
-            :rtype: Geopandas.GeoDataFrame::POINT
+    (optional, if None is provided dataset will be downloaded from osm automatically)
+    :type network_gdf: Geopandas.GeoDataFrame::POLYGON
+    :param start_geometries: Starting points for accessibility calculation
+    :type start_geometries: Geopandas.GeoDataFrame::POLYGON
+    :param destination_geometries: Starting point for accessibility calculation
+    :type destination_geometries: Geopandas.GeoDataFrame::POLYGON
+    :param boundary_geometries: Boundary dataset of the desired area
+    :type boundary_geometries: Geopandas.GeoDataFrame::POLYGON
+    :param maximum_distance: Maximum distance to next pt station (optional)
+    :type maximum_distance: int
+    :param start_time: Time to start the routing (in seconds of the day)
+    :type start_time: int
+    :param transport_system: Low-capacity or high-capacity pt system
+    :type transport_system: str
+    :param number_of_threads: The number of threads to use
+    :type number_of_threads: int
+    :param date: date on which the routing starts (e.g. 20200915) (not implemented yet)
+    :type date: int
+    :param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
+    :type verbose: int
+    :return accessibility_output: A geo data frame consists of accessibility calculation outputs
+    :rtype: Geopandas.GeoDataFrame::POINT
     """
-
-    # todo: check if dataset is geographic coordinate system, if yes get epsg code of corresponding utm projection
-
     start = timeit.default_timer()
 
     start_geometries = util.project_gdf(start_geometries, to_latlong=True)
@@ -296,7 +292,7 @@ def distance_to_closest(
 
 def subset_result(accessibility_output, transport_system=None, maximum_distance=None):
     """
-    Subset accessibility results based on transport system type or maximum distance
+    Subset accessibility results based on transport system type or maximum distance.
 
     :param accessibility_output: A geo data frame consists of accessibility calculation outputs
     :type: Geopandas.GeoDataFrame::POINT
@@ -308,7 +304,6 @@ def subset_result(accessibility_output, transport_system=None, maximum_distance=
     the type of defined transport system
     :rtype: Geopandas.GeoDataFrame::POINT
     """
-
     if transport_system is not None and maximum_distance is not None:
         print("please indicate either transport_system or maximum_distance. Not both")
         sys.exit()
@@ -335,6 +330,7 @@ def subset_result(accessibility_output, transport_system=None, maximum_distance=
 
 def calculate_sdg(df_pop_total, pop_accessible, population_column, verbose=0):
     """
+    Calculate sdg 11.2.1 value.
 
     :param df_pop_total: Population points GeoDataFrame (start geometries)
     :type df_pop_total: Geopandas.GeoDataFrame::POINT
@@ -344,7 +340,6 @@ def calculate_sdg(df_pop_total, pop_accessible, population_column, verbose=0):
     :type: str
     :return SDG 11.2.1 indicator: SDG 11.2.1 indicator
     :rtype: int
-
     """
     total_population = df_pop_total[population_column].sum()
     # if input is a list of dataframes (low- and high-capacity transit systems):

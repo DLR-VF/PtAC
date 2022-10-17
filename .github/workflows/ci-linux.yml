@@ -59,7 +59,7 @@ jobs:
           isort . 
           black . 
           flake8 .
-          pydocstyle .
+          pydocstyle . --ignore=D104,D100,D103,D212
 
       - name: Test code
         shell: bash -l {0}

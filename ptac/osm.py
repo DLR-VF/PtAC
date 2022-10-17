@@ -15,7 +15,7 @@ import osmnx as ox
 
 def get_network(polygon, network_type="walk", custom_filter=None, verbose=0):
     """
-    Download street network from osm via osmnx
+    Download street network from osm via osmnx.
 
     :param polygon: boundary of the area from which to download the network (in WGS84)
     :type polygon: Geopandas.GeoDataFrame::POLYGON

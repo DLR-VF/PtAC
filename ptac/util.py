@@ -19,8 +19,8 @@ import ptac.settings as settings
 # from osmnx
 def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
     """
-    Project a GeoDataFrame to the UTM zone appropriate for its geometries'
-    centroid.
+    Project a GeoDataFrame to the UTM zone appropriate for its geometries' centroid.
+
     The simple calculation in this function works well for most latitudes, but
     won't work for some far northern locations like Svalbard and parts of far
     northern Norway.

@@ -19,6 +19,8 @@ Deutsches Zentrum fuer Luft- und Raumfahrt
 
 def raster_to_points(path, band=1, epsg=4326):
     """
+    Convert Raster to Point.
+
     :param path: Path to raster file. (Tested with GeoTIF)
     :type path: str
     :param band: Band of dataset
@@ -26,7 +28,6 @@ def raster_to_points(path, band=1, epsg=4326):
     :return: Point GeoDataFrame including Raster values of specific band
     :rtype: GeoPandas.GeoDataFrame:: Point
     """
-
     with rasterio.open(path) as src:
         # create 1D coordinate arrays (coordinates of the pixel center)
         xmin, ymax = np.around(src.xy(0.00, 0.00), 9)  # src.xy(0, 0)
