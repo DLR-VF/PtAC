@@ -40,13 +40,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup Mambaforge
+      - name: Setup Condaforge
         uses: conda-incubator/setup-miniconda@v2
         with:
-            miniforge-variant: Mambaforge
             miniforge-version: latest
             activate-environment: ptac-dev
-            use-mamba: true
+            #use-mamba: true
 
       - name: Set cache date
         run: echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
@@ -59,8 +58,7 @@ jobs:
 
       - name: Update environment
         run: | 
-          mamba list --revisions
-          mamba env update -n ptac-dev -f tests/environment.yml
+          conda env update -n ptac-dev -f tests/environment.yml
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Install PtAC
