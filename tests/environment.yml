@@ -6,7 +6,7 @@ channels:
 
 dependencies:
     # required
-    # - python=3.8
+    - python=^3.8
     - osmnx==1.1.1
     - networkx #>=2.5
     - numpy>=1.22
@@ -22,8 +22,8 @@ dependencies:
     # - rasterio
     # - scikit-learn
     # - scipy
-    - setuptools=57.4.0
-    - wheel = "^0.37.0"
+    - setuptools=60.6.0
+    - wheel = "^0.37.1"
 
     # linting/testing
     - coverage
