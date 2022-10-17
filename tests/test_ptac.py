@@ -12,8 +12,6 @@ import ptac.population as population
 import ptac.util as util
 
 
-# todo: check columns
-# inheriting from unittest. TestCase gives access to a lot of different testing capabilities within the class
 class PtACTest(unittest.TestCase):
     def set_up(self):
         self.data_path = str(pathlib.Path(__file__).parent.absolute())
