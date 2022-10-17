@@ -57,7 +57,7 @@ jobs:
         shell: bash -l {0}
         run: |
           isort . 
-          black . --line-length 120 --check --diff
+          black . 
           flake8 .
           pydocstyle .
 
