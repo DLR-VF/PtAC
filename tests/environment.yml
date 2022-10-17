@@ -22,7 +22,7 @@ dependencies:
     # - rasterio
     # - scikit-learn
     # - scipy
-    - setuptools = "57.4.0"
+    - setuptools = "63.3.0"
     - wheel = "^0.37.1"
 
     # linting/testing
