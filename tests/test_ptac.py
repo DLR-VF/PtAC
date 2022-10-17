@@ -5,7 +5,6 @@ Unit tests for PtAC library
 import pathlib
 import sys
 import unittest
-
 import geopandas as gpd
 import ptac.accessibility as accessibility
 import ptac.population as population
