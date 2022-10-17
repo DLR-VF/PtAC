@@ -23,7 +23,7 @@ dependencies:
     # - scikit-learn
     # - scipy
     - setuptools=57.4.0
-    - wheel = "^0.37.1"
+    - wheel = "0.37.0"
 
     # linting/testing
     - coverage
