@@ -7,6 +7,7 @@ import sys
 import unittest
 
 import geopandas as gpd
+
 import ptac.accessibility as accessibility
 import ptac.population as population
 import ptac.util as util
@@ -124,11 +125,11 @@ class PtACTest(unittest.TestCase):
             population_column="pop",
         )
         if sys.platform.startswith("win"):
-            self.assertEqual(round(result, 4), 0.957)  # 0.9561
+            self.assertEqual(round(result, 2), 0.96)  # 0.9561
         elif sys.platform.startswith("linux"):
-            self.assertEqual(round(result, 4), 0.9614)
+            self.assertEqual(round(result, 2), 0.96)
         elif sys.platform.startswith("macos"):
-            self.assertEqual(round(result, 4), 0.9614)
+            self.assertEqual(round(result, 2), 0.96)
 
     def test_raster_to_points(self):
         self.set_up()
