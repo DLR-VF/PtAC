@@ -57,7 +57,8 @@ jobs:
         id: cache
 
       - name: Update environment
-        run: | 
+        run: |
+          conda update conda
           conda env update -n ptac-dev -f tests/environment.yml
         if: steps.cache.outputs.cache-hit != 'true'
 
