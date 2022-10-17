@@ -15,18 +15,18 @@ import osmnx as ox
 
 def get_network(polygon, network_type="walk", custom_filter=None, verbose=0):
     """
-        Download street network from osm via osmnx
+    Download street network from osm via osmnx
 
-        :param polygon: boundary of the area from which to download the network (in WGS84)
-        :type polygon: Geopandas.GeoDataFrame::POLYGON
-        :param network_type: can be "all_private", "all", "bike", "drive", "drive_service", "walk" (see osmnx for description)
-        :type network_type: str
-        :param custom_filter: filter network (see osmnx for description)
-        :type custom_filter: str
-        :param verbose: Degree of verbosity (the higher, the more)
-        :type verbose: int
-        :return: OSM city network
-        :rtype: networkx.Graph
+    :param polygon: boundary of the area from which to download the network (in WGS84)
+    :type polygon: Geopandas.GeoDataFrame::POLYGON
+    :param network_type: can be "all_private", "all", "bike", "drive", "drive_service", "walk" (see osmnx for description)
+    :type network_type: str
+    :param custom_filter: filter network (see osmnx for description)
+    :type custom_filter: str
+    :param verbose: Degree of verbosity (the higher, the more)
+    :type verbose: int
+    :return: OSM city network
+    :rtype: networkx.Graph
 
     """
     if verbose > 0:

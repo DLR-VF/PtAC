@@ -19,20 +19,20 @@ import ptac.settings as settings
 # from osmnx
 def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
     """
-        Project a GeoDataFrame to the UTM zone appropriate for its geometries'
-        centroid.
-        The simple calculation in this function works well for most latitudes, but
-        won't work for some far northern locations like Svalbard and parts of far
-        northern Norway.
+    Project a GeoDataFrame to the UTM zone appropriate for its geometries'
+    centroid.
+    The simple calculation in this function works well for most latitudes, but
+    won't work for some far northern locations like Svalbard and parts of far
+    northern Norway.
 
-        :param gdf: the gdf to be projected
-        :type gdf: Geopandas.GeoDataFrame::POINT
-        :param to_crs: CRS code. if not None, just project to this CRS instead of to UTM
-        :type to_crs: int
-        :param to_latlong : If True, projects to latlong instead of to UTM
-        :type to_latlong: bool
-        :return projected_gdf: A projected GeoDataFrame to the UTM zone
-        :rtype projected_gdf: Geopandas.GeoDataFrame::POINT
+    :param gdf: the gdf to be projected
+    :type gdf: Geopandas.GeoDataFrame::POINT
+    :param to_crs: CRS code. if not None, just project to this CRS instead of to UTM
+    :type to_crs: int
+    :param to_latlong : If True, projects to latlong instead of to UTM
+    :type to_latlong: bool
+    :return projected_gdf: A projected GeoDataFrame to the UTM zone
+    :rtype projected_gdf: Geopandas.GeoDataFrame::POINT
     """
     assert len(gdf) > 0, "You cannot project an empty GeoDataFrame."
 

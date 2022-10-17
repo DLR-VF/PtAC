@@ -21,7 +21,7 @@ sys.setrecursionlimit(1500)
 
 project = "ptac"
 copyright = "2022, Simon Nieland, Serra Yosmaoglu"
-author = 'Simon Nieland, Serra Yosmaoglu'
+author = "Simon Nieland, Serra Yosmaoglu"
 
 # The full version, including alpha/beta/rc tags
 release = "0.0.1a1"
