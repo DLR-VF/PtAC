@@ -2,14 +2,13 @@
 Unit tests for PtAC library
 """
 
-import pathlib
-import sys
-import unittest
 import geopandas as gpd
+import pathlib
 import ptac.accessibility as accessibility
 import ptac.population as population
 import ptac.util as util
-
+import sys
+import unittest
 
 class PtACTest(unittest.TestCase):
     def set_up(self):
