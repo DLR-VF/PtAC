@@ -1,6 +1,6 @@
 # PtAC tests
 
-First, please ensure that you have installed the necessary [dependencies](build_environments/environment-dev.yml). Then run the scripts in this folder to:
+First, please ensure that you have installed the necessary [dependencies](../.github/build_environments/environment-dev.yml). Then run the scripts in this folder to:
 
   - format the code
   - lint the code and the docstrings
