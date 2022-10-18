@@ -74,10 +74,10 @@ jobs:
         shell: bash -l {0}
         run: |
           isort . 
-          black . --line-length 120 --check --diff
-          python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          python -m flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120 --statistics
-          pydocstyle .
+          isort . 
+          black . 
+          flake8 .
+          pydocstyle . --ignore=D104,D100,D103,D212
 
       - name: Run tests
         shell: bash -l {0}
