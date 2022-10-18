@@ -21,7 +21,7 @@ jobs:
         os: [ubuntu-latest]
         include:
           - os: ubuntu-latest
-            environment-file: tests/environment-linux.yml
+            environment-file: .ptac/build-environments/environment-linux.yml
             miniforge-variant: Mambaforge
             miniforge-version: 4.9.2-4
 
