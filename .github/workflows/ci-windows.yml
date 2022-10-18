@@ -59,7 +59,7 @@ jobs:
 
       - name: Update environment
         run: |
-          conda env update -n ptac-dev -f .github/build-environments/environment.yml
+          conda env update -n ptac-dev -f tests/build-environments/environment.yml
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Install PtAC
