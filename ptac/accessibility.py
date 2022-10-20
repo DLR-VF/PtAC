@@ -158,7 +158,7 @@ def build_request(epsg, number_of_threads, date, start_time, timestamp):
         "--date {date} "
         '--net "file;{home_directory}/.ptac/network.csv"'.format(
             home_directory=home_directory,
-            timestamp= timestamp,
+            timestamp=timestamp,
             current_path=current_path,
             epsg=epsg,
             number_of_threads=number_of_threads,
