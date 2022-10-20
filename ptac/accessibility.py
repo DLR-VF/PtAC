@@ -4,6 +4,7 @@
 import glob
 import os
 import sys
+import time
 import timeit
 from pathlib import Path
 
@@ -128,7 +129,7 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
     return network_gdf
 
 
-def build_request(epsg, number_of_threads, date, start_time):
+def build_request(epsg, number_of_threads, date, start_time, timestamp):
     """
     Build request for the UrMoAC.
 
@@ -150,13 +151,14 @@ def build_request(epsg, number_of_threads, date, start_time):
         "--mode foot "
         "--time {start_time} "
         "--epsg {epsg} "
-        '--nm-output "file;{home_directory}/.ptac/sdg_output.csv" '
+        '--nm-output "file;{home_directory}/.ptac/sdg_output_{timestamp}.csv" '
         "--verbose "
         "--threads {number_of_threads} "
         "--dropprevious "
         "--date {date} "
         '--net "file;{home_directory}/.ptac/network.csv"'.format(
             home_directory=home_directory,
+            timestamp= timestamp,
             current_path=current_path,
             epsg=epsg,
             number_of_threads=number_of_threads,
@@ -208,7 +210,7 @@ def distance_to_closest(
     :rtype: Geopandas.GeoDataFrame::POINT
     """
     start = timeit.default_timer()
-
+    timestamp = int(round(time.time()))
     start_geometries = util.project_gdf(start_geometries, to_latlong=True)
     destination_geometries = util.project_gdf(destination_geometries, to_latlong=True)
 
@@ -252,7 +254,7 @@ def distance_to_closest(
     epsg = destination_geometries.crs.to_epsg()
     # build UrMoAC request
     urmo_ac_request = build_request(
-        epsg=epsg, number_of_threads=number_of_threads, date=date, start_time=start_time
+        epsg=epsg, number_of_threads=number_of_threads, date=date, start_time=start_time, timestamp=timestamp
     )
     if verbose > 0:
         print("Starting UrMoAC to calculate accessibilities\n")
@@ -265,7 +267,7 @@ def distance_to_closest(
     # read UrMoAC output
     header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_num", "avg_value"]
     output = pd.read_csv(
-        f"{home_directory}/.ptac/sdg_output.csv", sep=";", header=0, names=header_list
+        f"{home_directory}/.ptac/sdg_output_{timestamp}.csv", sep=";", header=0, names=header_list
     )
 
     # only use distance on road network
