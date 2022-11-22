@@ -22,7 +22,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/DLR-VF/PtAC",
     # platforms="any",
-    packages=["ptac"],
+    packages=["ptac", "ptac.urmoacjar"],
     include_package_data=True,
     # python_requires=">=3.8",
     # install_requires=INSTALL_REQUIRES,
