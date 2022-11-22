@@ -3,7 +3,7 @@ Internals reference
 
 This is the complete PtAC internals reference, including private internal functions.
 
-osmnx.bearing module
+ptac.accessibility module
 --------------------
 
 .. automodule:: ptac.accessibility
@@ -11,7 +11,7 @@ osmnx.bearing module
     :private-members:
     :noindex:
 
-osmnx.distance module
+ptac.osm module
 ---------------------
 
 .. automodule:: ptac.osm
@@ -19,3 +19,10 @@ osmnx.distance module
     :private-members:
     :noindex:
 
+ptac.population module
+----------------------
+
+.. automodule:: ptac.population
+    :members:
+    :private-members:
+    :noindex:
