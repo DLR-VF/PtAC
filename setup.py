@@ -27,7 +27,7 @@ setup(
     # python_requires=">=3.8",
     # install_requires=INSTALL_REQUIRES,
     classifiers=[
-        "Development Status :: 5 - Production/Stable",
+        "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
         "License :: OSI Approved :: Eclipse Public License 2.0 (EPL-2.0)",
