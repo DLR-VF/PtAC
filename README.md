@@ -25,7 +25,7 @@ works exactly). The street network can be downloaded and prepared for routing au
 
 # Installation and Usage
 
-Please see the [user guide](https://github.com/DLR-VF/PtAC/blob/master/docs/source/user-guide.rst) 
+Please see the [user guide](https://github.com/DLR-VF/PtAC/blob/master/docs/source/index.rst) 
 for information about installation and usage.
 
 # Examples
