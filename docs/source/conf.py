@@ -38,7 +38,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.coverage",
     # "sphinx_markdown_builder",
-    "myst_parser",
+    # "myst_parser",
     "sphinxcontrib.email",
 ]
 
