@@ -3,6 +3,8 @@ name: Publish Python 🐍 distributions 📦 to PyPI
 on:
   push:
     branches: ['release']
+  pull: 
+    branches: ['release']
     # release:
     # types: [published]
 
