@@ -39,7 +39,7 @@ extensions = [
     "sphinx.ext.coverage",
     # "sphinx_markdown_builder",
     # "myst_parser",
-    "sphinxcontrib.email",
+    # "sphinxcontrib.email",
 ]
 
 # napoleon extension options:
