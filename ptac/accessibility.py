@@ -64,14 +64,14 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
     """
     Load road network from OpenStreetMap and prepares network for usage in UrMoAC.
 
-    :param network_gdf: network dataset to use
-           (optional, if None is provided dataset will be downloaded from osm automatically)
+    :param network_gdf: network dataset to use (optional, if None: dataset will be downloaded from osm automatically)
     :param boundary: boundary of area where to download network (must be projected in WGS84)
     :type boundary: Geopandas.GeoDataFrame:POLYGON
     :param epsg: EPSG code of UTM projection for the area of interest
     :type epsg: int
     :param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
     :type verbose: int
+
     :return Street network, usable by UrmoAC
     :rtype GeoDataFrame
 
@@ -143,6 +143,7 @@ def build_request(epsg, number_of_threads, date, start_time, timestamp):
     :type date: int
     :param start_time: Time to start the routing (in seconds of the day)
     :type start_time: int
+
     :return UrmoAC request
     :type str
     """

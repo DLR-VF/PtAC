@@ -5,7 +5,7 @@ PtAC User Guide
 Here you can find information about how to install and use PtAC.
 
 Getting Started
-------------
+----------------
 In order to run the library on a windows computer you have to have a recent Python version installed
 (we recommend using Python `Anaconda <https://www.anaconda.com/products/individual>`_
 or `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_, which is a lightweight version of the conda environment).
