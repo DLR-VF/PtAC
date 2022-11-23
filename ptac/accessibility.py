@@ -45,7 +45,7 @@ def prepare_origins_and_destinations(dest_gdf, od):
     :param dest_gdf: origin or destination point data set (must be projected in UTM Projection)
     :type dest_gdf: Geopandas.GeoDataFrame:POINT
     :param od: indicate if "origin" or "destination"
-    :rtype od: str
+    :type od: str
     """
     dest_gdf["x"] = dest_gdf.geometry.centroid.x
     dest_gdf["y"] = dest_gdf.geometry.centroid.y
@@ -71,7 +71,9 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
     :param epsg: EPSG code of UTM projection for the area of interest
     :type epsg: int
     :param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
-    :rtype verbose: int
+    :type verbose: int
+    :return Street network, usable by UrmoAC
+    :rtype GeoDataFrame
 
     """
     if network_gdf is None:
@@ -141,6 +143,8 @@ def build_request(epsg, number_of_threads, date, start_time, timestamp):
     :type date: int
     :param start_time: Time to start the routing (in seconds of the day)
     :type start_time: int
+    :return UrmoAC request
+    :type str
     """
     current_path = os.path.dirname(os.path.abspath(__file__))
     urmo_ac_request = (
@@ -205,7 +209,7 @@ def distance_to_closest(
     :type date: int
     :param verbose: The degree of verbosity. Valid values are 0 (silent) - 3 (debug)
     :type verbose: int
-    :return accessibility_output: A geo data frame consists of accessibility calculation outputs
+    :return accessibility_output: A GeoDataFrame consists of accessibility calculation outputs
     :rtype: Geopandas.GeoDataFrame::POINT
     """
     start = timeit.default_timer()
@@ -297,13 +301,12 @@ def subset_result(accessibility_output, transport_system=None, maximum_distance=
 
     :param accessibility_output: A geo data frame consists of accessibility calculation outputs
     :type: Geopandas.GeoDataFrame::POINT
-    :param transport_system: Low-capacity or high-capacity pt system
+    :param transport_system: "Low-capacity" (local bus) or "high-capacity" (trains and BRT routes)
     :type transport_system: str
     :param maximum_distance: Maximum walkable distance
     :type maximum_distance: int
-    :return accessibility_output: A geo data frame consists of accessibility calculation outputs based on
-    the type of defined transport system
-    :rtype: Geopandas.GeoDataFrame::POINT
+    :return accessibility_output: A GeoDataFrame including a subset of accessibility calculation outputs based on the defined options
+    :rtype accessibility_output: Geopandas.GeoDataFrame::POINT
     """
     if transport_system is not None and maximum_distance is not None:
         print("please indicate either transport_system or maximum_distance. Not both")
