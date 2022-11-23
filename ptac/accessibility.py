@@ -189,7 +189,8 @@ def distance_to_closest(
     """
     Python wrapper for UrMoAC Accessibility Calculator.
 
-    :param network_gdf: Network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
+    :param network_gdf: Network dataset to use (optional, if None is provided dataset will be downloaded from
+        osm automatically)
     :type network_gdf: Geopandas.GeoDataFrame::POLYGON
     :param start_geometries: Starting points for accessibility calculation
     :type start_geometries: Geopandas.GeoDataFrame::POLYGON
@@ -305,7 +306,8 @@ def subset_result(accessibility_output, transport_system=None, maximum_distance=
     :type transport_system: str
     :param maximum_distance: Maximum walkable distance
     :type maximum_distance: int
-    :return accessibility_output: A GeoDataFrame including a subset of accessibility calculation outputs based on the defined options
+    :return accessibility_output: A GeoDataFrame including a subset of accessibility calculation outputs based on the
+        defined options
     :rtype accessibility_output: Geopandas.GeoDataFrame::POINT
     """
     if transport_system is not None and maximum_distance is not None:
