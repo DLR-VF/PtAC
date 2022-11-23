@@ -25,8 +25,9 @@ def get_network(polygon, network_type="walk", custom_filter=None, verbose=0):
     :type custom_filter: str
     :param verbose: Degree of verbosity (the higher, the more)
     :type verbose: int
-    :return OSM city network
-    :rtype GeoDataFrame::LineString
+
+    :return network_gdf: OSM city network
+    :rtype network_gdf: GeoPandas.GeoDataFrame::LineString
 
     """
     if verbose > 0:

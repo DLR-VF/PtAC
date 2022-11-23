@@ -23,12 +23,6 @@ ptac.population module
 .. automodule:: ptac.population
     :members:
 
-ptac.settings module
---------------------
-
-.. automodule:: ptac.settings
-    :members:
-
 ptac.util module
 ----------------
 
