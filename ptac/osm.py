@@ -2,7 +2,7 @@
 # coding:utf-8
 
 import osmnx as ox
-
+import networkx as nx
 """Downloads pois, footprints and graphs from OSM"""
 
 """
@@ -34,8 +34,7 @@ def get_network(polygon, network_type="walk", custom_filter=None, verbose=0):
     if verbose > 0:
         print("downloading street network. This may take some time for bigger areas\n")
     bounds = polygon.unary_union.bounds
-    network_gdf = ox.graph_to_gdfs(
-        ox.graph_from_bbox(
+    G = ox.graph_from_bbox(
             north=bounds[3],
             south=bounds[1],
             east=bounds[2],
@@ -44,5 +43,7 @@ def get_network(polygon, network_type="walk", custom_filter=None, verbose=0):
             network_type=network_type,
             simplify=False,
         )
-    )[1]
+    #make unique node labels. OSM node ids are not unique
+    G = nx.convert_node_labels_to_integers(G, first_label=100000000, ordering='default', label_attribute="osm_id")
+    network_gdf = ox.graph_to_gdfs(G)[1]
     return network_gdf
