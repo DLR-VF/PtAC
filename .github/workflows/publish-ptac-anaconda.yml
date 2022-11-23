@@ -1,8 +1,10 @@
 name: Publish PtAC to Anaconda
 
 on:
-  release:
-    types: [published]
+  push:
+    branch: [anaconda]
+  # release:
+  # types: [published]
     
 jobs:
   publish:
