@@ -185,8 +185,7 @@ def distance_to_closest(
     """
     Python wrapper for UrMoAC Accessibility Calculator.
 
-    :param network_gdf: Network dataset to use
-    (optional, if None is provided dataset will be downloaded from osm automatically)
+    :param network_gdf: Network dataset to use (optional, if None is provided dataset will be downloaded from osm automatically)
     :type network_gdf: Geopandas.GeoDataFrame::POLYGON
     :param start_geometries: Starting points for accessibility calculation
     :type start_geometries: Geopandas.GeoDataFrame::POLYGON
@@ -339,9 +338,9 @@ def calculate_sdg(df_pop_total, pop_accessible, population_column, verbose=0):
     :param pop_accessible: A geo dataframe or a list of two geo dataframes consists of accessibility calculation outputs
     :type pop_accessible: Geopandas.GeoDataFrame::POINT
     :param population_column: The name of the population column in accessibility output dataframe
-    :type: str
+    :type population_column: str
     :return SDG 11.2.1 indicator: SDG 11.2.1 indicator
-    :rtype: int
+    :rtype SDG 11.2.1 indicator: int
     """
     total_population = df_pop_total[population_column].sum()
     # if input is a list of dataframes (low- and high-capacity transit systems):

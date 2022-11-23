@@ -133,10 +133,6 @@ User reference
 
    ptac
 
-.. toctree::
-   :maxdepth: 1
-
-   internals
 
 
 Support
