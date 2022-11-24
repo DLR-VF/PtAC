@@ -29,7 +29,7 @@ import ptac.util as util
 home_directory = Path.home()  # os.path.abspath('../../')  # Path.home()
 
 
-def clear_directory(folder=f"{home_directory}/.ptac"):
+def clear_directory(folder=f"{home_directory}/.ptac", timestamp=None):
     files = glob.glob(f"{folder}//*.csv")
     for f in files:
         try:
@@ -38,7 +38,7 @@ def clear_directory(folder=f"{home_directory}/.ptac"):
             print("Error: %s : %s" % (f, e.strerror))
 
 
-def prepare_origins_and_destinations(dest_gdf, od):
+def prepare_origins_and_destinations(dest_gdf, od, timestamp):
     """
     Prepare origin or destination dataset for usage in UrMoAC.
 
@@ -52,15 +52,15 @@ def prepare_origins_and_destinations(dest_gdf, od):
     dest_gdf = dest_gdf[["x", "y"]]
     if od == "origin":
         dest_gdf = dest_gdf.dropna()
-        dest_gdf.to_csv(f"{home_directory}/.ptac/origins.csv", sep=";", header=False)
+        dest_gdf.to_csv(f"{home_directory}/.ptac/{timestamp}_origins.csv", sep=";", header=False)
     if od == "destination":
         dest_gdf = dest_gdf.dropna()
         dest_gdf.to_csv(
-            f"{home_directory}/.ptac/destinations.csv", sep=";", header=False
+            f"{home_directory}/.ptac/{timestamp}_destinations.csv", sep=";", header=False
         )
 
 
-def prepare_network(network_gdf=None, boundary=None, verbose=0):
+def prepare_network(network_gdf=None, boundary=None, verbose=0, timestamp=None):
     """
     Load road network from OpenStreetMap and prepares network for usage in UrMoAC.
 
@@ -81,7 +81,7 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
             print("No street network was specified. Loading osm network..\n")
         network_gdf = osm.get_network(boundary)
         network_gdf = util.project_gdf(network_gdf, to_latlong=True)
-        # network_gdf = util.project_gdf(network_gdf, to_latlong=False)
+        network_gdf = util.project_gdf(network_gdf, to_latlong=False)
 
     else:
         if verbose > 0:
@@ -126,7 +126,7 @@ def prepare_network(network_gdf=None, boundary=None, verbose=0):
     network_gdf = pd.concat([network_gdf, network_gdf.geometry.bounds], axis=1)
     del network_gdf["geometry"]
     network_gdf.to_csv(
-        f"{home_directory}/.ptac/network.csv", sep=";", header=False, index=False
+        f"{home_directory}/.ptac/{timestamp}_network.csv", sep=";", header=False, index=False
     )
     return network_gdf
 
@@ -150,18 +150,18 @@ def build_request(epsg, number_of_threads, date, start_time, timestamp):
     current_path = os.path.dirname(os.path.abspath(__file__))
     urmo_ac_request = (
         "java -jar -Xmx12g {current_path}/urmoacjar/UrMoAC.jar "
-        '--from "file;{home_directory}/.ptac/origins.csv" '
+        '--from "file;{home_directory}/.ptac/{timestamp}_origins.csv" '
         "--shortest "
-        '--to "file;{home_directory}/.ptac/destinations.csv" '
+        '--to "file;{home_directory}/.ptac/{timestamp}_destinations.csv" '
         "--mode foot "
         "--time {start_time} "
         "--epsg {epsg} "
-        '--nm-output "file;{home_directory}/.ptac/sdg_output_{timestamp}.csv" '
+        '--nm-output "file;{home_directory}/.ptac/{timestamp}_sdg_output.csv" '
         "--verbose "
         "--threads {number_of_threads} "
         "--dropprevious "
         "--date {date} "
-        '--net "file;{home_directory}/.ptac/network.csv"'.format(
+        '--net "file;{home_directory}/.ptac/{timestamp}_network.csv"'.format(
             home_directory=home_directory,
             timestamp=timestamp,
             current_path=current_path,
@@ -240,7 +240,7 @@ def distance_to_closest(
         network_gdf = util.project_gdf(network_gdf, to_latlong=True)
         network_gdf = util.project_gdf(network_gdf, to_latlong=False)
         prepare_network(
-            network_gdf=network_gdf, boundary=boundary_geometries, verbose=verbose
+            network_gdf=network_gdf, boundary=boundary_geometries, verbose=verbose, timestamp=timestamp
         )
 
     if "index" in start_geometries.columns:
@@ -253,8 +253,8 @@ def distance_to_closest(
     destination_geometries = destination_geometries.reset_index()
 
     # write origins and destinations to disk
-    prepare_origins_and_destinations(destination_geometries, od="destination")
-    prepare_origins_and_destinations(start_geometries, od="origin")
+    prepare_origins_and_destinations(destination_geometries, od="destination", timestamp=timestamp)
+    prepare_origins_and_destinations(start_geometries, od="origin", timestamp=timestamp)
 
     epsg = destination_geometries.crs.to_epsg()
     # build UrMoAC request
@@ -272,7 +272,7 @@ def distance_to_closest(
     # read UrMoAC output
     header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_num", "avg_value"]
     output = pd.read_csv(
-        f"{home_directory}/.ptac/sdg_output_{timestamp}.csv", sep=";", header=0, names=header_list
+        f"{home_directory}/.ptac/{timestamp}_sdg_output.csv", sep=";", header=0, names=header_list
     )
 
     # only use distance on road network
