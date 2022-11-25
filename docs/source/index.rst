@@ -62,7 +62,7 @@ with** `conda <https://docs.conda.io/en/latest/>`_ **and activate the created en
 
 .. code-block:: bash
 
-   pip install -i https://test.pypi.org/simple/ ptac
+   pip install ptac
 
 should look like this:
 
@@ -73,7 +73,7 @@ should look like this:
    Collecting ptac
    Downloading https://test-files.pythonhosted.org/packages/32/b3/a3b687fb181cc584f4308655a895299494126474ad2cb4470fa67f8e3b3a/ptac-0.0.6-py3-none-any.whl (13 kB)
    Installing collected packages: ptac
-   Successfully installed ptac-0.0.6
+   Successfully installed ptac-0.0.1a
 
 ptac should be successfully installed, now. To be sure weather it works you might start python
 

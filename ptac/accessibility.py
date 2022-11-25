@@ -32,7 +32,7 @@ home_directory = Path.home()  # os.path.abspath('../../')  # Path.home()
 def clear_directory(folder=f"{home_directory}/.ptac", timestamp=None):
     files = glob.glob(f"{folder}//*.csv")
     for f in files:
-        if f.startswith(timestamp):
+        if f.startswith(folder+f"\\{str(timestamp)}"):
             try:
                 os.remove(f)
             except os.error as e:
@@ -294,7 +294,7 @@ def distance_to_closest(
     stop = timeit.default_timer()
 
     print(f"calculation finished in {stop - start} seconds")
-    clear_directory()
+    clear_directory(timestamp=timestamp)
     return accessibility_output
 
 
