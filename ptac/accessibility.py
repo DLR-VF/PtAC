@@ -32,10 +32,11 @@ home_directory = Path.home()  # os.path.abspath('../../')  # Path.home()
 def clear_directory(folder=f"{home_directory}/.ptac", timestamp=None):
     files = glob.glob(f"{folder}//*.csv")
     for f in files:
-        try:
-            os.remove(f)
-        except os.error as e:
-            print("Error: %s : %s" % (f, e.strerror))
+        if f.startswith(timestamp):
+            try:
+                os.remove(f)
+            except os.error as e:
+                print("Error: %s : %s" % (f, e.strerror))
 
 
 def prepare_origins_and_destinations(dest_gdf, od, timestamp):
