@@ -1,5 +1,4 @@
 name: conda_build
-name: Publish
 
 on: 
   push:
