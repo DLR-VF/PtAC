@@ -1,27 +1,27 @@
 name: conda_build
+name: Publish
 
-on:
-  release:
-    types: [published]
+on: 
   push:
-    branches: [ anaconda ]
-    tags:
-      - '**'
-  pull_request:
-    branches: [ anaconda ]
-    
+    branches: 
+      - anaconda
+
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
     - name: publish-to-conda
-      uses: paskino/conda-package-publish-action@master
+      uses: amauryval/publish_conda_package_action@2.0.3
       with:
-        subDir: 'conda'
-        channels: 'conda-forge -c ccpi -c paskino'
-        AnacondaToken: ${{ secrets.ANACONDA_TOKEN }}
-        publish: ${{ github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags') }}
-        test_all: ${{(github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')) || (github.ref == 'refs/heads/master')}}
-        convert_win: true
-        convert_osx: true
+        # CondaDir: locate the directory containing your meta.yml, conda_build_config.yaml (...) files
+        CondaDir: 'conda'
+        # Channels: You can add more channel with a space separator
+        Channels: 'conda-forge' 
+        # Platforms: remove one or more of these platforms
+        Platforms: 'osx-64 linux-32 linux-64 win-32 win-64 noarch'
+        CondaUsername: ${{ secrets.CONDA_USERNAME }}
+        CondaPassword: ${{ secrets.CONDA_PASSWORD }}
