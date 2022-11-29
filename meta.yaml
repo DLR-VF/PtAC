@@ -10,10 +10,10 @@ build:
 
 requirements:
   build:
-    - python >=3.8
+    - python >=3
     - setuptools
   run:
-    - python >=3.8
+    - python >=3
     - osmnx==1.1.1
     - networkx>=2.5
     - numpy==1.22.4
