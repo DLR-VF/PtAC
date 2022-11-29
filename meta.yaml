@@ -3,17 +3,19 @@ package:
   version: 0.1.1a
 
 source:
-  path: ../
+  path: .
+  # git-url: https://github.com/DLR-VF/PtAC
  
 build:
   number: 0
 
 requirements:
   build:
-    - python >=3
+    - python
     - setuptools
+
   run:
-    - python >=3
+    - python
     - osmnx==1.1.1
     - networkx>=2.5
     - numpy==1.22.4
