@@ -2,8 +2,8 @@ name: conda_build
 
 on: 
   push:
-    # branches: 
-    # - anaconda
+    branches: 
+      - anaconda
 
 jobs:
   publish:
@@ -17,10 +17,10 @@ jobs:
       uses: amauryval/publish_conda_package_action@2.0.3
       with:
         # CondaDir: locate the directory containing your meta.yml, conda_build_config.yaml (...) files
-        CondaDir: 'conda'
+        CondaDir: .
         # Channels: You can add more channel with a space separator
         Channels: 'conda-forge' 
         # Platforms: remove one or more of these platforms
-        Platforms: 'osx-64 linux-32 linux-64 win-32 win-64 noarch'
+        Platforms: 'osx-64 linux-32 linux-64 win-32 win-64'
         CondaUsername: ${{ secrets.CONDA_USERNAME }}
         CondaPassword: ${{ secrets.CONDA_PASSWORD }}
