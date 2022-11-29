@@ -2,8 +2,8 @@ name: conda_build
 
 on: 
   push:
-    branches: 
-      - anaconda
+    # branches: 
+    # - anaconda
 
 jobs:
   publish:
