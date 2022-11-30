@@ -3,7 +3,7 @@ name: conda_build
 on:
   push:
     branches:
-      - anaconda
+      - anaconda, dev
 
 jobs:
   publish:
