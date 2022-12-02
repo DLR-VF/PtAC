@@ -16,7 +16,7 @@ jobs:
     - name: publish-to-conda
       uses: amauryval/publish_conda_package_action@2.0.3
       with:
-        # CondaDir: locate the directory containing your meta.yml, conda_build_config.yaml (...) files
+        # CondaDir: locate the directory containing your meta.yaml, conda_build_config.yaml (...) files
         CondaDir: .
         # Channels: You can add more channel with a space separator
         Channels: 'conda-forge'
