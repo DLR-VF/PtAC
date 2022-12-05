@@ -5,7 +5,7 @@ PtAC User Guide
 Here you can find information about how to install and use PtAC.
 
 Getting Started
-------------
+----------------
 In order to run the library on a windows computer you have to have a recent Python version installed
 (we recommend using Python `Anaconda <https://www.anaconda.com/products/individual>`_
 or `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_, which is a lightweight version of the conda environment).
@@ -62,18 +62,18 @@ with** `conda <https://docs.conda.io/en/latest/>`_ **and activate the created en
 
 .. code-block:: bash
 
-   pip install -i https://test.pypi.org/simple/ ptac
+   pip install ptac
 
 should look like this:
 
 .. code-block:: bash
 
-   (ptac) C:\>pip install -i https://test.pypi.org/simple/ ptac
+   (ptac) C:\>pip install -i ptac
    Looking in indexes: https://test.pypi.org/simple/
    Collecting ptac
    Downloading https://test-files.pythonhosted.org/packages/32/b3/a3b687fb181cc584f4308655a895299494126474ad2cb4470fa67f8e3b3a/ptac-0.0.6-py3-none-any.whl (13 kB)
    Installing collected packages: ptac
-   Successfully installed ptac-0.0.6
+   Successfully installed ptac-0.0.1a
 
 ptac should be successfully installed, now. To be sure weather it works you might start python
 
@@ -133,10 +133,6 @@ User reference
 
    ptac
 
-.. toctree::
-   :maxdepth: 1
-
-   internals
 
 
 Support

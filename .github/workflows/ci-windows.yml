@@ -2,11 +2,11 @@ name: Test PtAC with Mamba in Windows
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, dev ]
     tags:
       - "v*.*.*"
   pull_request:
-    branches: [ master ]
+    branches: [ master, dev ]
     # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -21,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ['3.8', '3.9']
+        python-version: ['3.9']
         include:
           #- os: ubuntu-latest
           #label: linux-64

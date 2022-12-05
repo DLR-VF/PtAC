@@ -27,11 +27,11 @@ def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
 
     :param gdf: the gdf to be projected
     :type gdf: Geopandas.GeoDataFrame::POINT
-    :param to_crs: CRS code. if not None, just project to this CRS instead of to UTM
+    :param to_crs: CRS code. if not None,project GeodataFrame to CRS
     :type to_crs: int
-    :param to_latlong : If True, projects to latlong instead of to UTM
+    :param to_latlong: If True, projects to latlong instead of to UTM
     :type to_latlong: bool
-    :return projected_gdf: A projected GeoDataFrame to the UTM zone
+    :return projected_gdf: A projected GeoDataFrame
     :rtype projected_gdf: Geopandas.GeoDataFrame::POINT
     """
     assert len(gdf) > 0, "You cannot project an empty GeoDataFrame."

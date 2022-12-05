@@ -6,10 +6,10 @@
 version: 2
 
 # Set the version of Python and other tools
-build: 
-  os: ubuntu-20.04
-  tools:
-    python: "3.8" #mambaforge-4.10" # "3.8"
+#build: 
+#os: ubuntu-20.04
+  #tools:
+  #python: "3.8" #mambaforge-4.10" # "3.8"
 
 # Build the documentation in the docs/ directory with Sphinx
 sphinx:
@@ -23,6 +23,6 @@ sphinx:
 python:
   version: 3.8
   install:
-  - requirements: docs/requirements.txt
+  - requirements: requirements.txt
   - method: pip
     path: .
