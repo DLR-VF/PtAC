@@ -2,11 +2,11 @@ name: Test PtAC with Mamba in Windows
 
 on:
   push:
-    branches: [  ]
+    branches: [ master, dev ]
     tags:
       - "v*.*.*"
   pull_request:
-    branches: [  ]
+    branches: [ master, dev ]
     # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
