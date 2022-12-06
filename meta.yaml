@@ -1,21 +1,30 @@
+{% set name = "ptac" %}
+{% set version = "0.1.2a0" %}
+
 package:
-  name: ptac
-  version: 0.1.1a
+  name: {{ name|lower }}
+  version: {{ version }}
 
 source:
-  path: .
-  # git-url: https://github.com/DLR-VF/PtAC
- 
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ptac-{{ version }}.tar.gz
+  sha256: 86da137e9b23241f42540ea5bb6d3c774b75f8f52650bce549d8497bce34a6df
+
 build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
   number: 0
 
 requirements:
-  build:
-    - python
-    - setuptools
+  host:
+    - python >=3.8
+    - pip
 
+  build:
+    - python >=3.8
+    - setuptools
+ 
   run:
-    - python
+    - python >=3.8
     - osmnx==1.1.1
     - networkx>=2.5
     - numpy==1.22.4
@@ -26,9 +35,19 @@ requirements:
     - pandas==1.2.4
 
 test:
-  source_files:
-    - tests/test_ptac.py
+  imports:
+    - ptac
+  commands:
+    - pip check
+  requires:
+    - pip
 
 about:
   home: https://github.com/DLR-VF/PtAC
   license: Eclipse Public License
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - serrayos
+    - SimonNieland
