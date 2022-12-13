@@ -23,7 +23,7 @@ else:
 
 setup(
     name="ptac",
-    version="0.1.2a",
+    version="0.1.3a",
     author="Simon Nieland, Serra Yosmaoglu",
     author_email="Simon.Nieland@dlr.de, Serra.Yosmaoglu@dlr.de",
     long_description=readme(),
