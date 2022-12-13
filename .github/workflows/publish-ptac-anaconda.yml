@@ -1,18 +1,26 @@
-name: Publish PtAC to Anaconda
+name: conda_build
 
 on:
   push:
-    branch: [anaconda]
-  # release:
-  # types: [published]
-    
+    branches:
+      - anaconda
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
     - name: publish-to-conda
-      uses: maxibor/conda-package-publish-action@v1.1
+      uses: amauryval/publish_conda_package_action@2.0.3
       with:
-        subDir: 'conda'
-        AnacondaToken: ${{ secrets.ANACONDA_TOKEN }}
+        # CondaDir: locate the directory containing your meta.yaml, conda_build_config.yaml (...) files
+        CondaDir: .
+        # Channels: You can add more channel with a space separator
+        Channels: 'conda-forge'
+        # Platforms: remove one or more of these platforms
+        Platforms: 'osx-64 linux-32 linux-64 win-32 win-64'
+        CondaUsername: ${{ secrets.CONDA_USERNAME }}
+        CondaPassword: ${{ secrets.CONDA_PASSWORD }}

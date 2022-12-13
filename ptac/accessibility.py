@@ -61,7 +61,7 @@ def prepare_origins_and_destinations(dest_gdf, od, timestamp):
         )
 
 
-def prepare_network(network_gdf=None, boundary=None, verbose=0, timestamp=None):
+def prepare_network(timestamp, network_gdf=None, boundary=None, verbose=0):
     """
     Load road network from OpenStreetMap and prepares network for usage in UrMoAC.
 
@@ -235,7 +235,7 @@ def distance_to_closest(
         boundary_geometries = boundary_geometries.to_crs(settings.default_crs)
 
     if network_gdf is None:
-        prepare_network(network_gdf=None, boundary=boundary_geometries, verbose=verbose)
+        prepare_network(timestamp=timestamp, network_gdf=None, boundary=boundary_geometries, verbose=verbose)
 
     else:
         network_gdf = util.project_gdf(network_gdf, to_latlong=True)
