@@ -19,11 +19,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.8', '3.9']
+        python-version: ['3.9']
         os: ["macos-latest"]
         include:
           - os: macos-latest
-            environment-file: .github/build_environments/environment.yml
+            environment-file: .github/build_environments/environment-linux.yml
             miniforge-variant: Mambaforge
             miniforge-version: 4.9.2-4
 
