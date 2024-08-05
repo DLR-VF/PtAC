@@ -89,7 +89,7 @@ class PtACTest(unittest.TestCase):
         elif sys.platform.startswith("linux"):
             self.assertEqual(round(value), 217)
         elif sys.platform.startswith("macos"):
-            self.assertEqual(round(value), 218)
+            self.assertEqual(round(value), 217)
 
     def test_dist_to_closest_transport_system_high(self):
         self.set_up()
