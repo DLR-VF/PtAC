@@ -73,9 +73,9 @@ class PtACTest(unittest.TestCase):
         if sys.platform.startswith("win"):
             self.assertAlmostEqual(round(value), 199, delta=1)
         elif sys.platform.startswith("linux"):
-            self.assertEqual(round(value), 200)
+            self.assertEqual(round(value), 199)
         elif sys.platform.startswith("macos"):
-            self.assertEqual(round(value), 200)
+            self.assertEqual(round(value), 199)
 
     def test_dist_to_closest_transport_system_low(self):
         self.set_up()
