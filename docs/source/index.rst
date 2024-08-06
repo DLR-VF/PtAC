@@ -58,7 +58,13 @@ with** `conda <https://docs.conda.io/en/latest/>`_ **and activate the created en
 
 (ptac) should now be displayed in brackets at the starting of the line.
 
-**5. you are able to install ptac now by typing**
+**5. you can now install the latest version of ptac either via conda or pip by typing**
+
+.. code-block:: bash
+
+   conda install -c conda-forge ptac
+
+or
 
 .. code-block:: bash
 

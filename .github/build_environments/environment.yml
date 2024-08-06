@@ -6,14 +6,14 @@ channels:
 
 dependencies:
     # required
-    - python
-    - osmnx==1.1.1
-    - networkx #>=2.5
-    - numpy>=1.22
-    - pandas #==1.2.4
-    - Shapely<2.0
-    - pyproj #==3.1.0
+    - osmnx
     - geopandas
+    - networkx
+    - numpy
+    - pandas
+    - pyproj
+    - rasterio
+    - Shapely
 
 
     # extras
@@ -22,19 +22,12 @@ dependencies:
     # - rasterio
     # - scikit-learn
     # - scipy
-    - setuptools == 63.4.1
-    - wheel == 0.37.1
-
-    # linting/testing
+    - black=22.*
+    - pylint
     - coverage
+    - flake8
+    - flake8-bugbear
     - isort
     - pydocstyle
+    - pytest
     - sphinx
-    - sphinx_rtd_theme
-    - pytest == 7.1.1
-    - pytest-cov == 3.0.0
-    - twine == 4.0.0
-    - flake8 == 4.0.1
-    - black == 22.3.0
-    - pylint == 2.13.8
-
