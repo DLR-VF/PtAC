@@ -1,8 +1,8 @@
-osmnx==1.9.1
-networkx>=2.5
-numpy>=1.22.4
-Shapely>=2.0
-pyproj>=3.3.0
-geopandas>=1.0
-rasterio>=1.2.4
-pandas>=1.4
+osmnx==2.0.6
+networkx>=3.5
+numpy>=2.3.3
+shapely>=2.1.2
+pyproj>=3.7.2
+geopandas>=1.1.1
+rasterio>=1.4.3
+pandas>=2.3.3
