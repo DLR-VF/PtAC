@@ -236,7 +236,7 @@ def distance_to_closest(
 
     if boundary_geometries is None:
         boundary_geometries = gpd.GeoDataFrame(
-            index=[0], crs="epsg:4326", geometry=[start_geometries.unary_union]
+            index=[0], crs="epsg:4326", geometry=[start_geometries.union_all()]
         )
 
     if not boundary_geometries.crs == settings.default_crs:

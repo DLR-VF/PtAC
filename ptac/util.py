@@ -68,7 +68,7 @@ def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
 
             # calculate the centroid of the union of all the geometries in the
             # GeoDataFrame
-            avg_longitude = gdf[geom_col].unary_union.centroid.x
+            avg_longitude = gdf[geom_col].union_all().centroid.x
 
             # calculate the UTM zone from this avg longitude and define the UTM
             # CRS to project
