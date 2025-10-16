@@ -1,6 +1,21 @@
-#!/usr/bin/env python3
-# coding:utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""Prepares dataset for accessibility computation and computes walking accessibilities
+from residential areas to public transport stops."""
+# ===========================================================================
+__author__     = "Serra Yosmaoglu, Simon Nieland, Daniel Krajzewicz"
+__copyright__  = "Copyright 2021-2025, German Aerospace Center (DLR), Institute of Transport Research"
+__license__    = "EPL2.0"
+__version__    = "0.2.0"
+__maintainer__ = "Simon Nieland"
+__email__      = "simon.nieland@dlr.de"
+__status__     = "Production"
+# ===========================================================================
+# - https://github.com/DLR-VF/PtAC
+# - http://www.dlr.de/vf
+# ===========================================================================
 
+# --- imports ---------------------------------------------------------------
 import glob
 import os
 import sys
@@ -15,20 +30,13 @@ import ptac.osm as osm
 import ptac.settings as settings
 import ptac.util as util
 
-"""Prepares dataset for accessibility computation and computes walking accessibilities
-   from residential areas to public transport stops."""
 
-"""
-@name : accessibility.py
-@author : Simon Nieland, Serra Yosmaoglu
-@date : 26.07.2021 12:44
-@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
-"""
-
+# --- definitions -----------------------------------------------------------
 # global home_directory
 home_directory = Path.home()  # os.path.abspath('../../')  # Path.home()
 
 
+# --- functions -------------------------------------------------------------
 def clear_directory(folder=f"{home_directory}/.ptac", timestamp=None):
     files = glob.glob(f"{folder}//*.csv")
     for f in files:

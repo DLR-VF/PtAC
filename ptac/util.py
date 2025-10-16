@@ -1,21 +1,29 @@
-#!/usr/bin/env python3
-# coding:utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""Converts geometries between latitude/longitude & UTM coordinates
 
+Uses methods developed by Geoff Boeing https://geoffboeing.com/
+"""
+# ===========================================================================
+__author__     = "Serra Yosmaoglu, Simon Nieland, Daniel Krajzewicz"
+__copyright__  = "Copyright 2021-2025, German Aerospace Center (DLR), Institute of Transport Research"
+__license__    = "EPL2.0"
+__version__    = "0.2.0"
+__maintainer__ = "Simon Nieland"
+__email__      = "simon.nieland@dlr.de"
+__status__     = "Production"
+# ===========================================================================
+# - https://github.com/DLR-VF/PtAC
+# - http://www.dlr.de/vf
+# ===========================================================================
+
+# --- imports ---------------------------------------------------------------
 import math
-
 from pyproj import CRS
-
 import ptac.settings as settings
 
-"""Converts geometries between latitude/longitude & UTM coordinates"""
 
-"""
-@name : util.py
-@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
-             & 2016–2021 Geoff Boeing https://geoffboeing.com/
-"""
-
-
+# --- functions -------------------------------------------------------------
 # from osmnx
 def project_gdf(gdf, geom_col="geometry", to_crs=None, to_latlong=False):
     """
