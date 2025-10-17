@@ -43,6 +43,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           environment-file: ${{ matrix.environment-file }}
           channels: conda-forge 
+          conda-remove-defaults: true
           auto-update-conda: true
 
       - name: Verify Conda setup
@@ -57,8 +58,8 @@ jobs:
 
       - name: Lint code
         run: |
-          isort . 
-          black . 
+          isort .  --chck-only
+          black . --check
           flake8 .
           pydocstyle . --ignore=D104,D100,D103,D212
 
