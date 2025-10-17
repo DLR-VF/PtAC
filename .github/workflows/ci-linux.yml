@@ -59,7 +59,7 @@ jobs:
       - name: Lint code
         run: |
           isort .  --check-only
-          black . --check
+          black . --check-only
           flake8 .
           pydocstyle . --ignore=D104,D100,D103,D212
 
