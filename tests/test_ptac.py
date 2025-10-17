@@ -159,7 +159,7 @@ class PtACTest(unittest.TestCase):
         value = util.project_gdf(
             gdf=self.pop, geom_col="geometry", to_crs=None, to_latlong=False
         ).crs
-        self.assertEqual(value, "epsg:32633")
+        self.assertEqual(value, "epsg:32632")
 
 
 if __name__ == "__main__":
