@@ -1,7 +1,20 @@
-"""
-Unit tests for PtAC library
-"""
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""Unit tests for PtAC library"""
+# ===========================================================================
+__author__     = "Serra Yosmaoglu, Simon Nieland, Daniel Krajzewicz"
+__copyright__  = "Copyright 2021-2025, German Aerospace Center (DLR), Institute of Transport Research"
+__license__    = "EPL2.0"
+__version__    = "0.2.0"
+__maintainer__ = "Simon Nieland"
+__email__      = "simon.nieland@dlr.de"
+__status__     = "Production"
+# ===========================================================================
+# - https://github.com/DLR-VF/PtAC
+# - http://www.dlr.de/vf
+# ===========================================================================
 
+# --- imports ---------------------------------------------------------------
 import pathlib
 import sys
 import unittest
@@ -13,6 +26,7 @@ import ptac.population as population
 import ptac.util as util
 
 
+# --- classes ---------------------------------------------------------------
 class PtACTest(unittest.TestCase):
     def set_up(self):
         self.data_path = str(pathlib.Path(__file__).parent.absolute())
@@ -25,6 +39,7 @@ class PtACTest(unittest.TestCase):
         self.raster = self.data_path + "/input_data/raster_test.tif"
         self.timestamp = int(round(time.time()))
 
+
     def test_prepare_network(self):
         self.set_up()
         df_prepare_network = accessibility.prepare_network(
@@ -33,8 +48,9 @@ class PtACTest(unittest.TestCase):
         value = df_prepare_network["index"].count()
         self.assertEqual(value, 50)
 
+
     def test_network_colums(self):
-        # test if network dataset contains necessary columns
+        # test whether the network dataset contains necessary columns
         self.set_up()
         df_prepare_network = accessibility.prepare_network(
             timestamp=self.timestamp, network_gdf=self.net, boundary=self.boundary
@@ -69,7 +85,6 @@ class PtACTest(unittest.TestCase):
             maximum_distance=50,
         )
         value = df_accessibility["pop"].sum()
-
         if sys.platform.startswith("win"):
             self.assertAlmostEqual(round(value), 199, delta=1)
         elif sys.platform.startswith("linux"):
@@ -77,19 +92,20 @@ class PtACTest(unittest.TestCase):
         elif sys.platform.startswith("macos"):
             self.assertEqual(round(value), 199)
 
+
     def test_dist_to_closest_transport_system_low(self):
         self.set_up()
         df_accessibility = accessibility.distance_to_closest(
             self.pop, self.pt_low, network_gdf=self.net, transport_system="low-capacity"
         )
         value = df_accessibility["pop"].sum()
-
         if sys.platform.startswith("win"):
             self.assertAlmostEqual(round(value), 217, delta=1)
         elif sys.platform.startswith("linux"):
             self.assertEqual(round(value), 217)
         elif sys.platform.startswith("macos"):
             self.assertEqual(round(value), 217)
+
 
     def test_dist_to_closest_transport_system_high(self):
         self.set_up()
@@ -100,13 +116,13 @@ class PtACTest(unittest.TestCase):
             transport_system="high-capacity",
         )
         value = df_accessibility["pop"].sum()
-
         if sys.platform.startswith("win"):
             self.assertAlmostEqual(round(value), 217, delta=1)
         elif sys.platform.startswith("linux"):
             self.assertEqual(round(value), 217)
         elif sys.platform.startswith("macos"):
             self.assertEqual(round(value), 218)
+
 
     def test_calculate_sdg(self):
         # todo: why it is not 100%?
@@ -128,18 +144,18 @@ class PtACTest(unittest.TestCase):
         )
         if sys.platform.startswith("win"):
             self.assertAlmostEqual(round(result, 2), 0.96,  delta=0.01)
-            #self.assertEqual(round(result, 2), 0.96)  # 0.9561
         elif sys.platform.startswith("linux"):
             self.assertEqual(round(result, 2), 0.96)
         elif sys.platform.startswith("macos"):
             self.assertEqual(round(result, 2), 0.96)
 
+
     def test_raster_to_points(self):
         self.set_up()
-        # value = ((population.raster_to_points(self.raster))["geometry"].type == "Point")
         value = population.raster_to_points(self.raster)
         value = float(value["pop"].sum())
         self.assertEqual(round(value), 227)
+
 
     def test_project_gdf(self):
         self.set_up()
