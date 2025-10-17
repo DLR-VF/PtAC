@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+title: PtAC
+message: >-
+  A Python library to automatically compute walking access to 
+  public transport for the Sustainable Development Goal 11.2.1.
+type: software
+authors:
+  - given-names: Serra
+    family-names: Yosmaoglu
+    affiliation: Deutsches Zentrum für Luft- und Raumfahrt
+  - given-names: Simon
+    family-names: Nieland
+    email: simon.nieland@dlr.de
+    affiliation: Deutsches Zentrum für Luft- und Raumfahrt
+    orcid: 'https://orcid.org/0000-0002-1116-0646'
+  - given-names: Daniel
+    family-names: Krajzewicz
+    email: daniel.krajzewicz@dlr.de
+    affiliation: Deutsches Zentrum für Luft- und Raumfahrt
+    orcid: 'https://orcid.org/0000-0003-1045-8800'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.17378832
+repository-code: 'https://github.com/DLR-VF/PtAC'
+url: 'https://github.com/DLR-VF/PtAC'
+abstract: >-
+  A Python library to automatically compute walking access to 
+  public transport for the Sustainable Development Goal 11.2.1.
+keywords:
+  - SDG 11.2.1
+  - accessibility measures
+  - mobility
+license: EPL-2.0

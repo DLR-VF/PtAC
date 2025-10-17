@@ -1,6 +1,6 @@
 ## License
 
-Copyright © 2022 German Aerospace Center (DLR)
+Copyright &copy; 2022&ndash;2025 German Aerospace Center (DLR)
 
 This work is licensed under [Eclipse Public License 2.0 (EPL-2.0)](LICENSES/EPL-2.0.txt)
 
