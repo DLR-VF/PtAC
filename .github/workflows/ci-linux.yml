@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.9']
+        python-version: ['3.10']
         os: [ubuntu-latest]
         include:
           - os: ubuntu-latest
@@ -32,10 +32,10 @@ jobs:
         with:
           fetch-depth: 0  # get full history for version tags etc.
 
-      - name: Setup Mambaforge (Miniconda)
+      - name: Setup Miniforge
         uses: conda-incubator/setup-miniconda@v3
         with:
-          miniforge-variant: Mambaforge
+          miniforge-variant: Miniforge3
           miniforge-version: latest
           use-mamba: true
           auto-activate-base: false
