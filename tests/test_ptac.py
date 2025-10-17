@@ -17,8 +17,9 @@ __status__     = "Production"
 # --- imports ---------------------------------------------------------------
 import pathlib
 import sys
-import unittest
 import time
+import unittest
+
 import geopandas as gpd
 
 import ptac.accessibility as accessibility

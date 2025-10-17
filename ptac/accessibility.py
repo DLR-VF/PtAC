@@ -15,12 +15,12 @@ __status__     = "Production"
 # - http://www.dlr.de/vf
 # ===========================================================================
 
-# --- imports ---------------------------------------------------------------
 import glob
 import os
 import sys
 import time
 import timeit
+# --- imports ---------------------------------------------------------------
 from pathlib import Path
 
 import geopandas as gpd
@@ -29,7 +29,6 @@ import pandas as pd
 import ptac.osm as osm
 import ptac.settings as settings
 import ptac.util as util
-
 
 # --- definitions -----------------------------------------------------------
 # global home_directory
