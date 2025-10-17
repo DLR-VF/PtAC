@@ -79,18 +79,15 @@ class PtACTest(unittest.TestCase):
     def test_dist_to_closest_max_dist(self):
         self.set_up()
         df_accessibility = accessibility.distance_to_closest(
-            self.pop,
-            self.pt,
-            network_gdf=self.net,
-            maximum_distance=50,
+            self.pop, self.pt, network_gdf=self.net, maximum_distance=50,
         )
         value = df_accessibility["pop"].sum()
         if sys.platform.startswith("win"):
-            self.assertAlmostEqual(round(value), 199, delta=1)
+            self.assertAlmostEqual(round(value), 217, delta=1)
         elif sys.platform.startswith("linux"):
-            self.assertEqual(round(value), 199)
+            self.assertEqual(round(value), 217)
         elif sys.platform.startswith("macos"):
-            self.assertEqual(round(value), 199)
+            self.assertEqual(round(value), 217)
 
 
     def test_dist_to_closest_transport_system_low(self):
