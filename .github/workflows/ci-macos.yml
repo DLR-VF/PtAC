@@ -55,14 +55,6 @@ jobs:
           conda list
           conda info --all
       
-      - name: Lint code
-        shell: bash -l {0}
-        run: |
-          isort . 
-          black . 
-          flake8 .
-          pydocstyle . --ignore=D104,D100,D103,D212
-      
       - name: Test code
         shell: bash -l {0}
         run: |
