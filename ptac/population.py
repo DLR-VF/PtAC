@@ -1,22 +1,27 @@
-#!/usr/bin/env python3
-# coding:utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""Converts population raster dataset to population points"""
+# ===========================================================================
+__author__ = "Serra Yosmaoglu, Simon Nieland, Daniel Krajzewicz"
+__copyright__ = "Copyright 2021-2025, German Aerospace Center (DLR), Institute of Transport Research"
+__license__ = "EPL2.0"
+__version__ = "0.8.0"
+__maintainer__ = "Simon Nieland"
+__email__ = "simon.nieland@dlr.de"
+__status__ = "Production"
+# ===========================================================================
+# - https://github.com/DLR-VF/PtAC
+# - http://www.dlr.de/vf
+# ===========================================================================
 
+# --- imports ---------------------------------------------------------------
 import geopandas as gpd
 import numpy as np
 import pandas as pd
 import rasterio
 
-"""Converts population raster dataset to population points"""
 
-"""
-@name : population.py
-@author : Simon Nieland, Serra Yosmaoglu
-@date : 26.07.2021
-@copyright : Institut fuer Verkehrsforschung,
-Deutsches Zentrum fuer Luft- und Raumfahrt
-"""
-
-
+# --- functions -------------------------------------------------------------
 def raster_to_points(path, band=1, epsg=4326):
     """
     Convert Raster to Point.

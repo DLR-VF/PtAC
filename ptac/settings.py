@@ -1,17 +1,23 @@
-#!/usr/bin/env python3
-# coding:utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""Defines street types"""
+# ===========================================================================
+__author__ = "Serra Yosmaoglu, Simon Nieland, Daniel Krajzewicz"
+__copyright__ = "Copyright 2021-2025, German Aerospace Center (DLR), Institute of Transport Research"
+__license__ = "EPL2.0"
+__version__ = "0.8.0"
+__maintainer__ = "Simon Nieland"
+__email__ = "simon.nieland@dlr.de"
+__status__ = "Production"
+# ===========================================================================
+# - https://github.com/DLR-VF/PtAC
+# - http://www.dlr.de/vf
+# ===========================================================================
 
+# --- imports ---------------------------------------------------------------
 import pandas as pd
 
-"""Defines street types"""
-
-"""
-@name : settings.py
-@author : Simon Nieland, Serra Yosmaoglu
-@date : 26.07.2021
-@copyright : Institut fuer Verkehrsforschung, Deutsches Zentrum fuer Luft- und Raumfahrt
-"""
-
+# --- definiions ------------------------------------------------------------
 default_crs = "epsg:4326"
 
 streettypes = pd.DataFrame.from_dict(
