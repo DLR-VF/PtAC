@@ -3,13 +3,13 @@
 """Prepares dataset for accessibility computation and computes walking accessibilities
 from residential areas to public transport stops."""
 # ===========================================================================
-__author__     = "Serra Yosmaoglu, Simon Nieland, Daniel Krajzewicz"
-__copyright__  = "Copyright 2021-2025, German Aerospace Center (DLR), Institute of Transport Research"
-__license__    = "EPL2.0"
-__version__    = "0.2.0"
+__author__ = "Serra Yosmaoglu, Simon Nieland, Daniel Krajzewicz"
+__copyright__ = "Copyright 2021-2025, German Aerospace Center (DLR), Institute of Transport Research"
+__license__ = "EPL2.0"
+__version__ = "0.2.0"
 __maintainer__ = "Simon Nieland"
-__email__      = "simon.nieland@dlr.de"
-__status__     = "Production"
+__email__ = "simon.nieland@dlr.de"
+__status__ = "Production"
 # ===========================================================================
 # - https://github.com/DLR-VF/PtAC
 # - http://www.dlr.de/vf
@@ -39,7 +39,7 @@ home_directory = Path.home()  # os.path.abspath('../../')  # Path.home()
 def clear_directory(folder=f"{home_directory}/.ptac", timestamp=None):
     files = glob.glob(f"{folder}//*.wkt")
     for f in files:
-        if f.startswith(folder+f"\\{str(timestamp)}"):
+        if f.startswith(folder + f"\\{str(timestamp)}"):
             try:
                 os.remove(f)
             except os.error as e:
@@ -58,11 +58,15 @@ def prepare_origins_and_destinations(dest_gdf, od, timestamp):
     dest_gdf = dest_gdf[["geometry"]]
     if od == "origin":
         dest_gdf = dest_gdf.dropna()
-        dest_gdf.to_csv(f"{home_directory}/.ptac/{timestamp}_origins.wkt", sep=";", header=False)
+        dest_gdf.to_csv(
+            f"{home_directory}/.ptac/{timestamp}_origins.wkt", sep=";", header=False
+        )
     if od == "destination":
         dest_gdf = dest_gdf.dropna()
         dest_gdf.to_csv(
-            f"{home_directory}/.ptac/{timestamp}_destinations.wkt", sep=";", header=False
+            f"{home_directory}/.ptac/{timestamp}_destinations.wkt",
+            sep=";",
+            header=False,
         )
 
 
@@ -130,7 +134,10 @@ def prepare_network(timestamp, network_gdf=None, boundary=None, verbose=0):
         ]
     ]
     network_gdf.to_csv(
-        f"{home_directory}/.ptac/{timestamp}_network.wkt", sep=";", header=False, index=False
+        f"{home_directory}/.ptac/{timestamp}_network.wkt",
+        sep=";",
+        header=False,
+        index=False,
     )
     return network_gdf
 
@@ -238,13 +245,21 @@ def distance_to_closest(
         boundary_geometries = boundary_geometries.to_crs(settings.default_crs)
 
     if network_gdf is None:
-        prepare_network(timestamp=timestamp, network_gdf=None, boundary=boundary_geometries, verbose=verbose)
+        prepare_network(
+            timestamp=timestamp,
+            network_gdf=None,
+            boundary=boundary_geometries,
+            verbose=verbose,
+        )
 
     else:
         network_gdf = util.project_gdf(network_gdf, to_latlong=True)
         network_gdf = util.project_gdf(network_gdf, to_latlong=False)
         prepare_network(
-            network_gdf=network_gdf, boundary=boundary_geometries, verbose=verbose, timestamp=timestamp
+            network_gdf=network_gdf,
+            boundary=boundary_geometries,
+            verbose=verbose,
+            timestamp=timestamp,
         )
 
     if "index" in start_geometries.columns:
@@ -257,13 +272,19 @@ def distance_to_closest(
     destination_geometries = destination_geometries.reset_index()
 
     # write origins and destinations to disk
-    prepare_origins_and_destinations(destination_geometries, od="destination", timestamp=timestamp)
+    prepare_origins_and_destinations(
+        destination_geometries, od="destination", timestamp=timestamp
+    )
     prepare_origins_and_destinations(start_geometries, od="origin", timestamp=timestamp)
 
     epsg = destination_geometries.crs.to_epsg()
     # build UrMoAC request
     urmo_ac_request = build_request(
-        epsg=epsg, number_of_threads=number_of_threads, date=date, start_time=start_time, timestamp=timestamp
+        epsg=epsg,
+        number_of_threads=number_of_threads,
+        date=date,
+        start_time=start_time,
+        timestamp=timestamp,
     )
     if verbose > 0:
         print("Starting UrMoAC to calculate accessibilities\n")
@@ -276,7 +297,10 @@ def distance_to_closest(
     # read UrMoAC output
     header_list = ["o_id", "d_id", "avg_distance", "avg_tt", "avg_num", "avg_value"]
     output = pd.read_csv(
-        f"{home_directory}/.ptac/{timestamp}_sdg_output.csv", sep=";", header=0, names=header_list
+        f"{home_directory}/.ptac/{timestamp}_sdg_output.csv",
+        sep=";",
+        header=0,
+        names=header_list,
     )
 
     # only use distance on road network
