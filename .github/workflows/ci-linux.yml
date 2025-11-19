@@ -2,7 +2,7 @@ name: Test PtAC with Mamba on Linux
 
 on:
   push:
-    branches: [ master, dev, work ]
+    branches: [ master, dev ]
     tags:
       - "v*.*.*"
   pull_request:
